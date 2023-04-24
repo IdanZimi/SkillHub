@@ -1,3 +1,9 @@
+<div align="center">
+
+![](static/images/skillHub-logo.jpg)
+
+</div>
+
 # SkillHub
 
 Welcome to our new generation social innovation hub!
