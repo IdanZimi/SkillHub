@@ -1,0 +1,15 @@
+name: Auto-request review from specific persons
+
+on:
+  pull_request:
+    types: [opened]
+
+jobs:
+  auto-request-review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Request review from specific person
+        uses: peter-evans/request-pull-request-review@v1
+        with:
+          reviewers: idoyek, swisash, IdanZimi
+
