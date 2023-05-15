@@ -1,5 +1,8 @@
 import { Model, DataTypes } from "sequelize";
 import { sequelize } from "../src/database";
+import {Project} from './project.model';
+import {Apply} from './apply.model'
+import {ProjectUser} from './projcet-user.model'
 
 export class User extends Model {
   public id!: number;
@@ -35,8 +38,12 @@ User.init(
     },
   },
   {
-    tableName: "user",
+    modelName: 'User', 
+    tableName: "users",
     sequelize,
   }
 );
 
+User.hasMany(Project, { foreignKey: 'userId' });
+User.hasMany(Apply, { foreignKey: 'userId' });
+User.hasMany(ProjectUser, { foreignKey: 'userId' });

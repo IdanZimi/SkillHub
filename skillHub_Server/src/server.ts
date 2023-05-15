@@ -3,7 +3,7 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import config from '../config/config.json'
 import { sequelize } from "./database";
-import { User } from '../models/User'
+import { User } from '../models/user.model'
 import { UserService } from './service/UserService'
 
 const app: Application = express();
