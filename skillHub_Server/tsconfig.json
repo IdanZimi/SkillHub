@@ -9,5 +9,5 @@
     },
     "include": [
         "./src/**/*"
-, "models/User.ts"    ]
+, "models/user.model.ts"    ]
 }
