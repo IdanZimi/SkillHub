@@ -2,6 +2,7 @@
 
 # dependencies
 skill-hub/node_modules
+skillHub_Server/node_modules
 /.pnp
 .pnp.js
 
@@ -9,7 +10,7 @@ skill-hub/node_modules
 /coverage
 
 # production
-/build
+skill-hub/build
 
 # misc
 .DS_Store
