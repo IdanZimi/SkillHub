@@ -1,46 +1,61 @@
-//import './App.css';
-import { stack as Menu } from 'react-burger-menu'
-import './styles/Menu.css'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHouse, faAddressCard, faPeopleGroup, faRightToBracket, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Route, Routes, useSearchParams } from "react-router-dom";
+import Login from "./login/login"
+import Register from './register/Register'
+import MenuComponent from './menu/Menu';
+import Home from './Home/home'
+import { auth, authStateChanged } from './firebase'
+import './App.css'
+import AlterRegister from './register/alterRegister';
+import Alterlogin from './login/alterlogin';
+import Nav from './nav/nav'
+
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    // Check if the authentication state exists in localStorage
-    const storedAuthState = localStorage.getItem('isAuthenticated');
-    if (storedAuthState) {
-      setIsAuthenticated(JSON.parse(storedAuthState));
-    }
+    const unsubscribe = authStateChanged(auth, (user) => {
+      if (user) {
+        // User is authenticated
+        setIsAuthenticated(true)
+        // Perform any necessary actions for an authenticated user
+      } else {
+        // User is not authenticated
+        setIsAuthenticated(false)
+        // Perform any necessary actions for an unauthenticated user
+      }
+    });
+
+    // Clean up the listener when the component is unmounted
+    return () => {
+      unsubscribe();
+    };
   }, []);
 
-  const handleLogin = () => {
-    setIsAuthenticated(true);
-    // Store the authentication state in localStorage
-    localStorage.setItem('isAuthenticated', true);
-  };
-
-  const handleLogout = () => {
-    setIsAuthenticated(false);
-    // Remove the authentication state from localStorage
-    localStorage.removeItem('isAuthenticated');
-  };
-
   return (
-    <div className='container'>
-      <Menu>
-        <a id="home" className="bm-item" href="/"><FontAwesomeIcon icon={faHouse} size='xl' flip /> Home</a>
-        <a id="about" className="bm-item" href="/about"><FontAwesomeIcon icon={faAddressCard} size='xl' /> About</a>
-        <a id="projects" className="bm-item" href="/projects"><FontAwesomeIcon icon={faPeopleGroup} size='xl' /> Projects</a>
-        {isAuthenticated ? (
-          <a id="logout" className="bm-item" onClick={handleLogout} href="/"><FontAwesomeIcon icon={faRightFromBracket} size='xl' /> Logout</a>
-        ) : (
-          <a id="login" className="bm-item" onClick={handleLogin} href="/login"><FontAwesomeIcon icon={faRightToBracket} size='xl' /> Login</a>
-        )}
-      </Menu>
-    </div>
+      <div className='app'>
+        <div className="content">
+          <div>
+            <Nav></Nav>
+            <MenuComponent isAauthenticated={isAuthenticated}> </MenuComponent>
+          </div>
+          <Router>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/login" element={<Alterlogin />} />
+              <Route path="/register" element={<AlterRegister />} />
+            </Routes>
+          </Router>
+        </div>
+        <footer className="footer">
+          <div className="d-flex flex-column flex-md-row text-center text-md-start justify-content-between py-2 px-4 px-xl-5 bg-primary">
+            <div className="text-white mb-3 mb-md-0">
+              Copyright © 2023. All rights reserved.
+            </div>
+          </div>
+        </footer>
+      </div>
   );
 }
 
