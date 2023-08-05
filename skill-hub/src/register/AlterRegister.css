@@ -1,0 +1,28 @@
+body {
+  background-color: hsl(0, 0%, 96%);
+}
+
+.register__btn {
+  padding: 10px;
+  font-size: 15px;
+  margin-bottom: 10px;
+  border: none;
+  color: white;
+  background-color: #4c4c4c;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.register__google {
+  background-color: #DB4437;
+}
+
+.register div {
+  margin-top: 7px;
+  color: #777777;
+}
+
+.register__btn:hover,
+.register__google:hover {
+  background-color: #DB4437;
+}
