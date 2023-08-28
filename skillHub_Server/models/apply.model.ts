@@ -1,7 +1,7 @@
 import { DataTypes, Model } from 'sequelize';
 import { sequelize } from '../src/database';
-import {User} from './user.model';
-import {Project} from './project.model';
+import { User } from './user.model';
+import { Project } from './project.model';
 
 export enum Role {
   Developer = 'developer',

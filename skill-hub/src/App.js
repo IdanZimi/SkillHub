@@ -9,6 +9,9 @@ import './App.css'
 import AlterRegister from './register/alterRegister';
 import Alterlogin from './login/alterlogin';
 import Nav from './nav/nav'
+import ProjectPage from './projects/projectPage';
+import RecipeReviewCard from './projects/projectPage';
+import AboutPage from './about/AboutPage';
 
 
 function App() {
@@ -45,6 +48,8 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Alterlogin />} />
               <Route path="/register" element={<AlterRegister />} />
+              <Route path="/projects" element={<RecipeReviewCard />} />
+              <Route path="/about" element={<AboutPage />} />
             </Routes>
           </Router>
         </div>
