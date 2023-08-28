@@ -67,5 +67,5 @@ Apply.init(
   }
 );
 
-Apply.belongsTo(User, { foreignKey: 'userId' });
-Apply.belongsTo(Project, { foreignKey: 'projectId' });
+//Apply.belongsTo(User, { foreignKey: 'userId' });
+//Apply.belongsTo(Project, { foreignKey: 'projectId' });

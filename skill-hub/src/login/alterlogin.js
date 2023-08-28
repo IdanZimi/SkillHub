@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { MDBContainer, MDBCol, MDBRow, MDBBtn, MDBIcon, MDBInput, MDBCheckbox } from 'mdb-react-ui-kit';
 import './Alterlogin.css'
-import { Link, useNavigate } from "react-router-dom";
-import { auth, logInWithEmailAndPassword, signInWithGoogle, signInWithFacebook } from "../firebase";
+import { useNavigate } from "react-router-dom";
+import { auth, signInWithFacebook, signInWithGoogle, logInWithEmailAndPassword } from "../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 // import '@fortawesome/fontawesome-free/css/all.min.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faGoogleLogo
 } from '@fortawesome/free-solid-svg-icons';
+import { request } from '../httpRequest';
 
 function Alterlogin() {
     const [email, setEmail] = useState("");
@@ -24,6 +25,16 @@ function Alterlogin() {
         if (user) navigate("/");
     }, [user, loading, navigate]);
 
+    const handleLogin =async (loginMethod) =>{
+        try{
+        await request.login(loginMethod)
+        localStorage.setItem('isAuthenticated', true)
+        //navigate('/')
+        }catch(err){
+            console.error(err.message)
+            alert("login failed")
+        }
+    }
     return (
         <MDBContainer fluid className="p-2 my-5">
 
@@ -41,7 +52,7 @@ function Alterlogin() {
                         <MDBBtn floating size='md' tag='a' className='me-2' onClick={signInWithGoogle}>
                             <MDBIcon fab icon='google' />
                         </MDBBtn>
-                        <MDBBtn floating size='md' tag='a' className='me-2' onClick={signInWithFacebook}>
+                        <MDBBtn floating size='md' tag='a' className='me-2' onClick={{signInWithFacebook}}>
                             <MDBIcon fab icon='facebook'/>
                         </MDBBtn>
                     </div>

@@ -37,7 +37,7 @@ function App() {
       <div className='app'>
         <div className="content">
           <div>
-            <Nav></Nav>
+            {/* <Nav></Nav> */}
             <MenuComponent isAauthenticated={isAuthenticated}> </MenuComponent>
           </div>
           <Router>

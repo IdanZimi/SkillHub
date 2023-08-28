@@ -23,7 +23,7 @@ function Home() {
     };
 
     useEffect(() => {
-        if (loading) return;
+        if (loading) return 
         if (!user) return navigate("/login");
         fetchUserName();
     }, [user, loading]);
