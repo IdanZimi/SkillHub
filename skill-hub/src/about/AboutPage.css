@@ -1,0 +1,59 @@
+.banner-background-icon {
+    position: absolute;
+    top: 0;
+    left: 868px;
+    width: 862px;
+    height: 1077px;
+  }
+  .span {
+    font-size: 60px;
+  }
+  .skill-hub {
+    align-self: stretch;
+    position: relative;
+  }
+  .skill-hub-is {
+    margin-block-start: 0;
+    margin-block-end: 9px;
+  }
+  .or-an-individual {
+    margin: 0;
+  }
+  .skill-hub-is-container1 {
+    line-break: anywhere;
+    width: 100%;
+  }
+  .skill-hub-is-container {
+    position: relative;
+    font-size: 25px;
+    font-weight: 600;
+    color: #828282;
+    display: flex;
+    align-items: center;
+    width: 725px;
+    height: 391px;
+    flex-shrink: 0;
+  }
+  .home-page-text-container {
+    position: absolute;
+    top: 309px;
+    left: 220px;
+    width: 693px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 53px;
+  }
+  .restaurant-landing-page {
+    position: relative;
+    background-color: #f6f6f6;
+    width: 100%;
+    height: 1164px;
+    overflow: hidden;
+    text-align: left;
+    font-size: 96px;
+    color: #4c4c4c;
+    font-family: var(--font-montserrat);
+  }
+  

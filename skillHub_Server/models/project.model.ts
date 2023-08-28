@@ -56,7 +56,7 @@ export class Project extends Model {
   Project.hasMany(Apply, { foreignKey: 'projectId' });
   Project.hasMany(Apply, { foreignKey: 'userId' });
   Project.hasMany(ProjectUser, { foreignKey: 'projectId' });
-
+  
 
 
   
