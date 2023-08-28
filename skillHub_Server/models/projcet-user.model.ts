@@ -48,5 +48,5 @@ ProjectUser.init(
   }
 );
 
-ProjectUser.belongsTo(User, { foreignKey: 'userId' });
-ProjectUser.belongsTo(Project, { foreignKey: 'projectId' });
+//ProjectUser.belongsTo(User, { foreignKey: 'userId' });
+//ProjectUser.belongsTo(Project, { foreignKey: 'projectId' });
