@@ -1,87 +1,42 @@
+//import { bodyParser } from 'body-parser';
 import { User } from '../../models/user.model'
 import { sequelize } from "../database";
+import {
+    auth,
+    registerWithEmailAndPassword,
+    signInWithGoogle,
+    signInWithFacebook,
+    logInWithEmailAndPassword,
+} from '../firebase'
+
 
 
 export class UserService {
-    async createUser(name: string, email: string, password: string): Promise<User> {
-        try {
-            this.checkConnection()
-            const user = await User.create({
-                name,
-                email,
-                password,
-            });
-            
-            return user;
+    async registerUser(fullName: string, email: string, password: string, skills: string[]): Promise<void> {
+        await registerWithEmailAndPassword(fullName, email, password, skills)
+    }
 
-        } catch (error) {
-            throw error;
+    async loginUser(data: any) {
+        if (data.provider === 'local') {
+            try{
+                await logInWithEmailAndPassword(data.email, data.password)
+            }catch(error){
+                throw error
+            }
+        }
+        else {
+            data.provider === 'google' ? signInWithGoogle : signInWithFacebook
         }
     }
 
-    async getUserById(id: number): Promise<User | null> {
-        try {
-            this.checkConnection()
-            const user = await User.findByPk(id);
-            return user;
-        } catch (error) {
-            throw error;
-        }
-    }
 
-    async updateUserById(id: number, name: string, email: string, password: string): Promise<[number, User[]]> {
-        try {
-            this.checkConnection()
-            const [updatedRowsCount, updatedUsers] = await User.update({
-                name,
-                email,
-                password,
-            }, {
-                where: {
-                    id,
-                },
-                returning: true,
-            });
-
-            return [updatedRowsCount, updatedUsers];
-        } catch (error) {
-            throw error;
-        }
-    }
-
-    async deleteUserById(id: number): Promise<number> {
-        try {
-            this.checkConnection();
-            const deletedRowsCount = await User.destroy({
-                where: {
-                    id,
-                },
-            });
-
-            return deletedRowsCount;
-
-        } catch (error) {
-            throw error;
-        }
-    }
-
-     async getAllUsers(): Promise<User[]> {
-        try {
-            this.checkConnection()
-            const users = await User.findAll() 
-            return users
-        } catch (error) {
-            throw error;
-        }
-    }
-
-    async checkConnection() {
-        try {
-            await sequelize.authenticate();
-            console.log("Connection has been established successfully.");
-        }
-        catch (error) {
-            throw error;
-        }
-    }
+    // async checkConnection() {
+    //     try {
+    //         await sequelize.authenticate();
+    //         console.log("Connection has been established successfully.");
+    //     }
+    //     catch (error) {
+    //         throw error;
+    //     }
+    // }
 }

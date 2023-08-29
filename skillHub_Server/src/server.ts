@@ -5,6 +5,12 @@ import config from '../config/config.json'
 import { sequelize } from "./database";
 import { User } from '../models/user.model'
 import { UserService } from './service/UserService'
+import {
+    auth,
+    registerWithEmailAndPassword,
+    signInWithGoogle,
+    signInWithFacebook,
+} from './firebase'
 
 const app: Application = express();
 
@@ -23,13 +29,31 @@ app.get("/", async (req: Request, res: Response) => {
 });
 
 
-app.get("/users", async (req: Request, res: Response) => {
+
+app.post('/register', async (req: Request, res: Response) => {
+    const { fullName, email, password } = req.body;
     try {
-        const users = await userService.getAllUsers()
-        res.status(200).json(users);
-    } catch (error) {
-        console.error("Unable to connect to the database:", error);
-        res.status(500).json({ error: "Unable to connect to the database" });
+        userService.registerUser(fullName, email, password, [])
+        // Here, you would typically perform your registration logic
+        // and save the user data to a database or perform other actions.
+        // For demonstration purposes, we'll just return a response.
+
+        res.json({ message: 'Registration successful', fullName, email });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'failed', err: err.message })
+    }
+});
+
+app.post('/login', async (req: Request, res: Response) => {
+    const data  = req.body;
+    try {
+        await userService.loginUser(data)
+        res.json({ message: 'login successful'});
+    } catch (err) {
+        var errorMessage = err.message;
+        console.error("Sign-in error:", errorMessage);
+        res.status(500).json({ message: 'failed', err: errorMessage })
     }
 });
 

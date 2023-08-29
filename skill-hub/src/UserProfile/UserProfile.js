@@ -27,6 +27,12 @@ function UserProfile() {
             sx={{ minWidth: "100%" }}
             data-testid="tagList-newTag-card"
           >
+            {/* imageUrl, title, description, positionName */}
+            {/* key={index}
+            imageUrl={project.image}
+            title={project.title}
+            description={project.description}
+            positionName={project.positionName} */}
             <Project id={project.id} founder={project.founder} status={project.status} user={userName}/>
           </Card>
         ))}

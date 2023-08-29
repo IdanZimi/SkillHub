@@ -20,6 +20,7 @@ import {
     signInWithFacebook,
 } from "../firebase";
 import './AlterRegister.css'
+import {request} from '../httpRequest'
 
 function AlterRegister() {
     const [email, setEmail] = useState("");
@@ -29,10 +30,23 @@ function AlterRegister() {
     const [user, loading, error] = useAuthState(auth);
     const navigate = useNavigate();
 
-    const register = () => {
-        if (!firstname || !password || !email) alert("Please enter all fields");
-        registerWithEmailAndPassword(firstname + ' ' + lastname, email, password);
+    const register = async () => {
+        if (!firstname || !password || !email) {
+            alert("Please enter all fields");
+            return
+        }
+        try{
+         await request.register({
+            fullName: `${firstname} ${lastname}`,
+            email:email,
+            password:password})
+            navigate('/')
+         }catch(err){
+            alert(err.message)
+            console.error(err.message)
+         }
 
+        //registerWithEmailAndPassword(`${firstname} ${lastname}`, email, password);
     };
 
     useEffect(() => {

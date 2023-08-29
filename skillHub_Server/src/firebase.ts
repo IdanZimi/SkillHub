@@ -18,7 +18,7 @@ import {
     where,
     addDoc,
 } from "firebase/firestore";
-import { redirect } from "react-router-dom";
+//import { redirect } from "react-router-dom";
 
 const firebaseConfig = {
     apiKey: "AIzaSyDAdPJ1TuJSIKlEzLUUgwGS23e_Cow_Rus",
@@ -41,7 +41,7 @@ const signInWithGoogle = async () => {
     signInWithExternalApi(googleProvider)
 };
 
-const signInWithFacebook = async () =>{
+const signInWithFacebook = async () => {
     signInWithExternalApi(facebookProvider)
 }
 const signInWithExternalApi = async (provider) => {
@@ -57,8 +57,8 @@ const signInWithExternalApi = async (provider) => {
                 authProvider: "google",
                 email: user.email,
             });
-            localStorage.setItem('isAuthenticated', true);
-            redirect("/")
+            //localStorage.setItem('isAuthenticated', true);
+            //redirect("/")
         }
     } catch (err) {
         console.error(err);
@@ -68,30 +68,29 @@ const signInWithExternalApi = async (provider) => {
 
 const logInWithEmailAndPassword = async (email, password) => {
     try {
-        await signInWithEmailAndPassword(auth, email, password);
-        localStorage.setItem('isAuthenticated', true);
-    } catch (err) {
-        console.error(err);
-        alert(err.message);
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+        console.log("User signed in:", user);
+    } catch (error) {
+        throw error; // Rethrow the error to be caught by the caller
     }
-    redirect("/")
+    //localStorage.setItem('isAuthenticated', true);
+
+    //redirect("/")
 };
 
-const registerWithEmailAndPassword = async (name, email, password, skills=[]) => {
-    try {
-        const res = await createUserWithEmailAndPassword(auth, email, password, skills);
-        const user = res.user;
-        await addDoc(collection(db, "users"), {
-            uid: user.uid,
-            name,
-            authProvider: "local",
-            email,
-            skills
-        });
-    } catch (err) {
-        console.error(err);
-        alert(err.message);
-    }
+const registerWithEmailAndPassword = async (name, email, password, skills = []) => {
+    debugger;
+    const res = await createUserWithEmailAndPassword(auth, email, password);
+    const user = res.user;
+    await addDoc(collection(db, "users"), {
+        uid: user.uid,
+        name,
+        authProvider: "local",
+        email,
+        skills
+    });
+
 };
 
 const sendPasswordReset = async (email) => {
