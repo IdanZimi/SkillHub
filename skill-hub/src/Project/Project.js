@@ -29,8 +29,6 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-
-
 const Project = ({ imageUrl, title, description, positionName }) => {
   const [cvFiles, setCVFiles] = useState(null);
   const [expanded, setExpanded] = React.useState(false);
@@ -59,7 +57,7 @@ const Project = ({ imageUrl, title, description, positionName }) => {
       <CardMedia
         component="img"
         height="194"
-        image={imageUrl} // Use the imageUrl prop
+        image={imageUrl} 
         alt="Project Image"
       />
       <CardContent className="project-description">
