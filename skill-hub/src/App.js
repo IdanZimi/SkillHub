@@ -4,6 +4,7 @@ import Login from "./login/login"
 import Register from './register/Register'
 import MenuComponent from './menu/Menu';
 import Home from './Home/home'
+import UserProfile from './UserProfile/UserProfile';
 import { auth, authStateChanged } from './firebase'
 import './App.css'
 import AlterRegister from './register/alterRegister';
@@ -37,7 +38,7 @@ function App() {
       <div className='app'>
         <div className="content">
           <div>
-            <Nav></Nav>
+            {/* <Nav></Nav> */}
             <MenuComponent isAauthenticated={isAuthenticated}> </MenuComponent>
           </div>
           <Router>
@@ -45,6 +46,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Alterlogin />} />
               <Route path="/register" element={<AlterRegister />} />
+              <Route path="/profile" element={<UserProfile />} />
             </Routes>
           </Router>
         </div>

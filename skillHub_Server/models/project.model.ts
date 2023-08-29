@@ -52,7 +52,7 @@ export class Project extends Model {
     }
   );
   
-  Project.belongsTo(User, { foreignKey: 'userId' });
+  //Project.belongsTo(User, { foreignKey: 'userId' });
   Project.hasMany(Apply, { foreignKey: 'projectId' });
   Project.hasMany(Apply, { foreignKey: 'userId' });
   Project.hasMany(ProjectUser, { foreignKey: 'projectId' });

@@ -3,7 +3,7 @@ import './Menu.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faHouse, faAddressCard, faPeopleGroup, faRightToBracket,
-  faRightFromBracket,  
+  faRightFromBracket, faUser
 } from '@fortawesome/free-solid-svg-icons';
 import React, { useState, useEffect } from 'react';
 import {logout} from '../firebase'
@@ -38,6 +38,7 @@ function MenuComponent(props) {
           <a id="home" className="bm-item" href="/"><FontAwesomeIcon icon={faHouse} size='lg' flip /> Home</a>
           <a id="about" className="bm-item" href="/about"><FontAwesomeIcon icon={faAddressCard} size='lg' /> About</a>
           <a id="projects" className="bm-item" href="/projects"><FontAwesomeIcon icon={faPeopleGroup} size='lg' /> Projects</a>
+          <a id="profile" className="bm-item" href="/profile"><FontAwesomeIcon icon={faUser} size='lg' /> Profile</a>
           {props.isAauthenticated ? (
             <a id="logout" className="bm-item" onClick={handleLogout} href="/"><FontAwesomeIcon icon={faRightFromBracket} size='lg' /> Logout</a>
           ) : (
