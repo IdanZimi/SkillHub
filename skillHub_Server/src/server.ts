@@ -11,6 +11,7 @@ import {
     signInWithGoogle,
     signInWithFacebook,
 } from './firebase'
+import { ProjectService } from './service/ProjectService';
 
 const app: Application = express();
 
@@ -18,6 +19,7 @@ app.use(bodyParser.json());
 app.use(cors());
 sequelize.sync
 const userService = new UserService();
+const projectService = new ProjectService()
 
 app.get("/", async (req: Request, res: Response) => {
     try {
@@ -53,6 +55,21 @@ app.post('/login', async (req: Request, res: Response) => {
     } catch (err) {
         var errorMessage = err.message;
         console.error("Sign-in error:", errorMessage);
+        res.status(500).json({ message: 'failed', err: errorMessage })
+    }
+});
+
+app.post('/project', async (req: Request, res: Response) => {
+    const data  = req.body;
+    try {
+        console.log("inside project endpoint")
+        console.log("data " + data)
+        console.log("data uid" + data.uid)
+        const docref = await projectService.addProject(data)
+        res.json({ message: 'Add project successful', docref});
+    } catch (err) {
+        var errorMessage = err.message;
+        console.error("add project error:", errorMessage);
         res.status(500).json({ message: 'failed', err: errorMessage })
     }
 });

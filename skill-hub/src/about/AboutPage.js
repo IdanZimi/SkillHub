@@ -1,4 +1,5 @@
 import "./AboutPage.css";
+
 const AboutPage = () => {
   return (
     <div className="restaurant-landing-page">
@@ -10,23 +11,15 @@ const AboutPage = () => {
       <div className="home-page-text-container">
         <b className="skill-hub">
           <span>Skill Hub</span>
-          <span className="span">{` `}</span>
+          {/* <span className="span">{` `}</span> */}
         </b>
         <div className="skill-hub-is-container">
-          <span className="skill-hub-is-container1">
-            <p className="skill-hub-is">
-              Skill Hub is a platform for finding suitable partners and team
-              members,
-            </p>
-            <p className="skill-hub-is">
-              especially for your project. Whether you are an entrepreneur, a
-              creative individual,
-            </p>
-            <p className="or-an-individual">
-              or an individual seeking collaboration, our platform connects you
-              with relevant people to bring your ideas to life.
-            </p>
-          </span>
+          <p className="skill-hub-is">
+            Skill Hub is a platform for finding suitable partners and team
+            members, especially for your project. Whether you are an entrepreneur, a
+            creative individual,or an individual seeking collaboration, our platform connects you
+            with relevant people to bring your ideas to life.
+          </p>
         </div>
       </div>
     </div>

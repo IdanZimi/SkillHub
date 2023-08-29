@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { db } from "./firebase";
 
 const port = '3000'
 const apiUrl = `http://localhost:${port}/`;
@@ -38,4 +39,21 @@ export const request = {
       console.error("Login error:", errorData);
     }
   },
+  addProjectToDB: async (project) => {
+    console.log("the project" + project)
+    const response = await fetch(apiUrl + 'project', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(project)
+    })
+    if (response.ok) {
+      const responseData = await response.json();
+      console.log("Add Project successfuly:", responseData);
+    } else {
+      const errorData = await response.json();
+      console.error("Login error:", errorData);
+    }
+  }
 }
