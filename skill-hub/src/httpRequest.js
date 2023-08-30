@@ -50,6 +50,7 @@ export const request = {
     })
     if (response.ok) {
       const responseData = await response.json();
+      return responseData.docref._key.path.segments[1]
       //console.log("Add Project successfuly:", responseData);
     } else {
       const errorData = await response.json();

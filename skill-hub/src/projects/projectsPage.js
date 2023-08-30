@@ -6,6 +6,8 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
 import "./projectsPage.css";
+import { showNotification } from "../utils/utils";
+
 
 function ProjectsPage() {
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
@@ -37,12 +39,13 @@ function ProjectsPage() {
     setIsRegisterOpen(true);
   };
 
-  const handleCloseRegister = (project) => {
+  const handleCloseRegister = async (project) => {
     if (project) {
       //console.log("In handleCloseRegister, project is: ", project);
+      const projectID = await request.addProjectToDB(project);
+      project.id = projectID
       setProjectsList([...projectsList, project]);
-      //const userRef = db.collection('users').doc(uid);
-      request.addProjectToDB(project);
+      showNotification("info", "Success!",`${project.title} created`)
     }
     setIsRegisterOpen(false);
   };

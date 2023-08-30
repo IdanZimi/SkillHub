@@ -15,7 +15,8 @@ import AlterRegister from "./register/alterRegister";
 import Alterlogin from "./login/alterlogin";
 import ProjectPage from "./projects/projectsPage";
 //import RecipeReviewCard from './projects/projectPage';
-import AboutPage from "./about/AboutPage";
+import AboutPage from './about/AboutPage';
+import { ReactNotifications, store } from 'react-notifications-component'
 import { query, collection, getDocs, where } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 
@@ -71,35 +72,29 @@ function App() {
   // };
 
   return (
-    <div className="app">
-      <div className="content">
-        <div>
-          {/* <Nav></Nav> */}
-          <MenuComponent
-            isAauthenticated={isAuthenticated}
-            logoutUserData={logoutUserData}
-          >
-            {" "}
-          </MenuComponent>
+      <div className='app'>
+        <div className="content">
+          <div>
+            <ReactNotifications/>
+            <MenuComponent isAauthenticated={isAuthenticated} logoutUserData={logoutUserData}> </MenuComponent>
+          </div>
+          <Router>
+            <Routes>
+              <Route path="/" element={<Home setUserAuthenticated={setUserAuthenticated} logoutUserData={logoutUserData} />} />
+              <Route path="/login" element={<Alterlogin />} />
+              <Route path="/register" element={<AlterRegister />} />
+              <Route path="/projects" element={<ProjectPage />} />
+              <Route path="/about" element={<AboutPage />} />
+            </Routes>
+          </Router>
         </div>
-        <Router>
-          <Routes>
-            <Route
-              path="/"
-              element={
-                <Home
-                  setUserAuthenticated={setUserAuthenticated}
-                  logoutUserData={logoutUserData}
-                />
-              }
-            />
-            <Route path="/login" element={<Alterlogin />} />
-            <Route path="/register" element={<AlterRegister />} />
-            <Route path="/projects" element={<ProjectPage />} />
-            <Route path="/about" element={<AboutPage />} />
-          </Routes>
-        </Router>
-      </div>
+        {/* <footer className="footer">
+          <div className="d-flex flex-column flex-md-row text-center text-md-start justify-content-between py-2 px-4 px-xl-5 bg-primary">
+            <div className="text-white mb-3 mb-md-0">
+              Copyright © 2023. All rights reserved.
+            </div>
+          </div>
+        </footer> */}
       <footer className="footer">
         <div className="d-flex flex-column flex-md-row text-center text-md-start justify-content-between py-2 px-4 px-xl-5 bg-primary">
           <div className="text-white mb-3 mb-md-0">

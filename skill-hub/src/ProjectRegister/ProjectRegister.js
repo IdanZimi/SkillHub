@@ -61,7 +61,7 @@ export default function ProjectRegister({ isOpen, onClose }) {
     //debugger;
     const newProject = {
       uid: localStorage.getItem("uid"),
-      image: imageFile ? URL.createObjectURL(imageFile): '../static/images/projectImage.jpg',
+      image: imageFile ? URL.createObjectURL(imageFile): '',
       title: projectName,
       description: description,
       positionName: positionName,
