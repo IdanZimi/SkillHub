@@ -1,5 +1,18 @@
 import { List, Card } from "@mui/material";
 import Project from "../Project/Project";
+import React from "react";
+import {
+  MDBCol,
+  MDBContainer,
+  MDBRow,
+  MDBCard,
+  MDBCardText,
+  MDBCardBody,
+  MDBCardImage,
+  MDBTypography,
+  MDBIcon,
+} from "mdb-react-ui-kit";
+import "./UserProfile.css";
 
 function UserProfile() {
   const Projects = [
@@ -16,27 +29,87 @@ function UserProfile() {
   ];
   const userName = "ido";
   return (
-    // {founding projects}
-    // {projects im part of}
-    // 
     <div className="container">
-      <List sx={{ width: "650px" }}>
-        {Projects.map((project) => (
-          <Card
-            component="form"
-            sx={{ minWidth: "100%" }}
-            data-testid="tagList-newTag-card"
-          >
-            {/* imageUrl, title, description, positionName */}
-            {/* key={index}
-            imageUrl={project.image}
-            title={project.title}
-            description={project.description}
-            positionName={project.positionName} */}
-            <Project id={project.id} founder={project.founder} status={project.status} user={userName}/>
-          </Card>
-        ))}
-      </List>
+      <section className="vh-100" style={{ backgroundColor: "#f4f5f7" }}>
+        <MDBContainer className="py-5 h-100">
+          <MDBRow className="justify-content-center align-items-center h-100">
+            <MDBCol lg="6" className="mb-4 mb-lg-0">
+              <MDBCard className="mb-3" style={{ borderRadius: ".5rem" }}>
+                <MDBRow className="g-0">
+                  <MDBCol
+                    md="4"
+                    className="gradient-custom text-center text-white"
+                    style={{
+                      borderTopLeftRadius: ".5rem",
+                      borderBottomLeftRadius: ".5rem",
+                    }}
+                  >
+                    <MDBCardImage
+                      src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
+                      alt="Avatar"
+                      className="my-5"
+                      style={{ width: "80px" }}
+                      fluid
+                    />
+                    <MDBTypography tag="h5">Idan Yakar</MDBTypography>
+                    <MDBCardText>Web Designer</MDBCardText>
+                    <MDBIcon far icon="edit mb-5" />
+                  </MDBCol>
+                  <MDBCol md="8">
+                    <MDBCardBody className="p-4">
+                      <MDBTypography tag="h6">Profile</MDBTypography>
+                      <hr className="mt-0 mb-4" />
+                      <MDBRow className="pt-1">
+                        <MDBCol size="6" className="mb-3">
+                          <MDBTypography tag="h6">Email</MDBTypography>
+                          <MDBCardText className="text-muted">
+                            info@example.com
+                          </MDBCardText>
+                        </MDBCol>
+                        <MDBCol size="6" className="mb-3">
+                          <MDBTypography tag="h6">Phone</MDBTypography>
+                          <MDBCardText className="text-muted">
+                            123 456 789
+                          </MDBCardText>
+                        </MDBCol>
+                      </MDBRow>
+
+                      <MDBTypography tag="h6">Skills</MDBTypography>
+                      <hr className="mt-0 mb-4" />
+                      <MDBRow className="pt-1">
+                        <MDBCol size="6" className="mb-3">
+                          <MDBTypography tag="h6">Software Developer</MDBTypography>
+                        </MDBCol>
+                        <MDBCol size="6" className="mb-3">
+                          <MDBTypography tag="h6">React</MDBTypography>
+                        </MDBCol>
+                        <MDBCol size="6" className="mb-3">
+                          <MDBTypography tag="h6">Node.js</MDBTypography>
+                        </MDBCol>
+                        <MDBCol size="6" className="mb-3">
+                          <MDBTypography tag="h6">Moziz</MDBTypography>
+                        </MDBCol>
+                      </MDBRow>
+
+                      <div className="d-flex justify-content-start">
+                        <a href="#!">
+                          <MDBIcon fab icon="facebook me-3" size="lg" />
+                        </a>
+                        <a href="#!">
+                          <MDBIcon fab icon="twitter me-3" size="lg" />
+                        </a>
+                        <a href="#!">
+                          <MDBIcon fab icon="instagram me-3" size="lg" />
+                        </a>
+                      </div>
+                    </MDBCardBody>
+                  </MDBCol>
+                </MDBRow>
+              </MDBCard>
+            </MDBCol>
+          </MDBRow>
+        </MDBContainer>
+      </section>
     </div>
   );
 }
