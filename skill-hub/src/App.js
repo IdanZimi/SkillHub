@@ -11,6 +11,7 @@ import Alterlogin from './login/alterlogin';
 import ProjectPage from './projects/projectPage';
 //import RecipeReviewCard from './projects/projectPage';
 import AboutPage from './about/AboutPage';
+import { ReactNotifications, store } from 'react-notifications-component'
 import { query, collection, getDocs, where } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 
@@ -70,7 +71,7 @@ function App() {
       <div className='app'>
         <div className="content">
           <div>
-            {/* <Nav></Nav> */}
+            <ReactNotifications/>
             <MenuComponent isAauthenticated={isAuthenticated} logoutUserData={logoutUserData}> </MenuComponent>
           </div>
           <Router>
@@ -83,13 +84,13 @@ function App() {
             </Routes>
           </Router>
         </div>
-        <footer className="footer">
+        {/* <footer className="footer">
           <div className="d-flex flex-column flex-md-row text-center text-md-start justify-content-between py-2 px-4 px-xl-5 bg-primary">
             <div className="text-white mb-3 mb-md-0">
               Copyright © 2023. All rights reserved.
             </div>
           </div>
-        </footer>
+        </footer> */}
       </div>
   );
 }

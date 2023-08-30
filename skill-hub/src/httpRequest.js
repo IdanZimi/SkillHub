@@ -40,7 +40,6 @@ export const request = {
     }
   },
   addProjectToDB: async (project) => {
-    console.log("the project" + project)
     const response = await fetch(apiUrl + 'project', {
       method: 'POST',
       headers: {
@@ -50,7 +49,7 @@ export const request = {
     })
     if (response.ok) {
       const responseData = await response.json();
-      console.log("Add Project successfuly:", responseData);
+      return responseData.docref._key.path.segments[1]
     } else {
       const errorData = await response.json();
       console.error("Login error:", errorData);

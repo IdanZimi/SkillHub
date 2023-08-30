@@ -1,5 +1,6 @@
 import { db } from "../firebase";
 import { addDoc, collection, DocumentReference } from "firebase/firestore";
+
 interface Project{
     image: string;         
     title: string;
@@ -20,4 +21,7 @@ export class ProjectService{
             adminId: project.uid,
         });
     }
+
+    
+
 }
