@@ -17,20 +17,20 @@ import { useAuthState } from "react-firebase-hooks/auth";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [name, setName] = useState("");
-  const [uid, setuid] = useState("");
+  //const [name, setName] = useState("");
+  //const [uid, setuid] = useState("");
   //const [user, loading, error] = useAuthState(auth);
 
-  const setUserData = (name, uid) =>{
-    setName(name);
-    setuid(uid)
+  const setUserAuthenticated = () =>{
     setIsAuthenticated(true)
   }
 
   const logoutUserData = () =>{
-    setName('')
-    setuid('')
+    // setName('')
+    // setuid('')
     setIsAuthenticated(false)
+    localStorage.removeItem("uid");
+    localStorage.removeItem("name");
   }
 
   // useEffect(() => {
@@ -73,10 +73,10 @@ function App() {
           </div>
           <Router>
             <Routes>
-              <Route path="/" element={<Home setUserData={setUserData} logoutUserData={logoutUserData} />} />
+              <Route path="/" element={<Home setUserAuthenticated={setUserAuthenticated} logoutUserData={logoutUserData} />} />
               <Route path="/login" element={<Alterlogin />} />
               <Route path="/register" element={<AlterRegister />} />
-              <Route path="/projects" element={<ProjectPage name={name} uid={uid} />} />
+              <Route path="/projects" element={<ProjectPage />} />
               <Route path="/about" element={<AboutPage />} />
             </Routes>
           </Router>

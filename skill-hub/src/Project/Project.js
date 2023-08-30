@@ -32,7 +32,7 @@ const ExpandMore = styled((props) => {
 const Project = ({ imageUrl, title, description, positionName }) => {
   const [cvFiles, setCVFiles] = useState(null);
   const [expanded, setExpanded] = React.useState(false);
-  console.log(positionName);
+  //console.log(positionName);
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };

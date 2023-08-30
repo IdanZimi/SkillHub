@@ -1,23 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import ProjectRegister from '../ProjectRegister/ProjectRegister';
-import Project from '../Project/Project';
+import React, { useState, useEffect } from "react";
+import ProjectRegister from "../ProjectRegister/ProjectRegister";
+import Project from "../Project/Project";
 import "./projectPage.css";
-import { request } from '../httpRequest';
+import { request } from "../httpRequest";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { db, auth } from '../firebase';
+import { db, auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
 
-function ProjectPage({ name, uid }) {
+function ProjectPage() {
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
   const [projects, setProjects] = useState([]); // State to store projects
   const [user, loading, error] = useAuthState(auth);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (loading) return 
+    if (loading) return;
     if (!user) return navigate("/login");
     //fetchUserData();
-}, [user, loading]);
+  }, [user, loading]);
 
   const handleButtonClick = () => {
     setIsRegisterOpen(true);
@@ -25,8 +25,7 @@ function ProjectPage({ name, uid }) {
 
   const handleCloseRegister = (project) => {
     if (project) {
-      debugger;
-      project.uid = uid
+      console.log("In handleCloseRegister, project is: ", project);
       setProjects([...projects, project]);
       //const userRef = db.collection('users').doc(uid);
       request.addProjectToDB(project);
@@ -36,7 +35,9 @@ function ProjectPage({ name, uid }) {
 
   return (
     <div>
-      <button className='create__btn' onClick={handleButtonClick}>Create +</button>
+      <button className="create__btn" onClick={handleButtonClick}>
+        Create +
+      </button>
       {isRegisterOpen && (
         <ProjectRegister
           onClose={handleCloseRegister}
@@ -55,8 +56,7 @@ function ProjectPage({ name, uid }) {
         ))}
       </div>
     </div>
-  )
+  );
 }
 
 export default ProjectPage;
-
