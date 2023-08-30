@@ -19,7 +19,6 @@ function Home({setUserData, logoutUserData}) {
     // },[uid]);
 
     useEffect(() => {
-        console.log("insdie useeffet homee")
         if (loading) return 
         if (!user) return navigate("/login");
         fetchUserData();
@@ -27,14 +26,16 @@ function Home({setUserData, logoutUserData}) {
 
     const fetchUserData = async () => {
         try {
+            //debugger;
             const q = query(collection(db, "users"), where("uid", "==", user?.uid));
             const doc = await getDocs(q);
             const data = doc.docs[0].data();
             setName(data.name);
             //setuid(data.uid);
-            debugger;
-            console.log("about to set uid: " + user?.uid)
-            setUserData(name, user?.uid)
+            //console.log("about to set uid: " + user?.uid);
+            setUserData(data.name, data.uid);
+            localStorage.setItem("uid", data.uid);
+            console.log("uid in localStorage: ", localStorage.getItem("uid"));
         } catch (err) {
             console.error(err);
             alert("An error occured while fetching user data");

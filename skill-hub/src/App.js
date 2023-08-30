@@ -22,6 +22,7 @@ function App() {
   //const [user, loading, error] = useAuthState(auth);
 
   const setUserData = (name, uid) =>{
+    //debugger;
     setName(name);
     setuid(uid)
     setIsAuthenticated(true)
@@ -31,6 +32,7 @@ function App() {
     setName('')
     setuid('')
     setIsAuthenticated(false)
+    localStorage.removeItem("uid");
   }
 
   // useEffect(() => {

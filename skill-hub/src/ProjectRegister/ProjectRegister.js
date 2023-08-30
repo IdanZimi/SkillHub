@@ -13,7 +13,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
 
-export default function ProjectRegister({ isOpen, onClose }) {
+export default function ProjectRegister({ uid, isOpen, onClose }) {
   const [open, setOpen] = React.useState(false);
   const [projectName, setProjectName] = useState('');
   const [positionInput, setPositionInput] = useState('');
@@ -58,7 +58,9 @@ export default function ProjectRegister({ isOpen, onClose }) {
   // }, [positionName]);
 
   const handleSubmit = () => {
+    //debugger;
     const newProject = {
+      uid: localStorage.getItem("uid"),
       image: imageFile ? URL.createObjectURL(imageFile): '../static/images/projectImage.jpg',
       title: projectName,
       description: description,
