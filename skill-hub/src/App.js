@@ -22,6 +22,8 @@ function App() {
   //const [user, loading, error] = useAuthState(auth);
 
   const setUserAuthenticated = () =>{
+    // setName(name);
+    // setuid(uid)
     setIsAuthenticated(true)
   }
 
