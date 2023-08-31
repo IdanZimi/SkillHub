@@ -13,12 +13,13 @@ import { auth, authStateChanged, db } from "./firebase";
 import "./App.css";
 import AlterRegister from "./register/alterRegister";
 import Alterlogin from "./login/alterlogin";
-import ProjectPage from "./projects/projectsPage";
+import ProjectsPage from "./projects/projectsPage";
 //import RecipeReviewCard from './projects/projectPage';
 import AboutPage from './about/AboutPage';
 import { ReactNotifications, store } from 'react-notifications-component'
 import { query, collection, getDocs, where } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
+import UserProfile from "./UserProfile/UserProfile";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -83,8 +84,9 @@ function App() {
               <Route path="/" element={<Home setUserAuthenticated={setUserAuthenticated} logoutUserData={logoutUserData} />} />
               <Route path="/login" element={<Alterlogin />} />
               <Route path="/register" element={<AlterRegister />} />
-              <Route path="/projects" element={<ProjectPage />} />
+              <Route path="/projects" element={<ProjectsPage />} />
               <Route path="/about" element={<AboutPage />} />
+              <Route path="/profile" element={<UserProfile />} />
             </Routes>
           </Router>
         </div>
