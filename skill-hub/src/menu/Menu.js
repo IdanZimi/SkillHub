@@ -8,7 +8,7 @@ import {
 import React, { useState, useEffect } from 'react';
 import {logout} from '../firebase'
 
-function MenuComponent(props) {
+function MenuComponent({isAauthenticated, logoutUserData}) {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
   
     useEffect(() => {
@@ -29,17 +29,18 @@ function MenuComponent(props) {
       //setIsAuthenticated(false);
       // Remove the authentication state from localStorage
       localStorage.removeItem('isAuthenticated');
+      logoutUserData()
       logout()
     };
   
     return (
       <div>
         <Menu width={260}>
-          <a id="home" className="bm-item" href="/"><FontAwesomeIcon icon={faHouse} size='lg' flip /> Home</a>
+          <a id="home" className="bm-item" href={isAauthenticated ? "/":"/login"}><FontAwesomeIcon icon={faHouse} size='lg' flip /> Home</a>
           <a id="about" className="bm-item" href="/about"><FontAwesomeIcon icon={faAddressCard} size='lg' /> About</a>
           <a id="projects" className="bm-item" href="/projects"><FontAwesomeIcon icon={faPeopleGroup} size='lg' /> Projects</a>
           <a id="profile" className="bm-item" href="/profile"><FontAwesomeIcon icon={faUser} size='lg' /> Profile</a>
-          {props.isAauthenticated ? (
+          {isAauthenticated ? (
             <a id="logout" className="bm-item" onClick={handleLogout} href="/"><FontAwesomeIcon icon={faRightFromBracket} size='lg' /> Logout</a>
           ) : (
             <a id="login" className="bm-item" href="/login"><FontAwesomeIcon icon={faRightToBracket} size='lg' /> Login</a>

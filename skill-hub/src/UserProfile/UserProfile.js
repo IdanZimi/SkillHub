@@ -15,19 +15,6 @@ import {
 import "./UserProfile.css";
 
 function UserProfile() {
-  const Projects = [
-    {
-      id: 1,
-      founder: "ido",
-      status: false,
-    },
-    {
-      id: 2,
-      founder: "idan",
-      status: true,
-    },
-  ];
-  const userName = "ido";
   return (
     <div className="container">
       <section className="vh-100" style={{ backgroundColor: "#f4f5f7" }}>
