@@ -6,24 +6,18 @@ import { auth, db, logout } from "../firebase";
 import { query, collection, getDocs, where } from "firebase/firestore";
 import img from '../static/images/projectImage.jpg'
 
-function Home({setUserAuthenticated, logoutUserData}) {
-    const [user, loading, error] = useAuthState(auth);
-    //const [name, setName] = useState("");
-    //const [uid, setuid] = useState("");
-    const navigate = useNavigate();
-    
-    // useEffect(() => {
-    //     console.log("inside useeffect of home " + uid)
-    //     //setuid(uid)
-    //     if (!uid) return navigate("/login");
-    //      //fetchUserData();
-    // },[uid]);
+function Home({ setUserAuthenticated, logoutUserData }) {
+  const [user, loading, error] = useAuthState(auth);
+  //const [projectsList, setProjectsList] = useState([]);
+  //const [name, setName] = useState("");
+  //const [uid, setuid] = useState("");
+  const navigate = useNavigate();
 
-    useEffect(() => {
-        if (loading) return 
-        if (!user) return navigate("/login");
-        fetchUserData();
-    }, [user, loading]);
+  useEffect(() => {
+    if (loading) return;
+    if (!user) return navigate("/login");
+    fetchUserData();
+  }, [user, loading]);
 
     const fetchUserData = async () => {
         try {

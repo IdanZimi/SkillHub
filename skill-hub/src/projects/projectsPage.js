@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from "react";
 import ProjectRegister from "../ProjectRegister/ProjectRegister";
 import Project from "../Project/Project";
-import "./projectPage.css";
+import "./projectsPage.css";
 import { request } from "../httpRequest";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { db, auth } from "../firebase";
+import { auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
+import "./projectsPage.css";
 import { showNotification } from "../utils/utils";
 
 
-function ProjectPage() {
+function ProjectsPage() {
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
-  const [projects, setProjects] = useState([]); // State to store projects
+  const [projectsList, setProjectsList] = useState([]);
   const [user, loading, error] = useAuthState(auth);
   const navigate = useNavigate();
 
@@ -21,17 +22,30 @@ function ProjectPage() {
     //fetchUserData();
   }, [user, loading]);
 
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const projects = await request.getProjects();
+        setProjectsList(projects);
+        //console.log("in use effect: ", projects);
+      } catch (error) {
+        console.error("Error fetching projects:", error);
+      }
+    };
+
+    fetchProjects();
+  }, []);
+
   const handleButtonClick = () => {
     setIsRegisterOpen(true);
   };
 
   const handleCloseRegister = async (project) => {
     if (project) {
-      console.log("In handleCloseRegister, project is: ", project);
-      //const userRef = db.collection('users').doc(uid);
+      //console.log("In handleCloseRegister, project is: ", project);
       const projectID = await request.addProjectToDB(project);
       project.id = projectID
-      setProjects([...projects, project]);
+      setProjectsList([...projectsList, project]);
       showNotification("info", "Success!",`${project.title} created`)
     }
     setIsRegisterOpen(false);
@@ -49,11 +63,12 @@ function ProjectPage() {
         />
       )}
       <div className="projects-container">
-        {projects.map((project, index) => (
+        {projectsList.map((project, index) => (
           <Project
             key={index}
+            id={project.id}
             imageUrl={project.image}
-            title={project.title}
+            title={project.name}
             description={project.description}
             positionName={project.positionName}
           />
@@ -63,4 +78,4 @@ function ProjectPage() {
   );
 }
 
-export default ProjectPage;
+export default ProjectsPage;

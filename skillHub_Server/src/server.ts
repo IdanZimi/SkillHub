@@ -60,7 +60,7 @@ app.post('/login', async (req: Request, res: Response) => {
 });
 
 app.post('/project', async (req: Request, res: Response) => {
-    const data  = req.body;
+    const data = req.body;
     try {
         console.log("inside project endpoint")
         console.log("data " + data)
@@ -71,6 +71,17 @@ app.post('/project', async (req: Request, res: Response) => {
         var errorMessage = err.message;
         console.error("add project error:", errorMessage);
         res.status(500).json({ message: 'failed', err: errorMessage })
+    }
+});
+
+app.get("/projects", async (req: Request, res: Response) => {
+    try {            
+        const projects = await projectService.getProjects();
+        //console.log("in server.ts: ", projects);
+        res.status(200).json(projects);
+    } catch (error) {
+        console.error("Unable to fetch projects:", error);
+        res.status(500).json({ error: "Unable to fetch projects" });
     }
 });
 
