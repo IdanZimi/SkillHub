@@ -21,18 +21,12 @@
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
-<<<<<<< HEAD
-    "pg": "^8.11.3",
-    "pg-hstore": "^2.3.4",
-    "sequelize": "^6.32.1",
-=======
     "firebase": "^10.3.0",
     "firebase-admin": "^11.10.1",
     "pg": "^8.10.0",
     "pg-hstore": "^2.3.4",
     "react-firebase-hooks": "^5.1.1",
     "sequelize": "^6.31.0",
->>>>>>> main
     "ts-node": "^10.9.1",
     "typescript": "^5.0.4"
   },
