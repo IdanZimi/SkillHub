@@ -36,7 +36,7 @@ const Project = ({ imageUrl, title, description, positionName }) => {
   //console.log(positionName);
   const handleExpandClick = () => {
     setExpanded(!expanded);
-    console.log(positionName)
+    //console.log(positionName)
   };
 
   const handleDeleteProject = ()=>{

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ProjectRegister from "../ProjectRegister/ProjectRegister";
 import Project from "../Project/Project";
+import "./projectsPage.css";
 import { request } from "../httpRequest";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase";
@@ -26,7 +27,7 @@ function ProjectsPage() {
       try {
         const projects = await request.getProjects();
         setProjectsList(projects);
-        console.log("in use effect: ", projects);
+        //console.log("in use effect: ", projects);
       } catch (error) {
         console.error("Error fetching projects:", error);
       }

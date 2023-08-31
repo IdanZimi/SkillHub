@@ -85,7 +85,6 @@ app.get("/projects", async (req: Request, res: Response) => {
     }
 });
 
-
 app.listen(config.development.serverPort, () => {
     console.log(`Server is running on port ${config.development.serverPort}`);
 });
