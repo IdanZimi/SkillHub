@@ -1,19 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Route, Routes, useSearchParams } from "react-router-dom";
-import Login from "./login/login"
-import Register from './register/Register'
-import MenuComponent from './menu/Menu';
-import Home from './Home/home'
-import { auth, authStateChanged, db } from './firebase'
-import './App.css'
-import AlterRegister from './register/alterRegister';
-import Alterlogin from './login/alterlogin';
-import ProjectPage from './projects/projectPage';
+import React, { useEffect, useState } from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  useSearchParams,
+} from "react-router-dom";
+import Login from "./login/login";
+import Register from "./register/Register";
+import MenuComponent from "./menu/Menu";
+import Home from "./Home/home";
+import { auth, authStateChanged, db } from "./firebase";
+import "./App.css";
+import AlterRegister from "./register/alterRegister";
+import Alterlogin from "./login/alterlogin";
+import ProjectPage from "./projects/projectsPage";
 //import RecipeReviewCard from './projects/projectPage';
-import AboutPage from './about/AboutPage';
+import AboutPage from "./about/AboutPage";
 import { query, collection, getDocs, where } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
-
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -21,19 +25,19 @@ function App() {
   //const [uid, setuid] = useState("");
   //const [user, loading, error] = useAuthState(auth);
 
-  const setUserAuthenticated = () =>{
+  const setUserAuthenticated = () => {
     // setName(name);
     // setuid(uid)
-    setIsAuthenticated(true)
-  }
+    setIsAuthenticated(true);
+  };
 
-  const logoutUserData = () =>{
+  const logoutUserData = () => {
     // setName('')
     // setuid('')
-    setIsAuthenticated(false)
+    setIsAuthenticated(false);
     localStorage.removeItem("uid");
     localStorage.removeItem("name");
-  }
+  };
 
   // useEffect(() => {
   //   const unsubscribe = authStateChanged(auth, (user) => {
@@ -54,43 +58,56 @@ function App() {
   //   };
   // }, []);
 
-//   const fetchUserData = async (uid) => {
-//     try {
-//         const q = query(collection(db, "users"), where("uid", "==", uid));
-//         const doc = await getDocs(q);
-//         const data = doc.docs[0].data();
-//         setUserData(data.name, data.uid)
-//     } catch (err) {
-//         console.error(err);
-//         alert("An error occured while fetching user data");
-//     }
-// };
+  //   const fetchUserData = async (uid) => {
+  //     try {
+  //         const q = query(collection(db, "users"), where("uid", "==", uid));
+  //         const doc = await getDocs(q);
+  //         const data = doc.docs[0].data();
+  //         setUserData(data.name, data.uid)
+  //     } catch (err) {
+  //         console.error(err);
+  //         alert("An error occured while fetching user data");
+  //     }
+  // };
 
   return (
-      <div className='app'>
-        <div className="content">
-          <div>
-            {/* <Nav></Nav> */}
-            <MenuComponent isAauthenticated={isAuthenticated} logoutUserData={logoutUserData}> </MenuComponent>
-          </div>
-          <Router>
-            <Routes>
-              <Route path="/" element={<Home setUserAuthenticated={setUserAuthenticated} logoutUserData={logoutUserData} />} />
-              <Route path="/login" element={<Alterlogin />} />
-              <Route path="/register" element={<AlterRegister />} />
-              <Route path="/projects" element={<ProjectPage />} />
-              <Route path="/about" element={<AboutPage />} />
-            </Routes>
-          </Router>
+    <div className="app">
+      <div className="content">
+        <div>
+          {/* <Nav></Nav> */}
+          <MenuComponent
+            isAauthenticated={isAuthenticated}
+            logoutUserData={logoutUserData}
+          >
+            {" "}
+          </MenuComponent>
         </div>
-        <footer className="footer">
-          <div className="d-flex flex-column flex-md-row text-center text-md-start justify-content-between py-2 px-4 px-xl-5 bg-primary">
-            <div className="text-white mb-3 mb-md-0">
-              Copyright © 2023. All rights reserved.
-            </div>
-          </div>
-        </footer>
+        <Router>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <Home
+                  setUserAuthenticated={setUserAuthenticated}
+                  logoutUserData={logoutUserData}
+                />
+              }
+            />
+            <Route path="/login" element={<Alterlogin />} />
+            <Route path="/register" element={<AlterRegister />} />
+            <Route path="/projects" element={<ProjectPage />} />
+            <Route path="/about" element={<AboutPage />} />
+          </Routes>
+        </Router>
       </div>
+      <footer className="footer">
+        <div className="d-flex flex-column flex-md-row text-center text-md-start justify-content-between py-2 px-4 px-xl-5 bg-primary">
+          <div className="text-white mb-3 mb-md-0">
+            Copyright © 2023. All rights reserved.
+          </div>
+        </div>
+      </footer>
+    </div>
   );
 }
 
