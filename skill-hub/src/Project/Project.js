@@ -66,10 +66,10 @@ const Project = ({ imageUrl, title, description, positionName }) => {
     <Card raised className="project-body"
     sx={{
       maxWidth: 350,
-      maxHeight: 350,
+      // maxHeight: 350,
       // margin: "0 auto",
       //overflow: 'hidden',
-      maxHeight: expanded ? 'none' : '20rem',
+      // maxHeight: expanded ? 'none' : '20rem',
       padding: "0.1em",
     }}>
       <CardHeader className="project-name"
