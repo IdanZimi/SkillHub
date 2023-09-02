@@ -8,7 +8,15 @@ import { auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
 import "./projectsPage.css";
 import { showNotification } from "../utils/utils";
+import AddIcon from '@mui/icons-material/Add';
+import Fab from '@mui/material/Fab';
+import { styled } from '@mui/material/styles';
 
+const StyledFab = styled(Fab)({
+  position: 'fixed',
+  top: '70px',
+  right: '20px',
+});
 
 function ProjectsPage() {
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
@@ -46,16 +54,19 @@ function ProjectsPage() {
       const projectID = await request.addProjectToDB(project);
       project.id = projectID
       setProjectsList([...projectsList, project]);
-      showNotification("info", "Success!",`${project.title} created`)
+      showNotification("info", "Success!", `${project.title} created`)
     }
     setIsRegisterOpen(false);
   };
 
   return (
     <div>
-      <button className="create__btn" onClick={handleButtonClick}>
+      {/* <button className="create__btn" onClick={handleButtonClick}>
         Create +
-      </button>
+      </button> */}
+      <StyledFab color="primary" aria-label="add" onClick={handleButtonClick}>
+        <AddIcon />
+      </StyledFab>
       {isRegisterOpen && (
         <ProjectRegister
           onClose={handleCloseRegister}

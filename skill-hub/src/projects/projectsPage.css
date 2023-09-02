@@ -12,6 +12,7 @@
    display: grid; 
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 20px;
+  /* background-color: lightblue; */
 }
 
 .create__btn {
