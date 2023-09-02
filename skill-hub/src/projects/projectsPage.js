@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
 import ProjectRegister from "../ProjectRegister/ProjectRegister";
 import Project from "../Project/Project";
-import "./projectsPage.css";
 import { request } from "../httpRequest";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
-import "./projectsPage.css";
+import "./ProjectsPage.css";
 import { showNotification } from "../utils/utils";
 import AddIcon from '@mui/icons-material/Add';
 import Fab from '@mui/material/Fab';
 import { styled } from '@mui/material/styles';
+import ProjectsList from "./ProjectsList";
 
 const StyledFab = styled(Fab)({
   position: 'fixed',
@@ -18,9 +18,8 @@ const StyledFab = styled(Fab)({
   right: '20px',
 });
 
-function ProjectsPage() {
+function ProjectsPage({ projectsList, updateProjectsList }) {
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
-  const [projectsList, setProjectsList] = useState([]);
   const [user, loading, error] = useAuthState(auth);
   const navigate = useNavigate();
 
@@ -34,7 +33,7 @@ function ProjectsPage() {
     const fetchProjects = async () => {
       try {
         const projects = await request.getProjects();
-        setProjectsList(projects);
+        updateProjectsList(projects);
         //console.log("in use effect: ", projects);
       } catch (error) {
         console.error("Error fetching projects:", error);
@@ -53,7 +52,8 @@ function ProjectsPage() {
       //console.log("In handleCloseRegister, project is: ", project);
       const projectID = await request.addProjectToDB(project);
       project.id = projectID
-      setProjectsList([...projectsList, project]);
+      const newProjectsList = [...projectsList, project];
+      updateProjectsList(newProjectsList);
       showNotification("info", "Success!", `${project.title} created`)
     }
     setIsRegisterOpen(false);
@@ -74,6 +74,7 @@ function ProjectsPage() {
         />
       )}
       <div className="projects-container">
+        {/* <ProjectsList projectsList={projectsList}/> */}
         {projectsList.map((project, index) => (
           <Project
             key={index}
