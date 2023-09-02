@@ -24,6 +24,7 @@
     "react-burger-menu": "^3.0.9",
     "react-dom": "^18.2.0",
     "react-firebase-hooks": "^5.1.1",
+    "react-loader-spinner": "^5.4.5",
     "react-notifications-component": "^4.0.1",
     "react-router-dom": "^6.11.1",
     "react-scripts": "5.0.1",
