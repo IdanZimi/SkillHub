@@ -11,6 +11,8 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import Chip from '@mui/material/Chip';
+import Stack from '@mui/material/Stack';
 
 
 export default function ProjectRegister({ isOpen, onClose }) {
@@ -76,6 +78,12 @@ export default function ProjectRegister({ isOpen, onClose }) {
     onClose();
   };
 
+ 
+    const handleDelete = (positionIndex) => {
+      const updatedPositions = positionName.filter((_, index) => index !== positionIndex);
+      setPositionName(updatedPositions);
+    };
+
   return (
     <div>
       <Dialog open={isOpen} onClose={handleClose}>
@@ -120,11 +128,12 @@ export default function ProjectRegister({ isOpen, onClose }) {
             fullWidth
             variant="standard"
           />
-          <ul>
+       <Stack direction="row" spacing={1}>
             {positionName.map((position, index) => (
-              <li key={index}>{position}</li>
+              <Chip key={index} label={position} onDelete={() => handleDelete(index)} />
+              
             ))}
-          </ul>
+            </Stack>
           <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/icon?family=Material+Icons"
