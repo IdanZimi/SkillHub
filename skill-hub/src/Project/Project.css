@@ -63,13 +63,12 @@
 
  
 /* Style the wrapper */
-.file-input-wrapper {
-    position: relative;
-    display: inline-block;
-    /* border: 2px solid rgb(81, 122, 224); */
-    padding: 8px 12px;
-    background-color: #f9f9f9;
-    cursor: pointer;
+.apply-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin-bottom: 2rem;
   }
   
   /* Hide the original file input */
@@ -84,6 +83,6 @@
   } */
   
   /* Add hover effect to the wrapper */
-  .file-input-wrapper:hover {
+  /* .file-input-wrapper:hover {
     background-color: #e0e0e0;
-  }
+  } */

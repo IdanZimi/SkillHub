@@ -17,6 +17,10 @@ import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import img from '../static/images/projectImage.jpg'
+import Chip from '@mui/material/Chip';
+import Stack from '@mui/material/Stack';
+import { Dialog, DialogTitle } from "@mui/material";
+import Apply from "./Apply";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -33,6 +37,7 @@ const Project = ({ imageUrl, title, description, positionName }) => {
   const imageURL = imageUrl ? imageUrl : img
   const [cvFiles, setCVFiles] = useState(null);
   const [expanded, setExpanded] = useState(false);
+  const [isApplyOpen, setIsApplyOpen] = useState(false);
   //console.log(positionName);
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -48,6 +53,11 @@ const Project = ({ imageUrl, title, description, positionName }) => {
       setCVFiles(file);
     }
   };
+
+  const handleApplyClick = (e) =>{
+    setIsApplyOpen(true);
+    console.log(`im am ${isApplyOpen}`);
+  }
 
   return (
     <Card raised 
@@ -93,35 +103,23 @@ const Project = ({ imageUrl, title, description, positionName }) => {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography variant="body2" color="text.secondary">
-            Positions:
+          <Typography variant="h7" color="text" style={{ fontWeight: 'bold', marginBottom: '1rem' }}>
+           Suggested positions
             {positionName && positionName.length > 0 ? (
-              <ul>
+                <Stack direction="row" flexWrap="wrap" marginTop={1} gap={1}>
                 {positionName.map((position, index) => (
-                  <li key={index}>{position}</li>
+                  <Chip key={index} label={position} color="primary" variant="outlined" marginTop={2} />
                 ))}
-              </ul>
+              </Stack>
             ) : (
               <p>No positions available.</p>
             )}
           </Typography>
-          <Typography paragraph>
-
-            <div className="file-input-wrapper">
-              <input
-                type="file"
-                accept=".pdf,.doc,.docx"
-                onChange={(e) => handleCVFileChange(e)}
-                className="custom-file-input"
-              />
-
-              {/* You can add other elements inside the wrapper as well */}
-            </div>
-          </Typography>
-          <Typography paragraph>
-
-          </Typography>
-          <Typography>
+          <Typography paragraph style={{ display: 'flex', justifyContent: 'center', marginBottom: '1rem' }}>
+            <Chip className="apply-btn" label="Apply" color="primary" onClick={handleApplyClick} style={{ margin: '1rem 0' }}/>
+            {isApplyOpen && (
+            <Apply isOpen={isApplyOpen} title={title} onClose={() => setIsApplyOpen(false)}  />
+             )}
           </Typography>
         </CardContent>
       </Collapse>
