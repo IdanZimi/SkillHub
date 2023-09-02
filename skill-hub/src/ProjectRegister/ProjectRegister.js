@@ -94,6 +94,10 @@ export default function ProjectRegister({ isOpen, onClose }) {
   // }
 
   const handleSubmit = async () => {
+    if (!projectName.trim() || !description.trim()) {
+      setShowAlert(true);
+      return; // Exit the function
+    }
     setfinishedSubmit(false)
     if (!imageFile) {
       submit()
@@ -118,11 +122,6 @@ export default function ProjectRegister({ isOpen, onClose }) {
     );
   };
   const submit = async (imageURL) => {
-    if (!projectName.trim() || !description.trim()) {
-      setShowAlert(true);
-      return; // Exit the function
-    }
-
     const newProject = {
       uid: localStorage.getItem("uid"),
       image: imageFile ? imageURL : '',

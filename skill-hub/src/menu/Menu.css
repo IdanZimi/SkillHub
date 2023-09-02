@@ -10,7 +10,7 @@
   /* Color/shape of burger icon bars */
   .bm-burger-bars {
     background: #373a47;
-    color: ;
+    /* color: ; */
   }
   
   /* Color/shape of burger icon bars on hover*/
@@ -45,8 +45,6 @@
     font-size: 1.25em;
     font: 25px'Raleway', Arial, sans-serif;
     overflow: hidden !important;
-    
-
   }
 
   /* Morph shape necessary with bubble or elastic */
