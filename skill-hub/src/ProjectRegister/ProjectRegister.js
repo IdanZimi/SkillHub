@@ -13,7 +13,22 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
+import { styled } from '@mui/material';
 
+
+const VisuallyHiddenInput = styled('input')`
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  white-space: nowrap;
+  width: 1px;
+`;
 
 export default function ProjectRegister({ isOpen, onClose }) {
   const [open, setOpen] = React.useState(false);
@@ -22,6 +37,7 @@ export default function ProjectRegister({ isOpen, onClose }) {
   const [positionName, setPositionName] = useState([]);
   const [description, setDescription] = useState('');
   const [imageFile, setImageFile] = useState(null);
+  const [showAlert, setShowAlert] = useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -44,6 +60,10 @@ export default function ProjectRegister({ isOpen, onClose }) {
     }
   };
 
+  const handleDeleteImage = () =>{
+    setImageFile(null);
+  }
+
   //   const handleClose = () => {
   //     setOpen(false);
   //  };
@@ -61,6 +81,12 @@ export default function ProjectRegister({ isOpen, onClose }) {
 
   const handleSubmit = () => {
     //debugger;
+    // Check if projectName and projectDescription are empty
+    if (!projectName.trim() || !description.trim()) {
+        setShowAlert(true);
+      return; // Exit the function
+    }
+
     const newProject = {
       uid: localStorage.getItem("uid"),
       image: imageFile ? URL.createObjectURL(imageFile): '',
@@ -112,11 +138,19 @@ export default function ProjectRegister({ isOpen, onClose }) {
             fullWidth
             variant="standard"
           />
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleImageChange}
-          />
+<DialogActions style={{ justifyContent: 'center' }}>
+        <Button onClick={() => document.getElementById('fileInput').click()} variant="contained">Upload Image
+        <VisuallyHiddenInput id="fileInput"  type="file" onChange={handleImageChange} />   
+         </Button>
+        </DialogActions>
+        {imageFile ? (
+  <Stack direction="row" flexWrap="wrap" marginTop={1} >
+    <Chip label={imageFile.name} color="primary" variant="outlined" marginTop={2} onDelete={() => handleDeleteImage(imageFile)} />
+  </Stack>
+) : (
+  <p>No selected file.</p>
+)}
+<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <TextField className='project-name-text'
             type="text"
             placeholder="Position Needed"
@@ -128,6 +162,10 @@ export default function ProjectRegister({ isOpen, onClose }) {
             fullWidth
             variant="standard"
           />
+                   <IconButton color="primary" onClick={handleAddCircleClick}>
+            <Icon>add_circle</Icon>
+          </IconButton>
+          </div>
        <Stack direction="row" spacing={1}>
             {positionName.map((position, index) => (
               <Chip key={index} label={position} onDelete={() => handleDelete(index)} />
@@ -138,13 +176,19 @@ export default function ProjectRegister({ isOpen, onClose }) {
             rel="stylesheet"
             href="https://fonts.googleapis.com/icon?family=Material+Icons"
           />
-          <IconButton color="primary" onClick={handleAddCircleClick}>
-            <Icon>add_circle</Icon>
-          </IconButton>
+          {showAlert && ( // Conditionally render the alert based on showAlert state
+            <Alert severity="error" sx={{marginTop:1}} onClose={() => setShowAlert(false) }>
+              <AlertTitle>Error</AlertTitle>
+              Please enter a project name and description.
+            </Alert>
+          )}
+ 
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleSubmit}>Save</Button>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <Button onClick={handleClose}>Cancel</Button>
+            <Button onClick={handleSubmit}>Save</Button>
+          </div>
         </DialogActions>
       </Dialog>
     </div>
