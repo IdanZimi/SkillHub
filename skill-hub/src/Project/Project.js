@@ -59,13 +59,18 @@ const Project = ({ imageUrl, title, description, positionName }) => {
     console.log(`im am ${isApplyOpen}`);
   }
 
+  const handleChipClick = (e) =>{
+    
+  }
   return (
-    <Card raised 
+    <Card raised className="project-body"
     sx={{
       maxWidth: 350,
-      //maxHeight: 300,
-      //margin: "0 auto",
-      //padding: "0.1em",
+      maxHeight: 350,
+      // margin: "0 auto",
+      //overflow: 'hidden',
+      maxHeight: expanded ? 'none' : '20rem',
+      padding: "0.1em",
     }}>
       <CardHeader className="project-name"
         avatar={
@@ -83,7 +88,7 @@ const Project = ({ imageUrl, title, description, positionName }) => {
         sx={{  objectFit: "contain" }}
       />
       <CardContent className="project-description">
-        <Typography variant="body2" color="text.secondary">
+        <Typography variant="body2">
           {description} {/* Use the description prop */}
         </Typography>
       </CardContent>
@@ -108,7 +113,7 @@ const Project = ({ imageUrl, title, description, positionName }) => {
             {positionName && positionName.length > 0 ? (
                 <Stack direction="row" flexWrap="wrap" marginTop={1} gap={1}>
                 {positionName.map((position, index) => (
-                  <Chip key={index} label={position} color="primary" variant="outlined" marginTop={2} />
+                  <Chip key={index} label={position} color="primary" variant="outlined" onClick={handleChipClick} marginTop={2} />
                 ))}
               </Stack>
             ) : (

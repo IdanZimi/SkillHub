@@ -132,5 +132,3 @@ function UserProfile({ projectsList, updateProjectsList }) {
     </div>
   );
 }
-
-export default UserProfile;

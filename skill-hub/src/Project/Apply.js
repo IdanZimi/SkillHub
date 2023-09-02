@@ -38,7 +38,7 @@ const isValidPhoneNumber = (phoneNumber) => {
     return emailRegex.test(email);
   };
   
-const Apply = ({isOpen, onClose , title}) => {
+const Apply = ({isOpen, onClose , title, positions}) => {
     const [emailAddressInput, setEmailAddressInput] = useState('');
     const [phoneNumberInput, setPhoneNumberInput] = useState('');
     const [resumeFile, setResumeFile] = useState(null);

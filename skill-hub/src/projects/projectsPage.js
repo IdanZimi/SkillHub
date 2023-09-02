@@ -49,7 +49,7 @@ function ProjectsPage({ projectsList, updateProjectsList }) {
 
   const handleCloseRegister = async (project) => {
     if (project) {
-      //console.log("In handleCloseRegister, project is: ", project);
+      
       const projectID = await request.addProjectToDB(project);
       project.id = projectID
       const newProjectsList = [...projectsList, project];
