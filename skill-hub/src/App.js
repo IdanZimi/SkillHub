@@ -74,7 +74,7 @@ function App() {
 
   return (
       <div className='app'>
-        <div className="content">
+        <div id="content">
           <div>
             <ReactNotifications/>
             <MenuComponent isAauthenticated={isAuthenticated} logoutUserData={logoutUserData}> </MenuComponent>
@@ -97,13 +97,6 @@ function App() {
             </div>
           </div>
         </footer> */}
-      <footer className="footer">
-        <div className="d-flex flex-column flex-md-row text-center text-md-start justify-content-between py-2 px-4 px-xl-5 bg-primary">
-          <div className="text-white mb-3 mb-md-0">
-            Copyright © 2023. All rights reserved.
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }

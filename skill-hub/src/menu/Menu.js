@@ -5,6 +5,7 @@ import {
   faHouse, faAddressCard, faPeopleGroup, faRightToBracket,
   faRightFromBracket, faUser
 } from '@fortawesome/free-solid-svg-icons';
+import SearchMenu from './search-menu/searchMenu';
 import React, { useState, useEffect } from 'react';
 import {logout} from '../firebase'
 
@@ -25,17 +26,18 @@ function MenuComponent({isAauthenticated, logoutUserData}) {
       //localStorage.setItem('isAuthenticated', true);
     };
   
-    const handleLogout = () => {
-      //setIsAuthenticated(false);
-      // Remove the authentication state from localStorage
-      localStorage.removeItem('isAuthenticated');
-      logoutUserData()
-      logout()
-    };
+    // const handleLogout = () => {
+    //   //setIsAuthenticated(false);
+    //   // Remove the authentication state from localStorage
+    //   localStorage.removeItem('isAuthenticated');
+    //   logoutUserData()
+    //   logout()
+    // };
   
     return (
       <div>
-        <Menu width={260}>
+        <SearchMenu isAauthenticated={isAauthenticated} logoutUserData={logoutUserData}></SearchMenu>
+        {/* <Menu width={260}>
           <a id="home" className="bm-item" href={isAauthenticated ? "/":"/login"}><FontAwesomeIcon icon={faHouse} size='lg' flip /> Home</a>
           <a id="about" className="bm-item" href="/about"><FontAwesomeIcon icon={faAddressCard} size='lg' /> About</a>
           <a id="projects" className="bm-item" href="/projects"><FontAwesomeIcon icon={faPeopleGroup} size='lg' /> Projects</a>
@@ -45,7 +47,7 @@ function MenuComponent({isAauthenticated, logoutUserData}) {
           ) : (
             <a id="login" className="bm-item" href="/login"><FontAwesomeIcon icon={faRightToBracket} size='lg' /> Login</a>
           )}
-        </Menu>
+        </Menu> */}
       </div>
     );
   }
