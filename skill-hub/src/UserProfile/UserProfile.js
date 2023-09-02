@@ -1,104 +1,54 @@
-import { List, Card } from "@mui/material";
-import Project from "../Project/Project";
-import React from "react";
-import {
-  MDBCol,
-  MDBContainer,
-  MDBRow,
-  MDBCard,
-  MDBCardText,
-  MDBCardBody,
-  MDBCardImage,
-  MDBTypography,
-  MDBIcon,
-} from "mdb-react-ui-kit";
-import "./UserProfile.css";
+import React from 'react';
+import { MDBContainer, MDBRow, MDBCol, MDBCardImage, MDBBtn, MDBTypography, MDBCardText, MDBCardBody } from 'mdb-react-ui-kit';
 
-function UserProfile() {
+export default function EditButton() {
   return (
-    <div className="container">
-      <section className="vh-100" style={{ backgroundColor: "#f4f5f7" }}>
-        <MDBContainer className="py-5 h-100">
-          <MDBRow className="justify-content-center align-items-center h-100">
-            <MDBCol lg="6" className="mb-4 mb-lg-0">
-              <MDBCard className="mb-3" style={{ borderRadius: ".5rem" }}>
-                <MDBRow className="g-0">
-                  <MDBCol
-                    md="4"
-                    className="gradient-custom text-center text-white"
-                    style={{
-                      borderTopLeftRadius: ".5rem",
-                      borderBottomLeftRadius: ".5rem",
-                    }}
-                  >
-                    <MDBCardImage
-                      src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
-                      alt="Avatar"
-                      className="my-5"
-                      style={{ width: "80px" }}
-                      fluid
-                    />
-                    <MDBTypography tag="h5">Idan Yakar</MDBTypography>
-                    <MDBCardText>Web Designer</MDBCardText>
-                    <MDBIcon far icon="edit mb-5" />
-                  </MDBCol>
-                  <MDBCol md="8">
-                    <MDBCardBody className="p-4">
-                      <MDBTypography tag="h6">Profile</MDBTypography>
-                      <hr className="mt-0 mb-4" />
-                      <MDBRow className="pt-1">
-                        <MDBCol size="6" className="mb-3">
-                          <MDBTypography tag="h6">Email</MDBTypography>
-                          <MDBCardText className="text-muted">
-                            info@example.com
-                          </MDBCardText>
-                        </MDBCol>
-                        <MDBCol size="6" className="mb-3">
-                          <MDBTypography tag="h6">Phone</MDBTypography>
-                          <MDBCardText className="text-muted">
-                            123 456 789
-                          </MDBCardText>
-                        </MDBCol>
-                      </MDBRow>
-
-                      <MDBTypography tag="h6">Skills</MDBTypography>
-                      <hr className="mt-0 mb-4" />
-                      <MDBRow className="pt-1">
-                        <MDBCol size="6" className="mb-3">
-                          <MDBTypography tag="h6">Software Developer</MDBTypography>
-                        </MDBCol>
-                        <MDBCol size="6" className="mb-3">
-                          <MDBTypography tag="h6">React</MDBTypography>
-                        </MDBCol>
-                        <MDBCol size="6" className="mb-3">
-                          <MDBTypography tag="h6">Node.js</MDBTypography>
-                        </MDBCol>
-                        <MDBCol size="6" className="mb-3">
-                          <MDBTypography tag="h6">Moziz</MDBTypography>
-                        </MDBCol>
-                      </MDBRow>
-
-                      <div className="d-flex justify-content-start">
-                        <a href="#!">
-                          <MDBIcon fab icon="facebook me-3" size="lg" />
-                        </a>
-                        <a href="#!">
-                          <MDBIcon fab icon="twitter me-3" size="lg" />
-                        </a>
-                        <a href="#!">
-                          <MDBIcon fab icon="instagram me-3" size="lg" />
-                        </a>
-                      </div>
-                    </MDBCardBody>
-                  </MDBCol>
-                </MDBRow>
-              </MDBCard>
+    <div>
+      <div style={{ backgroundColor: '#000' }}>
+        <MDBContainer className="py-5">
+          <MDBRow className="justify-content-center align-items-center">
+            <MDBCol lg="3" className="text-white d-flex flex-column align-items-center py-4">
+              <MDBCardImage
+                src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp"
+                alt="Generic placeholder image"
+                className="mt-4 mb-2 img-thumbnail"
+                fluid
+                style={{ width: '150px', zIndex: '1' }}
+              />
+              <MDBBtn outline color="dark" style={{ height: '36px', overflow: 'visible' }}>
+                Edit profile
+              </MDBBtn>
+              <MDBTypography tag="h5" className="mt-3">Andy Horwitz</MDBTypography>
+              <MDBCardText className="mb-3">New York</MDBCardText>
             </MDBCol>
           </MDBRow>
         </MDBContainer>
-      </section>
+      </div>
+      <MDBContainer>
+        <MDBRow>
+          <MDBCol lg="9">
+            <div className="p-4 text-black" style={{ backgroundColor: '#f8f9fa' }}>
+              <div className="d-flex justify-content-end text-center py-1">
+                <div>
+                  <MDBCardText className="mb-1 h5">253</MDBCardText>
+                  <MDBCardText className="small text-muted mb-0">Photos</MDBCardText>
+                </div>
+                <div className="px-3">
+                  <MDBCardText className="mb-1 h5">1026</MDBCardText>
+                  <MDBCardText className="small text-muted mb-0">Followers</MDBCardText>
+                </div>
+                <div>
+                  <MDBCardText className="mb-1 h5">478</MDBCardText>
+                  <MDBCardText className="small text-muted mb-0">Following</MDBCardText>
+                </div>
+              </div>
+            </div>
+            <MDBCardBody className="text-black p-4">
+              {/* ... Rest of your content */}
+            </MDBCardBody>
+          </MDBCol>
+        </MDBRow>
+      </MDBContainer>
     </div>
   );
 }
-
-export default UserProfile;
