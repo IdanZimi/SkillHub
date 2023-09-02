@@ -19,6 +19,7 @@ import {
     addDoc,
 } from "firebase/firestore";
 import { redirect } from "react-router-dom";
+import {getStorage} from 'firebase/storage'
 
 const firebaseConfig = {
     apiKey: "AIzaSyDAdPJ1TuJSIKlEzLUUgwGS23e_Cow_Rus",
@@ -33,6 +34,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
+const storage = getStorage(app);
 const googleProvider = new GoogleAuthProvider();
 const facebookProvider = new FacebookAuthProvider();
 const authStateChanged = onAuthStateChanged;
@@ -111,6 +113,7 @@ const logout = () => {
 export {
     auth,
     db,
+    storage,
     authStateChanged,
     signInWithFacebook,
     signInWithGoogle,

@@ -35,7 +35,7 @@ function ProjectsPage() {
       try {
         const projects = await request.getProjects();
         setProjectsList(projects);
-        //console.log("in use effect: ", projects);
+        console.log("in use effect: ", projects);
       } catch (error) {
         console.error("Error fetching projects:", error);
       }
@@ -50,7 +50,7 @@ function ProjectsPage() {
 
   const handleCloseRegister = async (project) => {
     if (project) {
-      //console.log("In handleCloseRegister, project is: ", project);
+      
       const projectID = await request.addProjectToDB(project);
       project.id = projectID
       setProjectsList([...projectsList, project]);

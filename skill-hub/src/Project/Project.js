@@ -59,6 +59,9 @@ const Project = ({ imageUrl, title, description, positionName }) => {
     console.log(`im am ${isApplyOpen}`);
   }
 
+  const handleChipClick = (e) =>{
+    
+  }
   return (
     <Card raised className="project-body"
     sx={{
@@ -110,7 +113,7 @@ const Project = ({ imageUrl, title, description, positionName }) => {
             {positionName && positionName.length > 0 ? (
                 <Stack direction="row" flexWrap="wrap" marginTop={1} gap={1}>
                 {positionName.map((position, index) => (
-                  <Chip key={index} label={position} color="primary" variant="outlined" marginTop={2} />
+                  <Chip key={index} label={position} color="primary" variant="outlined" onClick={handleChipClick} marginTop={2} />
                 ))}
               </Stack>
             ) : (
