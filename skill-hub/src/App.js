@@ -13,7 +13,7 @@ import { auth, authStateChanged, db } from "./firebase";
 import "./App.css";
 import AlterRegister from "./register/alterRegister";
 import Alterlogin from "./login/alterlogin";
-import ProjectsPage from "./projects/projectsPage";
+import ProjectsPage from "./projects/ProjectsPage";
 //import RecipeReviewCard from './projects/projectPage';
 import AboutPage from './about/AboutPage';
 import { ReactNotifications, store } from 'react-notifications-component'
@@ -23,9 +23,11 @@ import UserProfile from "./UserProfile/UserProfile";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  //const [name, setName] = useState("");
-  //const [uid, setuid] = useState("");
-  //const [user, loading, error] = useAuthState(auth);
+  const [projectsList, setProjectsList] = useState([]);
+
+  const updateProjectsList = (projects) => {
+    setProjectsList(projects);
+  }
 
   const setUserAuthenticated = () => {
     // setName(name);
@@ -84,9 +86,9 @@ function App() {
               <Route path="/" element={<Home setUserAuthenticated={setUserAuthenticated} logoutUserData={logoutUserData} />} />
               <Route path="/login" element={<Alterlogin />} />
               <Route path="/register" element={<AlterRegister />} />
-              <Route path="/projects" element={<ProjectsPage />} />
+              <Route path="/projects" element={<ProjectsPage projectsList={projectsList} updateProjectsList={updateProjectsList}/>} />
               <Route path="/about" element={<AboutPage />} />
-              <Route path="/profile" element={<UserProfile />} />
+              <Route path="/profile" element={<UserProfile projectsList={projectsList} updateProjectsList={updateProjectsList}/>} />
             </Routes>
           </Router>
         </div>
