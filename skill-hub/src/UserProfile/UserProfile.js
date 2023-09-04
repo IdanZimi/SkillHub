@@ -15,8 +15,9 @@ import Project from "../Project/Project";
 import { request } from "../httpRequest";
 
 function UserProfile({ projectsList, updateProjectsList }) {
-
-  const filteredProjectsList = projectsList.filter((project) => project.adminId === localStorage.getItem("uid"));
+  const filteredProjectsList = projectsList.filter(
+    (project) => project.adminId === localStorage.getItem("uid")
+  );
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -36,7 +37,7 @@ function UserProfile({ projectsList, updateProjectsList }) {
     <div className="gradient-custom" style={{ backgroundColor: "#9de2ff" }}>
       <MDBContainer className="py-5 h-100">
         <MDBRow className="justify-content-center align-items-center h-100">
-          <MDBCol lg="9" xl="7">
+          <MDBCol lg="12" xl="12">
             <MDBCard>
               <div
                 className="rounded-top text-white d-flex flex-row"
@@ -132,3 +133,5 @@ function UserProfile({ projectsList, updateProjectsList }) {
     </div>
   );
 }
+
+export default UserProfile;
