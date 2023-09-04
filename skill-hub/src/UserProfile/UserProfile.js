@@ -79,7 +79,7 @@ function UserProfile({ projectsList, updateProjectsList }) {
   };
 
   return (
-    <div className="gradient-custom" style={{ backgroundColor: "#9de2ff" }}>
+    <div className="gradient-custom" style={{  }}>
       <MDBContainer className="py-5 h-100">
         <MDBRow className="justify-content-center align-items-center h-100">
           <MDBCol lg="12" xl="12">

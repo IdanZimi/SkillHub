@@ -98,7 +98,7 @@ const Project = ({ imageUrl, title, description, positionName }) => {
       <CardHeader className="project-name"
         avatar={
           <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-            R
+            
           </Avatar>
         }
         title={title}
