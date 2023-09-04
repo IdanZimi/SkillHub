@@ -132,7 +132,6 @@ const Apply = ({ isOpen, onClose, title, positions }) => {
         <DialogActions style={{ justifyContent: 'space-between' }}>
           <Button variant="outlined" spacing={1} style={{ fontWeight: 'bold' }} onClick={handleDiscard}>Discard</Button>
           <Button variant="contained" >Save</Button>
-
         </DialogActions>
       </DialogContent>
     </Dialog>
