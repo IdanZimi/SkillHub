@@ -1,5 +1,5 @@
 import "./Project.css";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
@@ -38,7 +38,33 @@ const Project = ({ imageUrl, title, description, positionName }) => {
   const [cvFiles, setCVFiles] = useState(null);
   const [expanded, setExpanded] = useState(false);
   const [isApplyOpen, setIsApplyOpen] = useState(false);
-  //console.log(positionName);
+  const [selectedChips, setSelectedChips] = useState([]);
+  const [positionChips, setPositionChips] = useState([])
+
+  useEffect(() => {
+    // Create an array of chip objects with the initial "outlined" variant
+    const positionChips = positionName.map((name) => ({
+      label: name,
+      variant: 'outlined',
+    }));
+
+    setPositionChips(positionChips);
+  }, [positionName]);
+
+  const handleChipClick = (label) => {
+    setSelectedChips((prevSelectedChips) => {
+      const existingChip = prevSelectedChips.find((chip) => chip.label === label);
+
+      if (existingChip) {
+        positionChips.find((chip)=>chip.label === existingChip.label).variant = 'outlined'
+        return prevSelectedChips.filter((chip) => chip.label !== label);
+      } else {
+        positionChips.find((chip)=>chip.label === label).variant = 'filled'
+        return [...prevSelectedChips, { label, variant: 'filled' }];
+      }
+    });
+  };
+  
   const handleExpandClick = () => {
     setExpanded(!expanded);
     //console.log(positionName)
@@ -59,9 +85,6 @@ const Project = ({ imageUrl, title, description, positionName }) => {
     console.log(`im am ${isApplyOpen}`);
   }
 
-  const handleChipClick = (e) =>{
-    
-  }
   return (
     <Card raised className="project-body"
     sx={{
@@ -112,8 +135,8 @@ const Project = ({ imageUrl, title, description, positionName }) => {
            Suggested positions
             {positionName && positionName.length > 0 ? (
                 <Stack direction="row" flexWrap="wrap" marginTop={1} gap={1}>
-                {positionName.map((position, index) => (
-                  <Chip key={index} label={position} color="primary" variant="outlined" onClick={handleChipClick} marginTop={2} />
+                {positionChips.map((position, index) => (
+                  <Chip key={index} label={position.label} color="primary" variant={position.variant} onClick={() => handleChipClick(position.label)} marginTop={2} />
                 ))}
               </Stack>
             ) : (
