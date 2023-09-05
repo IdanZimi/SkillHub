@@ -70,4 +70,22 @@ export const request = {
       console.error("Login error:", errorData);
     }
   },
+  sendApplyToDB: async (apply) =>{
+    debugger;
+    const response = await fetch(apiUrl + 'apply', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(apply)
+    })
+    if (response.ok) {
+      const responseData = await response.json();
+      console.log(responseData);
+      return responseData;
+    } else {
+      const errorData = await response.json();
+      console.error("Login error:", errorData);
+    }
+  }
 }

@@ -11,6 +11,11 @@ import { styled } from '@mui/material';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import { MuiTelInput } from 'mui-tel-input'
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { storage } from '../firebase';
+import { request } from '../httpRequest';
+import { ColorRing } from 'react-loader-spinner'
+
 
 const VisuallyHiddenInput = styled('input')`
   clip: rect(0 0 0 0);
@@ -38,10 +43,11 @@ const isValidEmail = (email) => {
   return emailRegex.test(email);
 };
 
-const Apply = ({ isOpen, onClose, title, positions }) => {
+const Apply = ({ isOpen, onClose, title, positions, uid, selectedSkills, projectId }) => {
   const [emailAddressInput, setEmailAddressInput] = useState('');
   const [phoneNumberInput, setPhoneNumberInput] = useState('');
   const [resumeFile, setResumeFile] = useState(null);
+  const [finishedApply, setfinishedApply] = useState(true)
 
   const handleEmailAddressChange = (e) => {
     setEmailAddressInput(e.target.value)
@@ -58,7 +64,6 @@ const Apply = ({ isOpen, onClose, title, positions }) => {
       console.log("Selected File:", selectedFile);
       setResumeFile(selectedFile);
     }
-    console.log("No file selected.");
   };
 
   const handleDelete = () => {
@@ -73,6 +78,40 @@ const Apply = ({ isOpen, onClose, title, positions }) => {
     setResumeFile(null);
     onClose();
   }
+
+  const handleApply = async () => {
+    setfinishedApply(false)
+     uploadResumeToStorage();
+  }
+
+  const submitApplyToDB = async (url) =>{
+    const apply = {
+      uid: uid, 
+      pid: projectId,
+      selectedSkills: selectedSkills, 
+      email: emailAddressInput,
+      phone: phoneNumberInput,
+      resumeURL: url
+     }
+     await request.sendApplyToDB(apply)
+     setfinishedApply(true)
+     onClose()
+  }
+
+  const uploadResumeToStorage = () =>{
+    const storageRef = ref(storage, `${resumeFile.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, resumeFile);
+    uploadTask.on(
+      "state_changed", null,
+      (err) => console.log(err),
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+          submitApplyToDB(url)
+        });
+      }
+    );
+  }
+
 
   return (
     <Dialog open={isOpen}>
@@ -119,7 +158,7 @@ const Apply = ({ isOpen, onClose, title, positions }) => {
         {/* <MuiTelInput value={value} onChange={handlePhoneNumberChange} /> */}
         <DialogActions style={{ justifyContent: 'center' }}>
           <Button onClick={() => document.getElementById('fileInput').click()} variant="contained">Upload Resume
-            <VisuallyHiddenInput id="fileInput" type="file" onChange={handleFileChange} />
+            <VisuallyHiddenInput id="fileInput" type="file" accept=".pdf, .doc, .docx" onChange={handleFileChange} />
           </Button>
         </DialogActions>
         {resumeFile ? (
@@ -131,7 +170,17 @@ const Apply = ({ isOpen, onClose, title, positions }) => {
         )}
         <DialogActions style={{ justifyContent: 'space-between' }}>
           <Button variant="outlined" spacing={1} style={{ fontWeight: 'bold' }} onClick={handleDiscard}>Discard</Button>
-          <Button variant="contained" >Save</Button>
+          {finishedApply ?
+           <Button variant="contained" onClick={handleApply} >Save</Button> : 
+           <ColorRing
+                visible={true}
+                height="60"
+                width="60"
+                ariaLabel="blocks-loading"
+                wrapperStyle={{}}
+                wrapperClass="blocks-wrapper"
+                colors={['lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue']}
+              />}
         </DialogActions>
       </DialogContent>
     </Dialog>

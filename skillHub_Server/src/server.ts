@@ -12,6 +12,7 @@ import {
     signInWithFacebook,
 } from './firebase'
 import { ProjectService } from './service/ProjectService';
+import { ApplyService } from './service/ApplyService';
 
 const app: Application = express();
 
@@ -20,6 +21,7 @@ app.use(cors());
 sequelize.sync
 const userService = new UserService();
 const projectService = new ProjectService()
+const applyService = new ApplyService();
 
 app.get("/", async (req: Request, res: Response) => {
     try {
@@ -82,6 +84,18 @@ app.get("/projects", async (req: Request, res: Response) => {
     } catch (error) {
         console.error("Unable to fetch projects:", error);
         res.status(500).json({ error: "Unable to fetch projects" });
+    }
+});
+
+app.post('/apply', async (req: Request, res: Response) => {
+    const data = req.body;
+    try {
+        const docref = await applyService.addApply(data)
+        res.json({ message: 'Add apply successfuly', docref});
+    } catch (err) {
+        var errorMessage = err.message;
+        console.error("add apply error:", errorMessage);
+        res.status(500).json({ message: 'failed', err: errorMessage })
     }
 });
 

@@ -175,7 +175,7 @@ export default function ProjectRegister({ isOpen, onClose }) {
           />
           <DialogActions style={{ justifyContent: 'center' }}>
             <Button onClick={() => document.getElementById('fileInput').click()} variant="contained">Upload Image
-              <VisuallyHiddenInput id="fileInput" type="file" onChange={handleImageChange} />
+              <VisuallyHiddenInput id="fileInput" type="file" accept=".jpg .png .jpeg" onChange={handleImageChange} />
             </Button>
           </DialogActions>
           {imageFile ? (
