@@ -21,6 +21,9 @@ import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import { Dialog, DialogTitle } from "@mui/material";
 import Apply from "./Apply";
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
+import { showNotification } from "../utils/utils";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -33,13 +36,19 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-const Project = ({ imageUrl, title, description, positionName }) => {
+const Project = ({ imageUrl, title, description, positionName, id }) => {
   const imageURL = imageUrl ? imageUrl : img
   const [cvFiles, setCVFiles] = useState(null);
   const [expanded, setExpanded] = useState(false);
   const [isApplyOpen, setIsApplyOpen] = useState(false);
   const [selectedChips, setSelectedChips] = useState([]);
   const [positionChips, setPositionChips] = useState([])
+  const [showAlert, setShowAlert] = useState(false);
+  const [uid, setuid] = useState('')
+
+  useEffect(() => {
+    setuid(localStorage.getItem('uid'))
+  }, [])
 
   useEffect(() => {
     // Create an array of chip objects with the initial "outlined" variant
@@ -49,6 +58,7 @@ const Project = ({ imageUrl, title, description, positionName }) => {
     }));
 
     setPositionChips(positionChips);
+    setSelectedChips([])
   }, [positionName]);
 
   const handleChipClick = (label) => {
@@ -56,21 +66,25 @@ const Project = ({ imageUrl, title, description, positionName }) => {
       const existingChip = prevSelectedChips.find((chip) => chip.label === label);
 
       if (existingChip) {
-        positionChips.find((chip)=>chip.label === existingChip.label).variant = 'outlined'
-        return prevSelectedChips.filter((chip) => chip.label !== label);
+        positionChips.find((chip) => chip.label === existingChip.label).variant = 'outlined'
+        const filteredChips = prevSelectedChips.filter((chip) => chip.label !== label);
+        return filteredChips
       } else {
-        positionChips.find((chip)=>chip.label === label).variant = 'filled'
-        return [...prevSelectedChips, { label, variant: 'filled' }];
+        positionChips.find((chip) => chip.label === label).variant = 'filled'
+        setShowAlert(false)
+        const newSelectedChips = [...prevSelectedChips, { label, variant: 'filled' }];
+        console.log(newSelectedChips)
+        return newSelectedChips
       }
     });
   };
-  
+
   const handleExpandClick = () => {
     setExpanded(!expanded);
     //console.log(positionName)
   };
 
-  const handleDeleteProject = ()=>{
+  const handleDeleteProject = () => {
 
   }
   const handleCVFileChange = (e) => {
@@ -79,26 +93,35 @@ const Project = ({ imageUrl, title, description, positionName }) => {
       setCVFiles(file);
     }
   };
+  const onClose = () =>{
+    setIsApplyOpen(false)
+    showNotification("info", "Success!", `Congratulations! Apply has been sent to the project admin`)
+  }
 
-  const handleApplyClick = (e) =>{
+  const handleApplyClick = (e) => {
+    console.log(selectedChips.length)
+    if (selectedChips.length === 0) {
+      console.log("length is " + selectedChips.length)
+      setShowAlert(true);
+      return; // Exit the function
+    }
     setIsApplyOpen(true);
-    console.log(`im am ${isApplyOpen}`);
   }
 
   return (
     <Card raised className="project-body"
-    sx={{
-      maxWidth: 350,
-      // maxHeight: 350,
-      // margin: "0 auto",
-      //overflow: 'hidden',
-      // maxHeight: expanded ? 'none' : '20rem',
-      padding: "0.1em",
-    }}>
+      sx={{
+        maxWidth: 350,
+        // maxHeight: 350,
+        // margin: "0 auto",
+        //overflow: 'hidden',
+        // maxHeight: expanded ? 'none' : '20rem',
+        padding: "0.1em",
+      }}>
       <CardHeader className="project-name"
         avatar={
           <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-            
+
           </Avatar>
         }
         title={title}
@@ -106,9 +129,9 @@ const Project = ({ imageUrl, title, description, positionName }) => {
       <CardMedia
         component="img"
         height="150"
-        src = {imageURL}
+        src={imageURL}
         alt="Project Image"
-        sx={{  objectFit: "contain" }}
+        sx={{ objectFit: "contain" }}
       />
       <CardContent className="project-description">
         <Typography variant="body2">
@@ -119,7 +142,7 @@ const Project = ({ imageUrl, title, description, positionName }) => {
         <IconButton aria-label="add to favorites">
           <FavoriteIcon color={"error"} />
         </IconButton>
-        <DeleteOutlinedIcon onClick={handleDeleteProject}/>
+        <DeleteOutlinedIcon onClick={handleDeleteProject} />
         <ExpandMore
           expand={expanded}
           onClick={handleExpandClick}
@@ -132,9 +155,9 @@ const Project = ({ imageUrl, title, description, positionName }) => {
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
           <Typography variant="h7" color="text" style={{ fontWeight: 'bold', marginBottom: '1rem' }}>
-           Suggested positions
+            Suggested positions
             {positionName && positionName.length > 0 ? (
-                <Stack direction="row" flexWrap="wrap" marginTop={1} gap={1}>
+              <Stack direction="row" flexWrap="wrap" marginTop={1} gap={1}>
                 {positionChips.map((position, index) => (
                   <Chip key={index} label={position.label} color="primary" variant={position.variant} onClick={() => handleChipClick(position.label)} marginTop={2} />
                 ))}
@@ -143,11 +166,23 @@ const Project = ({ imageUrl, title, description, positionName }) => {
               <p>No positions available.</p>
             )}
           </Typography>
+          {showAlert && ( // Conditionally render the alert based on showAlert state
+            <Alert severity="error" sx={{ marginTop: 1 }} onClose={() => setShowAlert(false)}>
+              <AlertTitle>Error</AlertTitle>
+              Please pick at least 1 skill
+            </Alert>
+          )}
           <Typography paragraph style={{ display: 'flex', justifyContent: 'center', marginBottom: '1rem' }}>
-            <Chip className="apply-btn" label="Apply" color="primary" onClick={handleApplyClick} style={{ margin: '1rem 0' }}/>
+            <Chip className="apply-btn" label="Apply" color="primary" onClick={handleApplyClick} style={{ margin: '1rem 0' }} />
             {isApplyOpen && (
-            <Apply isOpen={isApplyOpen} title={title} onClose={() => setIsApplyOpen(false)}  />
-             )}
+              <Apply
+                uid={uid}
+                selectedSkills={selectedChips.map((chip)=>{return chip.label})}
+                projectId={id}
+                isOpen={isApplyOpen}
+                title={title}
+                onClose={onClose} />
+            )}
           </Typography>
         </CardContent>
       </Collapse>
