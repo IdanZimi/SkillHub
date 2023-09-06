@@ -43,7 +43,7 @@ const isValidEmail = (email) => {
   return emailRegex.test(email);
 };
 
-const Apply = ({ isOpen, onClose, title, positions, uid, selectedSkills, projectId }) => {
+const Apply = ({ isOpen, onClose, title, uid, userName, selectedSkills, projectId }) => {
   const [emailAddressInput, setEmailAddressInput] = useState('');
   const [phoneNumberInput, setPhoneNumberInput] = useState('');
   const [resumeFile, setResumeFile] = useState(null);
@@ -86,13 +86,15 @@ const Apply = ({ isOpen, onClose, title, positions, uid, selectedSkills, project
 
   const submitApplyToDB = async (url) =>{
     const apply = {
-      uid: uid, 
+      uid: uid,
+      userName: userName,
       pid: projectId,
       selectedSkills: selectedSkills, 
       email: emailAddressInput,
       phone: phoneNumberInput,
       resumeURL: url
      }
+     console.log("in submitApplyToDB, apply is: ", apply);
      await request.sendApplyToDB(apply)
      setfinishedApply(true)
      onClose()

@@ -32,8 +32,6 @@ app.get("/", async (req: Request, res: Response) => {
     }
 });
 
-
-
 app.post('/register', async (req: Request, res: Response) => {
     const { fullName, email, password } = req.body;
     try {
@@ -64,9 +62,9 @@ app.post('/login', async (req: Request, res: Response) => {
 app.post('/project', async (req: Request, res: Response) => {
     const data = req.body;
     try {
-        console.log("inside project endpoint")
-        console.log("data " + data)
-        console.log("data uid" + data.uid)
+        // console.log("inside project endpoint")
+        // console.log("data " + data)
+        // console.log("data uid" + data.uid)
         const docref = await projectService.addProject(data)
         res.json({ message: 'Add project successful', docref});
     } catch (err) {
@@ -92,6 +90,18 @@ app.post('/apply', async (req: Request, res: Response) => {
     try {
         const docref = await applyService.addApply(data)
         res.json({ message: 'Add apply successfuly', docref});
+    } catch (err) {
+        var errorMessage = err.message;
+        console.error("add apply error:", errorMessage);
+        res.status(500).json({ message: 'failed', err: errorMessage })
+    }
+});
+
+app.put('/apply/status', async (req: Request, res: Response) => {
+    const { id, status } = req.body;
+    try {
+        const docref = await applyService.changeApplyStatus(id, status);
+        res.json({ message: 'Changed status successfuly', docref});
     } catch (err) {
         var errorMessage = err.message;
         console.error("add apply error:", errorMessage);
