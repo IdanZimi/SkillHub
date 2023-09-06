@@ -26,6 +26,12 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
+
+import { Viewer } from "@react-pdf-viewer/core";
+import { Worker } from "@react-pdf-viewer/core";
+import "@react-pdf-viewer/core/lib/styles/index.css";
+import { defaultLayoutPlugin } from "@react-pdf-viewer/default-layout";
+
 import "./UserProfile.css";
 import Project from "../Project/Project";
 import { request } from "../httpRequest";
@@ -35,38 +41,69 @@ function UserProfile({ projectsList, updateProjectsList }) {
   const [city, setCity] = useState(localStorage.getItem("city") || "");
   const [about, setAbout] = useState(localStorage.getItem("about") || "");
   const [isEditMode, setIsEditMode] = useState(false);
+  const [appliesList, setAppliesList] = useState([]);
+  const [userNamesList, setUserNamesList] = useState({});
+  // Create new plugin instance
+  const defaultLayoutPluginInstance = defaultLayoutPlugin();
+
   const filteredProjectsList = projectsList.filter(
     (project) => project.adminId === localStorage.getItem("uid")
   );
 
-  const data = [
-    {
-      id: 0,
-      name: "Ido Yekutiel",
-      project: "Project 1",
-      skills: ["zivil, developer, ux/ui, FullStack"],
-    },
-    {
-      id: 1,
-      name: "Ori Globus",
-      project: "Project 777",
-      skills: ["I am, the best"],
-    }
-  ];
+  const filteredAppliesList = appliesList.filter((apply) =>
+    filteredProjectsList.some((project) => project.id === apply.pid)
+  );
+
+  // const data = [
+  //   {
+  //     id: 0,
+  //     name: "Ido Yekutiel",
+  //     project: "Project 1",
+  //     skills: ["zivil, developer, ux/ui, FullStack"],
+  //   },
+  //   {
+  //     id: 1,
+  //     name: "Ori Globus",
+  //     project: "Project 777",
+  //     skills: ["I am, the best"],
+  //   }
+  // ];
 
   useEffect(() => {
-    const fetchProjects = async () => {
-      try {
-        const projects = await request.getProjects();
-        updateProjectsList(projects);
-        //console.log("in use effect: ", projects);
-      } catch (error) {
-        console.error("Error fetching projects:", error);
-      }
-    };
-
     fetchProjects();
+    fetchApplies();
+    //fetchUserNamesApplies();
   }, []);
+
+  const fetchProjects = async () => {
+    try {
+      const projects = await request.getProjects();
+      updateProjectsList(projects);
+      //console.log("projects are: ", projects);
+    } catch (error) {
+      console.error("Error fetching projects:", error);
+    }
+  };
+
+  const fetchApplies = async () => {
+    try {
+      const applies = await request.getApplies();
+      setAppliesList(applies);
+      //console.log("applies are: ", applies);
+    } catch (error) {
+      console.error("Error fetching applies:", error);
+    }
+  };
+
+  // const fetchUserNamesApplies = async () => {
+  //   try {
+  //     const uidsList = filteredAppliesList.map(apply => apply.uid);
+  //     const userNames = await request.getUserNames(uidsList);
+  //     setUserNamesList(userNames);
+  //   } catch (error) {
+  //     console.error("Error fetching user name:", error);
+  //   }
+  // };
 
   const handleProfileEditSubmit = () => {
     // Here, you can send the updated profile information to your backend API
@@ -79,7 +116,7 @@ function UserProfile({ projectsList, updateProjectsList }) {
   };
 
   return (
-    <div className="gradient-custom" style={{  }}>
+    <div className="gradient-custom" style={{}}>
       <MDBContainer className="py-5 h-100">
         <MDBRow className="justify-content-center align-items-center h-100">
           <MDBCol lg="12" xl="12">
@@ -228,31 +265,66 @@ function UserProfile({ projectsList, updateProjectsList }) {
                         <TableCell>Name</TableCell>
                         <TableCell>Project</TableCell>
                         <TableCell>Skills</TableCell>
+                        <TableCell>Resume</TableCell>
+                        <TableCell>Approve</TableCell>
+                        <TableCell>Decline</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {data.map((row) => (
+                      {filteredAppliesList.map((row) => (
                         <TableRow key={row.id}>
-                          <TableCell>{row.name}</TableCell>
-                          <TableCell>{row.project}</TableCell>
-                          <TableCell>{row.skills}</TableCell>
+                          {/* <TableCell>{fetchUserName(row.uid)}</TableCell> */}
+                          <TableCell>{"temp name"}</TableCell>
                           <TableCell>
-                            <Button
-                              variant="contained"
-                              onClick={() => {}}
+                            {
+                              projectsList.find(
+                                (project) => project.adminId === row.uid
+                              ).name
+                            }
+                          </TableCell>
+                          <TableCell>{row.selectedSkills.join(", ")}</TableCell>
+                          <TableCell>
+                            <MDBCardText className="mb-0">
+                              <a
+                                href={row.resumeURL}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                View Resume
+                              </a>
+                            </MDBCardText>
+                          </TableCell>
+                          {/* <MDBCardText className="mb-0">
+                            <a
+                              href={row.resumeURL}
+                              target="_blank"
+                              rel="noopener noreferrer"
                             >
+                              View Resume
+                            </a>
+                          </MDBCardText> */}
+                          {/* <TableCell>
+                            <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
+                              <Viewer
+                                fileUrl={row.resumeURL}
+                                // plugins={[
+                                //   // Register plugins
+                                //   defaultLayoutPluginInstance
+                                // ]}
+                                numPages={1}
+                              />
+                            </Worker>
+                          </TableCell> */}
+                          <TableCell>
+                            <Button variant="contained" onClick={() => {}}>
                               Approve
                             </Button>
                           </TableCell>
                           <TableCell>
-                            <Button
-                              variant="contained"
-                              onClick={() => {}}
-                            >
+                            <Button variant="contained" onClick={() => {}}>
                               Decline
                             </Button>
                           </TableCell>
-
                         </TableRow>
                       ))}
                     </TableBody>

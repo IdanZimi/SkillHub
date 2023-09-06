@@ -1,6 +1,3 @@
-import { useNavigate } from "react-router-dom";
-import { db } from "./firebase";
-
 const port = '8000'
 const apiUrl = `http://localhost:${port}/`;
 
@@ -87,5 +84,31 @@ export const request = {
       const errorData = await response.json();
       console.error("Login error:", errorData);
     }
-  }
+  },
+  getApplies: async () => {
+    const response = await fetch(apiUrl + 'applies', {
+      method: 'GET'
+    })
+    if (response.ok) {
+      const responseData = await response.json();
+      console.log(responseData);
+      return responseData;
+    } else {
+      const errorData = await response.json();
+      console.error("Login error:", errorData);
+    }
+  },
+  // getUserName: async (uid) => {
+  //   const response = await fetch(apiUrl + `user/name?uid=${uid}`, {
+  //     method: 'GET'
+  //   })
+  //   if (response.ok) {
+  //     const responseData = await response.json();
+  //     //console.log(responseData.userName);
+  //     return responseData.userName;
+  //   } else {
+  //     const errorData = await response.json();
+  //     console.error("Login error:", errorData);
+  //   }
+  // }
 }
