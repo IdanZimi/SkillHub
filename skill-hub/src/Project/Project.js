@@ -177,6 +177,7 @@ const Project = ({ imageUrl, title, description, positionName, id }) => {
             {isApplyOpen && (
               <Apply
                 uid={uid}
+                userName={localStorage.getItem("name")}
                 selectedSkills={selectedChips.map((chip)=>{return chip.label})}
                 projectId={id}
                 isOpen={isApplyOpen}

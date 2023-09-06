@@ -1,7 +1,10 @@
 import { db } from "../firebase";
 import {
+  doc,
+  getDoc,
   getDocs,
   addDoc,
+  updateDoc,
   collection,
   DocumentReference,
 } from "firebase/firestore";
@@ -13,18 +16,37 @@ interface Apply {
   selectedSkills: string[];
   email: string;
   phone: string;
+  userName: string;
+  status: string;
 }
 
 export class ApplyService {
   async addApply(apply: Apply): Promise<DocumentReference> {
     return await addDoc(collection(db, "apply"), {
       uid: apply.uid,
+      userName: apply.userName,
       pid: apply.pid,
       email: apply.email,
       phone: apply.phone,
       selectedSkills: apply.selectedSkills,
       resumeURL: apply.resumeURL,
+      status: "pending"
     });
+  }
+
+  async changeApplyStatus(id: string, status: string): Promise<DocumentReference> {
+    const data = {
+      status: status
+    };
+
+    try{
+      const docRef = doc(db, "apply", id);
+      updateDoc(docRef, data);
+      return docRef;
+    } catch (error) {
+      console.error("Unable to fetch projects:", error);
+      throw error;
+    }
   }
 
   async getApplies() {

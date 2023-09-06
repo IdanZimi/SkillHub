@@ -68,7 +68,7 @@ export const request = {
     }
   },
   sendApplyToDB: async (apply) =>{
-    debugger;
+    //debugger;
     const response = await fetch(apiUrl + 'apply', {
       method: 'POST',
       headers: {
@@ -98,6 +98,24 @@ export const request = {
       console.error("Login error:", errorData);
     }
   },
+  changeApplyStatus: async (applyId, applyStatus) => {
+    const apply = {id: applyId, status: applyStatus};
+    const response = await fetch(apiUrl + 'apply/status', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(apply)
+    })
+    if (response.ok) {
+      const responseData = await response.json();
+      console.log("doc ref: ", responseData);
+      return responseData;
+    } else {
+      const errorData = await response.json();
+      console.error("Login error:", errorData);
+    }
+  }
   // getUserName: async (uid) => {
   //   const response = await fetch(apiUrl + `user/name?uid=${uid}`, {
   //     method: 'GET'

@@ -1,10 +1,4 @@
 import React, { useState, useEffect } from "react";
-// import Griddle, {
-//   plugins,
-//   RowDefinition,
-//   ColumnDefinition,
-// } from "griddle-react";
-
 import {
   MDBCol,
   MDBContainer,
@@ -35,6 +29,7 @@ import { defaultLayoutPlugin } from "@react-pdf-viewer/default-layout";
 import "./UserProfile.css";
 import Project from "../Project/Project";
 import { request } from "../httpRequest";
+import { showNotification } from "../utils/utils";
 
 function UserProfile({ projectsList, updateProjectsList }) {
   const [name, setName] = useState(localStorage.getItem("name") || "");
@@ -50,24 +45,16 @@ function UserProfile({ projectsList, updateProjectsList }) {
     (project) => project.adminId === localStorage.getItem("uid")
   );
 
-  const filteredAppliesList = appliesList.filter((apply) =>
-    filteredProjectsList.some((project) => project.id === apply.pid)
-  );
+  // const filteredAppliesList = appliesList.filter((apply) =>
+  //   filteredProjectsList.some((project) => project.id === apply.pid)
+  // );
 
-  // const data = [
-  //   {
-  //     id: 0,
-  //     name: "Ido Yekutiel",
-  //     project: "Project 1",
-  //     skills: ["zivil, developer, ux/ui, FullStack"],
-  //   },
-  //   {
-  //     id: 1,
-  //     name: "Ori Globus",
-  //     project: "Project 777",
-  //     skills: ["I am, the best"],
-  //   }
-  // ];
+  const myProjects = projectsList.filter((project) =>
+    project.adminId === localStorage.getItem("uid")
+  );
+  const filteredAppliesList = appliesList.filter((apply) =>
+    myProjects.some((project) => project.id === apply.pid)
+  ).filter((apply) => apply.status != "Approved" && apply.status != "Declined");
 
   useEffect(() => {
     fetchProjects();
@@ -89,10 +76,22 @@ function UserProfile({ projectsList, updateProjectsList }) {
     try {
       const applies = await request.getApplies();
       setAppliesList(applies);
-      //console.log("applies are: ", applies);
+      console.log("applies are: ", applies);
     } catch (error) {
       console.error("Error fetching applies:", error);
     }
+  };
+
+  const approveApplyHandler = (applyId) => {
+    request.changeApplyStatus(applyId, "Approved");
+    showNotification("info", "Success!", `Congratulations! You are one step closer to get started with your project!`)
+    fetchApplies();
+  };
+
+  const declineApplyHandler = (applyId) => {
+    request.changeApplyStatus(applyId, "Declined");
+    showNotification("info", "Success", `You have successfully rejected the cantidate's application.`)
+    fetchApplies();
   };
 
   // const fetchUserNamesApplies = async () => {
@@ -106,13 +105,10 @@ function UserProfile({ projectsList, updateProjectsList }) {
   // };
 
   const handleProfileEditSubmit = () => {
-    // Here, you can send the updated profile information to your backend API
-    // and update the user's information on success.
-    // For simplicity, we'll just update the state and localStorage here.
     //localStorage.setItem("name", name);
     //localStorage.setItem("city", city);
     localStorage.setItem("about", about);
-    setIsEditMode(false); // Close the edit modal
+    setIsEditMode(false);
   };
 
   return (
@@ -154,23 +150,8 @@ function UserProfile({ projectsList, updateProjectsList }) {
               </div>
               <div
                 className="p-4 text-black"
-                style={{ backgroundColor: "#f8f9fa" }}
-              >
-                {/* <div className="d-flex justify-content-end text-center py-1">
-                  <div>
-                    <MDBCardText className="mb-1 h5">253</MDBCardText>
-                    <MDBCardText className="small text-muted mb-0">Photos</MDBCardText>
-                  </div>
-                  <div className="px-3">
-                    <MDBCardText className="mb-1 h5">1026</MDBCardText>
-                    <MDBCardText className="small text-muted mb-0">Followers</MDBCardText>
-                  </div>
-                  <div>
-                    <MDBCardText className="mb-1 h5">478</MDBCardText>
-                    <MDBCardText className="small text-muted mb-0">Following</MDBCardText>
-                  </div>
-                </div> */}
-              </div>
+                style={{ backgroundColor: "white" }}
+              ></div>
               <MDBCardBody className="text-black p-4">
                 <div className="mb-5">
                   <p className="lead fw-normal mb-1">About</p>
@@ -204,15 +185,6 @@ function UserProfile({ projectsList, updateProjectsList }) {
                     </div>
                   ) : (
                     <div className="p-4" style={{ backgroundColor: "#f8f9fa" }}>
-                      {/* <MDBCardText className="font-italic mb-1">
-                        Web Developer
-                      </MDBCardText>
-                      <MDBCardText className="font-italic mb-1">
-                        Lives in New York
-                      </MDBCardText>
-                      <MDBCardText className="font-italic mb-0">
-                        Photographer
-                      </MDBCardText> */}
                       <MDBCardText className="font-italic mb-1">
                         {about}
                       </MDBCardText>
@@ -241,6 +213,28 @@ function UserProfile({ projectsList, updateProjectsList }) {
                     />
                   ))}
                 </MDBRow>
+                {/* <div className="d-flex justify-content-between align-items-center mb-4">
+                  <MDBCardText className="lead fw-normal mb-0">
+                    My projects
+                  </MDBCardText>
+                  <MDBCardText className="mb-0">
+                    <a href="#!" className="text-muted">
+                      Show all
+                    </a>
+                  </MDBCardText>
+                </div>
+                <MDBRow className="py-5">
+                  {filteredProjectsList.map((project, index) => (
+                    <Project
+                      key={index}
+                      id={project.id}
+                      imageUrl={project.image}
+                      title={project.name}
+                      description={project.description}
+                      positionName={project.positionName}
+                    />
+                  ))}
+                </MDBRow> */}
                 <div className="d-flex justify-content-between align-items-center mb-4">
                   <MDBCardText className="lead fw-normal mb-0">
                     Applies
@@ -251,13 +245,6 @@ function UserProfile({ projectsList, updateProjectsList }) {
                     </a>
                   </MDBCardText>
                 </div>
-                {/* <Griddle data={data} plugins={[plugins.LocalPlugin]}>
-                  <RowDefinition>
-                    <ColumnDefinition id="name" title="Name" width={200} />
-                    <ColumnDefinition id="project" title="Project Name" width={200} />
-                    <ColumnDefinition id="skills" title="Skills" width={200} />
-                  </RowDefinition>
-                </Griddle> */}
                 <TableContainer>
                   <Table>
                     <TableHead>
@@ -268,25 +255,27 @@ function UserProfile({ projectsList, updateProjectsList }) {
                         <TableCell>Resume</TableCell>
                         <TableCell>Approve</TableCell>
                         <TableCell>Decline</TableCell>
+                        <TableCell>Status</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {filteredAppliesList.map((row) => (
-                        <TableRow key={row.id}>
-                          {/* <TableCell>{fetchUserName(row.uid)}</TableCell> */}
-                          <TableCell>{"temp name"}</TableCell>
+                      {filteredAppliesList.map((apply) => (
+                        <TableRow key={apply.id}>
+                          <TableCell>{apply.userName}</TableCell>
                           <TableCell>
                             {
                               projectsList.find(
-                                (project) => project.adminId === row.uid
+                                (project) => project.adminId === apply.uid
                               ).name
                             }
                           </TableCell>
-                          <TableCell>{row.selectedSkills.join(", ")}</TableCell>
+                          <TableCell>
+                            {apply.selectedSkills.join(", ")}
+                          </TableCell>
                           <TableCell>
                             <MDBCardText className="mb-0">
                               <a
-                                href={row.resumeURL}
+                                href={apply.resumeURL}
                                 target="_blank"
                                 rel="noopener noreferrer"
                               >
@@ -294,19 +283,10 @@ function UserProfile({ projectsList, updateProjectsList }) {
                               </a>
                             </MDBCardText>
                           </TableCell>
-                          {/* <MDBCardText className="mb-0">
-                            <a
-                              href={row.resumeURL}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            >
-                              View Resume
-                            </a>
-                          </MDBCardText> */}
                           {/* <TableCell>
                             <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
                               <Viewer
-                                fileUrl={row.resumeURL}
+                                fileUrl={apply.resumeURL}
                                 // plugins={[
                                 //   // Register plugins
                                 //   defaultLayoutPluginInstance
@@ -316,14 +296,25 @@ function UserProfile({ projectsList, updateProjectsList }) {
                             </Worker>
                           </TableCell> */}
                           <TableCell>
-                            <Button variant="contained" onClick={() => {}}>
+                            <Button
+                              variant="contained"
+                              onClick={() => approveApplyHandler(apply.id)}
+                            >
                               Approve
                             </Button>
                           </TableCell>
                           <TableCell>
-                            <Button variant="contained" onClick={() => {}}>
+                            <Button
+                              variant="contained"
+                              onClick={() => declineApplyHandler(apply.id)}
+                            >
                               Decline
                             </Button>
+                          </TableCell>
+                          <TableCell>
+                            <MDBCardText className="mb-0">
+                              {apply.status}
+                            </MDBCardText>
                           </TableCell>
                         </TableRow>
                       ))}
