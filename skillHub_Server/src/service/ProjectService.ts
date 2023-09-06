@@ -30,18 +30,12 @@ export class ProjectService {
   async getProjects() {
     try {
       const querySnapshot = await getDocs(collection(db, "projects"));
-      //   querySnapshot.forEach((doc) => {
-      //     console.log(`${doc.id} => ${doc.data().name}`);
-      //   });
       const projects = [];
 
       querySnapshot.forEach((doc) => {
         projects.push({ id: doc.id, ...doc.data() });
       });
-
       return projects;
-
-      //return querySnapshot;
     } catch (error) {
       console.error("Unable to fetch projects:", error);
       throw error;

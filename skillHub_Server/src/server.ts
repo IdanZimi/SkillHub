@@ -99,6 +99,29 @@ app.post('/apply', async (req: Request, res: Response) => {
     }
 });
 
+app.get("/applies", async (req: Request, res: Response) => {
+    try {
+        const applies = await applyService.getApplies();
+        //console.log("in server.ts: ", projects);
+        res.status(200).json(applies);
+    } catch (error) {
+        console.error("Unable to fetch projects:", error);
+        res.status(500).json({ error: "Unable to fetch projects" });
+    }
+});
+
+// app.get("/user/name", async (req: Request, res: Response) => {
+//     try {
+//         const { uid } = req.query;
+//         const userName = await userService.getUserName(uid.toString());
+//         //console.log("in server.ts: ", projects);
+//         res.status(200).json(userName);
+//     } catch (error) {
+//         console.error("Unable to fetch projects:", error);
+//         res.status(500).json({ error: "Unable to fetch projects" });
+//     }
+// });
+
 app.listen(config.development.serverPort, () => {
     console.log(`Server is running on port ${config.development.serverPort}`);
 });
