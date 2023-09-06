@@ -7,10 +7,22 @@ import { auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
 import "./ProjectsPage.css";
 import { showNotification } from "../utils/utils";
-import AddIcon from "@mui/icons-material/Add";
-import Fab from "@mui/material/Fab";
-import { styled } from "@mui/material/styles";
-import ProjectsList from "../UserProfile/ProjectsList";
+import AddIcon from '@mui/icons-material/Add';
+import Fab from '@mui/material/Fab';
+import { styled } from '@mui/material/styles';
+//import ProjectsList from "./ProjectsList";
+import SearchMenu from "../menu/search-menu/searchMenu";
+import { handleLogout } from "../menu/search-menu/searchMenu";
+import { useLocation } from "react-router-dom"; 
+//import SearchMenu from "../menu/search-menu/searchMenu";
+//import { handleLogout } from "../menu/search-menu/searchMenu";
+import MenuComponent, { handleSearch } from "../menu/Menu";
+import MuiAlert from '@mui/material/Alert';
+import NoResult from "../NoResult/NoResult";
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const StyledFab = styled(Fab)({
   position: "fixed",
@@ -21,6 +33,11 @@ const StyledFab = styled(Fab)({
 function ProjectsPage({ projectsList, updateProjectsList }) {
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
   const [user, loading, error] = useAuthState(auth);
+  const [filteredProjects, setFilteredProjects] = useState([]);
+  // const location = useLocation(); // Get the current route location
+
+  // // Initialize isProjectsPage based on the route
+  // const isProjectsPage = location.pathname === "/projects";
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -35,6 +52,10 @@ function ProjectsPage({ projectsList, updateProjectsList }) {
         const projects = await request.getProjects();
         updateProjectsList(projects);
         //console.log("in use effect: ", projects);
+       // setProjectsList(projects);
+        setFilteredProjects(projects); // Initialize filteredProjects with all projects
+
+        console.log("in use effect: ", projects);
       } catch (error) {
         console.error("Error fetching projects:", error);
       }
@@ -58,6 +79,18 @@ function ProjectsPage({ projectsList, updateProjectsList }) {
     setIsRegisterOpen(false);
   };
 
+  const handleSearchTextChange = (searchText) => {
+    // Use the handleSearch function to filter projectsList based on the search query
+    handleSearch(searchText, setFilteredProjects, projectsList);
+  };
+  // const handleSearch = (searchText) => {
+  //   // Filter projects based on searchText
+  //   const filtered = projectsList.filter((project) =>
+  //     project.name.toLowerCase().includes(searchText.toLowerCase())
+  //   );
+  //   setFilteredProjects(filtered);
+  // };
+
   return (
     <div>
       {/* <button className="create__btn" onClick={handleButtonClick}>
@@ -72,6 +105,12 @@ function ProjectsPage({ projectsList, updateProjectsList }) {
           isOpen={isRegisterOpen}
         />
       )}
+        <SearchMenu
+          isAauthenticated={user !== null}
+          onSearch={handleSearchTextChange}
+          showSearch={true} 
+        />
+      
       <div className="projects-container">
         {/* <ProjectsList projectsList={projectsList}/> */}
         {projectsList.map((project, index) => (
@@ -85,6 +124,20 @@ function ProjectsPage({ projectsList, updateProjectsList }) {
             adminId={project.adminId}
           />
         ))}
+      {filteredProjects.length === 0 ? (
+        <NoResult />    ) : (
+          filteredProjects.map((project, index) => (
+            <Project
+              key={index}
+              id={project.id}
+              imageUrl={project.image}
+              title={project.name}
+              description={project.description}
+              positionName={project.positionName}
+            />
+          ))
+        )}
+        
       </div>
     </div>
   );
