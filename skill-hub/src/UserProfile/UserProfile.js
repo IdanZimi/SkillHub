@@ -70,24 +70,33 @@ function UserProfile({ projectsList, updateProjectsList }) {
     }
   };
 
-  const approveApplyHandler = (applyId) => {
-    request.changeApplyStatus(applyId, "Approved");
-    showNotification(
-      "info",
-      "Success!",
-      `Congratulations! You are one step closer to get started with your project!`
-    );
-    fetchApplies();
+  const approveApplyHandler = async (apply) => {
+    try {
+      await request.changeApplyStatus(apply.id, "Approved");
+      await request.addToProjectsUsersTable(apply.pid, apply.uid);
+      showNotification(
+        "info",
+        "Success!",
+        `Congratulations! You are one step closer to get started with your project!`
+      );
+      fetchApplies();  
+    } catch (error) {
+      console.error("Error changing status:", error);
+    }
   };
 
-  const declineApplyHandler = (applyId) => {
-    request.changeApplyStatus(applyId, "Declined");
-    showNotification(
-      "info",
-      "Success",
-      `You have successfully rejected the cantidate's application.`
-    );
-    fetchApplies();
+  const declineApplyHandler = async (apply) => {
+    try {
+      await request.changeApplyStatus(apply.id, "Declined");
+      showNotification(
+        "info",
+        "Success",
+        `You have successfully rejected the cantidate's application.`
+      );
+      fetchApplies();
+    } catch (error) {
+      console.error("Error changing status:", error);
+    }
   };
 
   // const fetchUserNamesApplies = async () => {

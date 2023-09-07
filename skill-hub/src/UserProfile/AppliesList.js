@@ -94,7 +94,7 @@ function AppliesList({
                       <TableCell>
                         <Button
                           variant="contained"
-                          onClick={() => approveApplyHandler(apply.id)}
+                          onClick={() => approveApplyHandler(apply)}
                         >
                           Approve
                         </Button>
@@ -102,7 +102,7 @@ function AppliesList({
                       <TableCell>
                         <Button
                           variant="contained"
-                          onClick={() => declineApplyHandler(apply.id)}
+                          onClick={() => declineApplyHandler(apply)}
                         >
                           Decline
                         </Button>

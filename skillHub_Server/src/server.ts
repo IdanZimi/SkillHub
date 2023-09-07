@@ -13,6 +13,7 @@ import {
 } from './firebase'
 import { ProjectService } from './service/ProjectService';
 import { ApplyService } from './service/ApplyService';
+import { ProjectUserService } from './service/ProjectUserService'
 
 const app: Application = express();
 
@@ -22,6 +23,7 @@ sequelize.sync
 const userService = new UserService();
 const projectService = new ProjectService()
 const applyService = new ApplyService();
+const projectUserService = new ProjectUserService();
 
 app.get("/", async (req: Request, res: Response) => {
     try {
@@ -112,6 +114,18 @@ app.put('/apply/status', async (req: Request, res: Response) => {
 app.get("/applies", async (req: Request, res: Response) => {
     try {
         const applies = await applyService.getApplies();
+        //console.log("in server.ts: ", projects);
+        res.status(200).json(applies);
+    } catch (error) {
+        console.error("Unable to fetch projects:", error);
+        res.status(500).json({ error: "Unable to fetch projects" });
+    }
+});
+
+app.post("/projects/users", async (req: Request, res: Response) => {
+    const data = req.body;
+    try {
+        const applies = await projectUserService.addProjectUser(data);
         //console.log("in server.ts: ", projects);
         res.status(200).json(applies);
     } catch (error) {
