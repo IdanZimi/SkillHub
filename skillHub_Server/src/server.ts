@@ -3,7 +3,6 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import config from '../config/config.json'
 import { sequelize } from "./database";
-import { User } from '../models/user.model'
 import { UserService } from './service/UserService'
 import {
     auth,
@@ -64,9 +63,6 @@ app.post('/login', async (req: Request, res: Response) => {
 app.post('/project', async (req: Request, res: Response) => {
     const data = req.body;
     try {
-        // console.log("inside project endpoint")
-        // console.log("data " + data)
-        // console.log("data uid" + data.uid)
         const docref = await projectService.addProject(data)
         res.json({ message: 'Add project successful', docref});
     } catch (err) {
@@ -79,7 +75,6 @@ app.post('/project', async (req: Request, res: Response) => {
 app.get("/projects", async (req: Request, res: Response) => {
     try {            
         const projects = await projectService.getProjects();
-        //console.log("in server.ts: ", projects);
         res.status(200).json(projects);
     } catch (error) {
         console.error("Unable to fetch projects:", error);
@@ -114,7 +109,6 @@ app.put('/apply/status', async (req: Request, res: Response) => {
 app.get("/applies", async (req: Request, res: Response) => {
     try {
         const applies = await applyService.getApplies();
-        //console.log("in server.ts: ", projects);
         res.status(200).json(applies);
     } catch (error) {
         console.error("Unable to fetch projects:", error);
@@ -126,7 +120,6 @@ app.post("/projects/users", async (req: Request, res: Response) => {
     const data = req.body;
     try {
         const applies = await projectUserService.addProjectUser(data);
-        //console.log("in server.ts: ", projects);
         res.status(200).json(applies);
     } catch (error) {
         console.error("Unable to fetch projects:", error);
@@ -138,7 +131,6 @@ app.get("/projects/users", async (req: Request, res: Response) => {
     const { uid } = req.query;
     try {            
         const projects = await projectUserService.getProjectsUsers(uid);
-        //console.log("in server.ts: ", projects);
         res.status(200).json(projects);
     } catch (error) {
         console.error("Unable to fetch projects:", error);
@@ -146,18 +138,6 @@ app.get("/projects/users", async (req: Request, res: Response) => {
     }
 
 })
-
-// app.get("/user/name", async (req: Request, res: Response) => {
-//     try {
-//         const { uid } = req.query;
-//         const userName = await userService.getUserName(uid.toString());
-//         //console.log("in server.ts: ", projects);
-//         res.status(200).json(userName);
-//     } catch (error) {
-//         console.error("Unable to fetch projects:", error);
-//         res.status(500).json({ error: "Unable to fetch projects" });
-//     }
-// });
 
 app.listen(config.development.serverPort, () => {
     console.log(`Server is running on port ${config.development.serverPort}`);
