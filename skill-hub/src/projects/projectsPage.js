@@ -10,7 +10,7 @@ import { showNotification } from "../utils/utils";
 import AddIcon from '@mui/icons-material/Add';
 import Fab from '@mui/material/Fab';
 import { styled } from '@mui/material/styles';
-import ProjectsList from "./ProjectsList";
+import ProjectsList from "../UserProfile/ProjectsList";
 
 const StyledFab = styled(Fab)({
   position: 'fixed',

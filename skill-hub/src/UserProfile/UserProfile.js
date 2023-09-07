@@ -11,25 +11,13 @@ import {
   MDBTypography,
   MDBInput,
 } from "mdb-react-ui-kit";
-import {
-  Button,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-} from "@mui/material";
-
-import { Viewer } from "@react-pdf-viewer/core";
-import { Worker } from "@react-pdf-viewer/core";
-import "@react-pdf-viewer/core/lib/styles/index.css";
-import { defaultLayoutPlugin } from "@react-pdf-viewer/default-layout";
 
 import "./UserProfile.css";
 import Project from "../Project/Project";
 import { request } from "../httpRequest";
 import { showNotification } from "../utils/utils";
+import ProjectsList from "./ProjectsList";
+import AppliesList from "./AppliesList";
 
 function UserProfile({ projectsList, updateProjectsList }) {
   const [name, setName] = useState(localStorage.getItem("name") || "");
@@ -38,23 +26,23 @@ function UserProfile({ projectsList, updateProjectsList }) {
   const [isEditMode, setIsEditMode] = useState(false);
   const [appliesList, setAppliesList] = useState([]);
   const [userNamesList, setUserNamesList] = useState({});
-  // Create new plugin instance
-  const defaultLayoutPluginInstance = defaultLayoutPlugin();
 
   const filteredProjectsList = projectsList.filter(
     (project) => project.adminId === localStorage.getItem("uid")
   );
 
-  // const filteredAppliesList = appliesList.filter((apply) =>
-  //   filteredProjectsList.some((project) => project.id === apply.pid)
-  // );
-
-  const myProjects = projectsList.filter((project) =>
-    project.adminId === localStorage.getItem("uid")
+  const myProjects = projectsList.filter(
+    (project) => project.adminId === localStorage.getItem("uid")
   );
-  const filteredAppliesList = appliesList.filter((apply) =>
-    myProjects.some((project) => project.id === apply.pid)
-  ).filter((apply) => apply.status != "Approved" && apply.status != "Declined");
+  const applicationsForMyProjects = appliesList
+    .filter((apply) => myProjects.some((project) => project.id === apply.pid))
+    .filter(
+      (apply) => apply.status != "Approved" && apply.status != "Declined"
+    );
+
+  const ApplicationsSent = appliesList.filter(
+    (apply) => apply.uid === localStorage.getItem("uid")
+  );
 
   useEffect(() => {
     fetchProjects();
@@ -84,13 +72,21 @@ function UserProfile({ projectsList, updateProjectsList }) {
 
   const approveApplyHandler = (applyId) => {
     request.changeApplyStatus(applyId, "Approved");
-    showNotification("info", "Success!", `Congratulations! You are one step closer to get started with your project!`)
+    showNotification(
+      "info",
+      "Success!",
+      `Congratulations! You are one step closer to get started with your project!`
+    );
     fetchApplies();
   };
 
   const declineApplyHandler = (applyId) => {
     request.changeApplyStatus(applyId, "Declined");
-    showNotification("info", "Success", `You have successfully rejected the cantidate's application.`)
+    showNotification(
+      "info",
+      "Success",
+      `You have successfully rejected the cantidate's application.`
+    );
     fetchApplies();
   };
 
@@ -191,136 +187,25 @@ function UserProfile({ projectsList, updateProjectsList }) {
                     </div>
                   )}
                 </div>
-                <div className="d-flex justify-content-between align-items-center mb-4">
-                  <MDBCardText className="lead fw-normal mb-0">
-                    My projects
-                  </MDBCardText>
-                  <MDBCardText className="mb-0">
-                    <a href="#!" className="text-muted">
-                      Show all
-                    </a>
-                  </MDBCardText>
-                </div>
-                <MDBRow className="py-5">
-                  {filteredProjectsList.map((project, index) => (
-                    <Project
-                      key={index}
-                      id={project.id}
-                      imageUrl={project.image}
-                      title={project.name}
-                      description={project.description}
-                      positionName={project.positionName}
-                    />
-                  ))}
-                </MDBRow>
-                {/* <div className="d-flex justify-content-between align-items-center mb-4">
-                  <MDBCardText className="lead fw-normal mb-0">
-                    My projects
-                  </MDBCardText>
-                  <MDBCardText className="mb-0">
-                    <a href="#!" className="text-muted">
-                      Show all
-                    </a>
-                  </MDBCardText>
-                </div>
-                <MDBRow className="py-5">
-                  {filteredProjectsList.map((project, index) => (
-                    <Project
-                      key={index}
-                      id={project.id}
-                      imageUrl={project.image}
-                      title={project.name}
-                      description={project.description}
-                      positionName={project.positionName}
-                    />
-                  ))}
-                </MDBRow> */}
-                <div className="d-flex justify-content-between align-items-center mb-4">
-                  <MDBCardText className="lead fw-normal mb-0">
-                    Applies
-                  </MDBCardText>
-                  <MDBCardText className="mb-0">
-                    <a href="#!" className="text-muted">
-                      Show all
-                    </a>
-                  </MDBCardText>
-                </div>
-                <TableContainer>
-                  <Table>
-                    <TableHead>
-                      <TableRow>
-                        <TableCell>Name</TableCell>
-                        <TableCell>Project</TableCell>
-                        <TableCell>Skills</TableCell>
-                        <TableCell>Resume</TableCell>
-                        <TableCell>Approve</TableCell>
-                        <TableCell>Decline</TableCell>
-                        <TableCell>Status</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {filteredAppliesList.map((apply) => (
-                        <TableRow key={apply.id}>
-                          <TableCell>{apply.userName}</TableCell>
-                          <TableCell>
-                            {
-                              projectsList.find(
-                                (project) => project.adminId === apply.uid
-                              ).name
-                            }
-                          </TableCell>
-                          <TableCell>
-                            {apply.selectedSkills.join(", ")}
-                          </TableCell>
-                          <TableCell>
-                            <MDBCardText className="mb-0">
-                              <a
-                                href={apply.resumeURL}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                              >
-                                View Resume
-                              </a>
-                            </MDBCardText>
-                          </TableCell>
-                          {/* <TableCell>
-                            <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
-                              <Viewer
-                                fileUrl={apply.resumeURL}
-                                // plugins={[
-                                //   // Register plugins
-                                //   defaultLayoutPluginInstance
-                                // ]}
-                                numPages={1}
-                              />
-                            </Worker>
-                          </TableCell> */}
-                          <TableCell>
-                            <Button
-                              variant="contained"
-                              onClick={() => approveApplyHandler(apply.id)}
-                            >
-                              Approve
-                            </Button>
-                          </TableCell>
-                          <TableCell>
-                            <Button
-                              variant="contained"
-                              onClick={() => declineApplyHandler(apply.id)}
-                            >
-                              Decline
-                            </Button>
-                          </TableCell>
-                          <TableCell>
-                            <MDBCardText className="mb-0">
-                              {apply.status}
-                            </MDBCardText>
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </TableContainer>
+                <ProjectsList
+                  projectsList={filteredProjectsList}
+                  projectsTitle="Projects I've created"
+                />
+                <AppliesList
+                  appliesList={applicationsForMyProjects}
+                  appliesTitle="My projects' applies"
+                  projectsList={projectsList}
+                  approveApplyHandler={approveApplyHandler}
+                  declineApplyHandler={declineApplyHandler}
+                />
+                {/* <ProjectsList projectsList={filteredProjectsList} projectsTitle="Projects I'm part of"/> */}
+                <AppliesList
+                  appliesList={ApplicationsSent}
+                  appliesTitle="Applies I've sent"
+                  projectsList={projectsList}
+                  approveApplyHandler={approveApplyHandler}
+                  declineApplyHandler={declineApplyHandler}
+                />
               </MDBCardBody>
             </MDBCard>
           </MDBCol>
