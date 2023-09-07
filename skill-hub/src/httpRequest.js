@@ -133,6 +133,24 @@ export const request = {
       const errorData = await response.json();
       console.error("Login error:", errorData);
     }
+  },
+  getProjectsOfUser: async (uid) => {
+    //const data = {pid: pid, uid: uid};
+    const response = await fetch(apiUrl + 'projects/users' + `?uid=${uid}`, {
+      method: 'GET'
+      // headers: {
+      //   'Content-Type': 'application/json'
+      // },
+      // body: JSON.stringify(data)
+    })
+    if (response.ok) {
+      const responseData = await response.json();
+      console.log(responseData);
+      return responseData;
+    } else {
+      const errorData = await response.json();
+      console.error("Login error:", errorData);
+    }
   }
   // getUserName: async (uid) => {
   //   const response = await fetch(apiUrl + `user/name?uid=${uid}`, {
