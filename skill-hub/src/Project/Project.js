@@ -97,9 +97,11 @@ const Project = ({ imageUrl, title, description, positionName, id }) => {
       setCVFiles(file);
     }
   };
-  const onClose = () =>{
+  const onClose = (isApplied) => {
     setIsApplyOpen(false)
-    showNotification("info", "Success!", `Congratulations! Apply has been sent to the project admin`)
+    if (isApplied) {
+      showNotification("info", "Success!", `Congratulations! Apply has been sent to the project admin`)
+    }
   }
 
   const handleApplyClick = (e) => {

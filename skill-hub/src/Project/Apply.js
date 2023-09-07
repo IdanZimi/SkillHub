@@ -76,7 +76,7 @@ const Apply = ({ isOpen, onClose, title, uid, userName, selectedSkills, projectI
     setEmailAddressInput('');
     setPhoneNumberInput('');
     setResumeFile(null);
-    onClose();
+    onClose(false);
   }
 
   const handleApply = async () => {
