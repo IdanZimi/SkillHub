@@ -26,6 +26,7 @@ function UserProfile({ projectsList, updateProjectsList }) {
   const [isEditMode, setIsEditMode] = useState(false);
   const [appliesList, setAppliesList] = useState([]);
   const [userNamesList, setUserNamesList] = useState({});
+  const [projectUserList, setProjectUserList] = useState([]);
 
   const filteredProjectsList = projectsList.filter(
     (project) => project.adminId === localStorage.getItem("uid")
@@ -45,9 +46,13 @@ function UserProfile({ projectsList, updateProjectsList }) {
   );
 
   useEffect(() => {
-    fetchProjects();
-    fetchApplies();
-    //fetchUserNamesApplies();
+    try {
+      fetchProjects();
+      fetchApplies();
+      fetchProjectsUsers();
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   }, []);
 
   const fetchProjects = async () => {
@@ -79,7 +84,7 @@ function UserProfile({ projectsList, updateProjectsList }) {
         "Success!",
         `Congratulations! You are one step closer to get started with your project!`
       );
-      fetchApplies();  
+      fetchApplies();
     } catch (error) {
       console.error("Error changing status:", error);
     }
@@ -96,6 +101,16 @@ function UserProfile({ projectsList, updateProjectsList }) {
       fetchApplies();
     } catch (error) {
       console.error("Error changing status:", error);
+    }
+  };
+
+  const fetchProjectsUsers = async () => {
+    try {
+      const matchingProjects = await request.getProjectsOfUser(localStorage.getItem("uid"));
+      console.log("matching projects are: ", matchingProjects);
+      setProjectUserList(matchingProjects);
+    } catch (error) {
+      console.error("Error fetching projects-users:", error);
     }
   };
 
@@ -207,7 +222,10 @@ function UserProfile({ projectsList, updateProjectsList }) {
                   approveApplyHandler={approveApplyHandler}
                   declineApplyHandler={declineApplyHandler}
                 />
-                {/* <ProjectsList projectsList={filteredProjectsList} projectsTitle="Projects I'm part of"/> */}
+                <ProjectsList
+                  projectsList={projectUserList}
+                  projectsTitle="Projects I've joined"
+                />
                 <AppliesList
                   appliesList={ApplicationsSent}
                   appliesTitle="Applies I've sent"

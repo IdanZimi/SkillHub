@@ -82,6 +82,7 @@ function ProjectsPage({ projectsList, updateProjectsList }) {
             title={project.name}
             description={project.description}
             positionName={project.positionName}
+            adminId={project.adminId}
           />
         ))}
       </div>

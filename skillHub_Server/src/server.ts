@@ -134,6 +134,19 @@ app.post("/projects/users", async (req: Request, res: Response) => {
     }
 });
 
+app.get("/projects/users", async (req: Request, res: Response) => {
+    const { uid } = req.query;
+    try {            
+        const projects = await projectUserService.getProjectsUsers(uid);
+        //console.log("in server.ts: ", projects);
+        res.status(200).json(projects);
+    } catch (error) {
+        console.error("Unable to fetch projects:", error);
+        res.status(500).json({ error: "Unable to fetch projects" });
+    }
+
+})
+
 // app.get("/user/name", async (req: Request, res: Response) => {
 //     try {
 //         const { uid } = req.query;
