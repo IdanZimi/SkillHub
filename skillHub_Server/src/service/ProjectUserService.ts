@@ -54,19 +54,4 @@ export class ProjectUserService {
       throw error;
     }
   }
-
-  //   async getProjectsUsers() {
-  //     try {
-  //       const querySnapshot = await getDocs(collection(db, "projects-users"));
-  //       const projectsUsers = [];
-
-  //       querySnapshot.forEach((doc) => {
-  //         projectsUsers.push({ id: doc.id, ...doc.data() });
-  //       });
-  //       return projectsUsers;
-  //     } catch (error) {
-  //       console.error("Unable to fetch projects:", error);
-  //       throw error;
-  //     }
-  //   }
 }

@@ -1,24 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   BrowserRouter as Router,
   Route,
   Routes,
-  useSearchParams,
 } from "react-router-dom";
-import Login from "./login/login";
-import Register from "./register/Register";
 import MenuComponent from "./menu/Menu";
 import Home from "./Home/home";
-import { auth, authStateChanged, db } from "./firebase";
 import "./App.css";
 import AlterRegister from "./register/alterRegister";
 import Alterlogin from "./login/alterlogin";
 import ProjectsPage from "./projects/ProjectsPage";
-//import RecipeReviewCard from './projects/projectPage';
 import AboutPage from './about/AboutPage';
 import { ReactNotifications, store } from 'react-notifications-component'
-import { query, collection, getDocs, where } from "firebase/firestore";
-import { useAuthState } from "react-firebase-hooks/auth";
 import UserProfile from "./UserProfile/UserProfile";
 
 function App() {
@@ -30,14 +23,10 @@ function App() {
   }
 
   const setUserAuthenticated = () => {
-    // setName(name);
-    // setuid(uid)
     setIsAuthenticated(true);
   };
 
   const logoutUserData = () => {
-    // setName('')
-    // setuid('')
     setIsAuthenticated(false);
     localStorage.removeItem("uid");
     localStorage.removeItem("name");

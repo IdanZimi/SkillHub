@@ -68,7 +68,6 @@ export const request = {
     }
   },
   sendApplyToDB: async (apply) =>{
-    //debugger;
     const response = await fetch(apiUrl + 'apply', {
       method: 'POST',
       headers: {
@@ -135,13 +134,8 @@ export const request = {
     }
   },
   getProjectsOfUser: async (uid) => {
-    //const data = {pid: pid, uid: uid};
     const response = await fetch(apiUrl + 'projects/users' + `?uid=${uid}`, {
       method: 'GET'
-      // headers: {
-      //   'Content-Type': 'application/json'
-      // },
-      // body: JSON.stringify(data)
     })
     if (response.ok) {
       const responseData = await response.json();
@@ -152,17 +146,4 @@ export const request = {
       console.error("Login error:", errorData);
     }
   }
-  // getUserName: async (uid) => {
-  //   const response = await fetch(apiUrl + `user/name?uid=${uid}`, {
-  //     method: 'GET'
-  //   })
-  //   if (response.ok) {
-  //     const responseData = await response.json();
-  //     //console.log(responseData.userName);
-  //     return responseData.userName;
-  //   } else {
-  //     const errorData = await response.json();
-  //     console.error("Login error:", errorData);
-  //   }
-  // }
 }

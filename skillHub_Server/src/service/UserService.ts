@@ -1,16 +1,9 @@
-import { db } from '../firebase';
 import {
-  auth,
   registerWithEmailAndPassword,
   signInWithGoogle,
   signInWithFacebook,
   logInWithEmailAndPassword,
 } from "../firebase";
-
-import {
-    getDocs,
-    collection,
-} from "firebase/firestore";
 
 export class UserService {
   async registerUser(
@@ -33,25 +26,6 @@ export class UserService {
       data.provider === "google" ? signInWithGoogle : signInWithFacebook;
     }
   }
-
-//   async getUserName(uid: String) {
-//     try {
-//       const querySnapshot = await getDocs(collection(db, "users"));
-  
-//       const user = querySnapshot.docs.find((doc) => doc.data().uid === uid);
-  
-//       if (user) {
-//         // User with matching uid found, return the user's data
-//         return { userName: user.data().name };
-//       } else {
-//         // User not found, return null or handle as needed
-//         return null;
-//       }
-//     } catch (error) {
-//       console.error("Unable to fetch user:", error);
-//       throw error;
-//     }
-//   }
   
   // async checkConnection() {
   //     try {

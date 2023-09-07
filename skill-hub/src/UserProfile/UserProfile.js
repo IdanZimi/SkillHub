@@ -13,19 +13,15 @@ import {
 } from "mdb-react-ui-kit";
 
 import "./UserProfile.css";
-import Project from "../Project/Project";
 import { request } from "../httpRequest";
 import { showNotification } from "../utils/utils";
 import ProjectsList from "./ProjectsList";
 import AppliesList from "./AppliesList";
 
 function UserProfile({ projectsList, updateProjectsList }) {
-  const [name, setName] = useState(localStorage.getItem("name") || "");
-  const [city, setCity] = useState(localStorage.getItem("city") || "");
   const [about, setAbout] = useState(localStorage.getItem("about") || "");
   const [isEditMode, setIsEditMode] = useState(false);
   const [appliesList, setAppliesList] = useState([]);
-  const [userNamesList, setUserNamesList] = useState({});
   const [projectUserList, setProjectUserList] = useState([]);
 
   const filteredProjectsList = projectsList.filter(
@@ -69,7 +65,7 @@ function UserProfile({ projectsList, updateProjectsList }) {
     try {
       const applies = await request.getApplies();
       setAppliesList(applies);
-      console.log("applies are: ", applies);
+      //console.log("applies are: ", applies);
     } catch (error) {
       console.error("Error fetching applies:", error);
     }
@@ -114,19 +110,7 @@ function UserProfile({ projectsList, updateProjectsList }) {
     }
   };
 
-  // const fetchUserNamesApplies = async () => {
-  //   try {
-  //     const uidsList = filteredAppliesList.map(apply => apply.uid);
-  //     const userNames = await request.getUserNames(uidsList);
-  //     setUserNamesList(userNames);
-  //   } catch (error) {
-  //     console.error("Error fetching user name:", error);
-  //   }
-  // };
-
   const handleProfileEditSubmit = () => {
-    //localStorage.setItem("name", name);
-    //localStorage.setItem("city", city);
     localStorage.setItem("about", about);
     setIsEditMode(false);
   };
