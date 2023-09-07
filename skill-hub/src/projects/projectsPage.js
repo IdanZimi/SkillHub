@@ -7,15 +7,15 @@ import { auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
 import "./ProjectsPage.css";
 import { showNotification } from "../utils/utils";
-import AddIcon from '@mui/icons-material/Add';
-import Fab from '@mui/material/Fab';
-import { styled } from '@mui/material/styles';
+import AddIcon from "@mui/icons-material/Add";
+import Fab from "@mui/material/Fab";
+import { styled } from "@mui/material/styles";
 import ProjectsList from "../UserProfile/ProjectsList";
 
 const StyledFab = styled(Fab)({
-  position: 'fixed',
-  top: '70px',
-  right: '20px',
+  position: "fixed",
+  top: "70px",
+  right: "20px",
 });
 
 function ProjectsPage({ projectsList, updateProjectsList }) {
@@ -49,12 +49,11 @@ function ProjectsPage({ projectsList, updateProjectsList }) {
 
   const handleCloseRegister = async (project) => {
     if (project) {
-      
       const projectID = await request.addProjectToDB(project);
-      project.id = projectID
+      project.id = projectID;
       const newProjectsList = [...projectsList, project];
       updateProjectsList(newProjectsList);
-      showNotification("info", "Success!", `${project.title} created`)
+      showNotification("info", "Success!", `${project.title} created`);
     }
     setIsRegisterOpen(false);
   };
