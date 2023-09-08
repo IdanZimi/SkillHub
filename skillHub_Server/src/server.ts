@@ -138,6 +138,26 @@ app.get("/projects/users", async (req: Request, res: Response) => {
     }
 
 })
+app.get('/projects/:projectId',async (req: Request, res: Response) => {
+    // Get the project ID from the request parameters
+    const projectId = req.params.projectId;
+    const uid = await projectService.getAdminUidWithProjectId(projectId)
+    // Perform any necessary operations (e.g., query a database)
+    // In this example, we'll just send back a JSON response
+    res.json({uid});
+  });
+
+// app.get("/user/name", async (req: Request, res: Response) => {
+//     try {
+//         const { uid } = req.query;
+//         const userName = await userService.getUserName(uid.toString());
+//         //console.log("in server.ts: ", projects);
+//         res.status(200).json(userName);
+//     } catch (error) {
+//         console.error("Unable to fetch projects:", error);
+//         res.status(500).json({ error: "Unable to fetch projects" });
+//     }
+// });
 
 app.listen(config.development.serverPort, () => {
     console.log(`Server is running on port ${config.development.serverPort}`);

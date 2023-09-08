@@ -2,8 +2,10 @@ import { db } from "../firebase";
 import {
   getDocs,
   addDoc,
+  getDoc,
   collection,
   DocumentReference,
+  doc,
 } from "firebase/firestore";
 
 interface Project {
@@ -36,6 +38,26 @@ export class ProjectService {
         projects.push({ id: doc.id, ...doc.data() });
       });
       return projects;
+    } catch (error) {
+      console.error("Unable to fetch projects:", error);
+      throw error;
+    }
+  }
+
+  async getAdminUidWithProjectId(projectId) {
+    try {
+    const projectRef = await doc(db, 'projects', projectId);
+    const projectDoc = await getDoc(projectRef);
+
+    if (projectDoc.exists) {
+      // Get the admin UID from the project document
+      const adminUid = projectDoc.data().adminId;
+      console.log("adminUid: "+ adminUid)
+      return adminUid;
+    } else {
+      // Handle the case where the project document doesn't exist
+      return null;
+    }
     } catch (error) {
       console.error("Unable to fetch projects:", error);
       throw error;
