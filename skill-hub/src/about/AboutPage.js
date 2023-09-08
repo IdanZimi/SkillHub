@@ -31,7 +31,7 @@ const AboutPage = () => {
   return (
     
     <div className="restaurant-landing-page">
-           {!isAboutPage && (
+           {isAboutPage && (
         <SearchMenu
           isAauthenticated={user !== null}
           //onSearch={handleSearchTextChange}

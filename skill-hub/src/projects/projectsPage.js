@@ -16,9 +16,10 @@ import { handleLogout } from "../menu/search-menu/searchMenu";
 import { useLocation } from "react-router-dom"; 
 //import SearchMenu from "../menu/search-menu/searchMenu";
 //import { handleLogout } from "../menu/search-menu/searchMenu";
-import MenuComponent, { handleSearch } from "../menu/Menu";
+//import MenuComponent, { handleSearch } from "../menu/Menu";
 import MuiAlert from '@mui/material/Alert';
 import NoResult from "../NoResult/NoResult";
+import {setSearchResults} from "../menu/search-menu/searchMenu";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -29,6 +30,19 @@ const StyledFab = styled(Fab)({
   top: "70px",
   right: "20px",
 });
+//shirab
+// const handleSearch = (searchQuery, setSearchResults, filteredProjects) => {
+
+//   // if (!projectsList) {
+//   //   // Handle the case where projectsList is undefined or null
+//   //   setSearchResults([]);
+//   //   return;
+//   // }
+//   const filtered = filteredProjects.filter((project) =>
+//     project.name.toLowerCase().includes(searchQuery.toLowerCase())
+//   );
+//   setSearchResults(filtered);
+// };
 
 function ProjectsPage({ projectsList, updateProjectsList }) {
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
@@ -52,7 +66,7 @@ function ProjectsPage({ projectsList, updateProjectsList }) {
         const projects = await request.getProjects();
         updateProjectsList(projects);
         //console.log("in use effect: ", projects);
-       // setProjectsList(projects);
+        //setProjectsList(projects);
         setFilteredProjects(projects); // Initialize filteredProjects with all projects
 
         console.log("in use effect: ", projects);
@@ -79,23 +93,20 @@ function ProjectsPage({ projectsList, updateProjectsList }) {
     setIsRegisterOpen(false);
   };
 
-  const handleSearchTextChange = (searchText) => {
-    // Use the handleSearch function to filter projectsList based on the search query
-    handleSearch(searchText, setFilteredProjects, projectsList);
+  const handleSearch = (searchQuery) => {
+    if (searchQuery.trim() === "") {
+      // If the search query is empty or only contains whitespace, show all projects.
+      setFilteredProjects(projectsList);
+    }else{
+    const filtered = projectsList.filter((project) =>
+      project.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    // Update the filtered projects state
+     setFilteredProjects(filtered);
+    }
   };
-  // const handleSearch = (searchText) => {
-  //   // Filter projects based on searchText
-  //   const filtered = projectsList.filter((project) =>
-  //     project.name.toLowerCase().includes(searchText.toLowerCase())
-  //   );
-  //   setFilteredProjects(filtered);
-  // };
-
   return (
     <div>
-      {/* <button className="create__btn" onClick={handleButtonClick}>
-        Create +
-      </button> */}
       <StyledFab color="primary" aria-label="add" onClick={handleButtonClick}>
         <AddIcon />
       </StyledFab>
@@ -107,12 +118,13 @@ function ProjectsPage({ projectsList, updateProjectsList }) {
       )}
         <SearchMenu
           isAauthenticated={user !== null}
-          onSearch={handleSearchTextChange}
+          onSearch={handleSearch}
           showSearch={true} 
         />
       
       <div className="projects-container">
         {/* <ProjectsList projectsList={projectsList}/> */}
+<<<<<<< HEAD
         {projectsList.map((project, index) => (
           <Project
             key={index}
@@ -138,6 +150,21 @@ function ProjectsPage({ projectsList, updateProjectsList }) {
           ))
         )}
         
+=======
+        {filteredProjects.map((project, index) => (
+    <Project
+      key={index}
+      id={project.id}
+      imageUrl={project.image}
+      title={project.name}
+      description={project.description}
+      positionName={project.positionName}
+    />
+  ))}
+  {filteredProjects.length === 0 ? (
+    <NoResult />
+  ) : null}
+>>>>>>> 0d0b980 (shiran - changes)
       </div>
     </div>
   );

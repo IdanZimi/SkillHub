@@ -142,7 +142,7 @@ const Project = ({ imageUrl, title, description, positionName, id }) => {
         sx={{ objectFit: "contain" }}
       />
       <CardContent className="project-description">
-        <Typography variant="body2">
+        <Typography variant="h6">
           {description} {/* Use the description prop */}
         </Typography>
       </CardContent>

@@ -71,7 +71,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 const pages = ['About', 'Projects', 'Blog'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-export default function SearchMenu({ isAauthenticated, logoutUserData ,onSearch, showSearch }) {
+export default function SearchMenu({ isAauthenticated, logoutUserData, onSearch, showSearch }) {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const [searchProject, setSearchProject] =React.useState('');
@@ -139,21 +139,21 @@ export default function SearchMenu({ isAauthenticated, logoutUserData ,onSearch,
                             Projects
                         </Button>
                     </Box>
+                    {showSearch &&(
                     <Search>
-  {showSearch && (
-    <>
+<>
       <SearchIconWrapper>
         <SearchIcon />
       </SearchIconWrapper>
       <StyledInputBase
         placeholder="Search…"
         inputProps={{ 'aria-label': 'search' }}
-        value={searchProject}
+         value={searchProject}
         onChange={handleSearchInput}
       />
     </>
-  )}
 </Search>
+                    )}
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip arrow title="Open settings">
                             <IconButton size='small' onClick={handleOpenUserMenu} sx={{ marginTop: 0 }}>

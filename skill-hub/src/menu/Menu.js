@@ -12,15 +12,15 @@ import { request } from "../httpRequest";
 
 
 
-export const  handleSearch = (searchQuery, setSearchResults, projectsList) => {
-  // Perform the search based on searchQuery and set searchResults
-  // This can be fetching data from your backend or filtering data
-  // Example: setSearchResults(filteredResults);
-  const filtered = projectsList.filter((project) =>
-  project.name.toLowerCase().includes(searchQuery.toLowerCase())
-);
-setSearchResults(filtered);
-};
+// export const  handleSearch = (searchQuery, setSearchResults, projectsList) => {
+//   // Perform the search based on searchQuery and set searchResults
+//   // This can be fetching data from your backend or filtering data
+//   // Example: setSearchResults(filteredResults);
+//   const filtered = projectsList.filter((project) =>
+//   project.name.toLowerCase().includes(searchQuery.toLowerCase())
+// );
+// setSearchResults(filtered);
+// };
 
 function MenuComponent({isAauthenticated, logoutUserData}) {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -37,21 +37,21 @@ function MenuComponent({isAauthenticated, logoutUserData}) {
     }, []);
 
     
-  useEffect(() => {
-    const fetchProjects = async () => {
-      try {
-        const projects = await request.getProjects();
-        setProjectsList(projects);
-        //setFilteredProjects(projects); // Initialize filteredProjects with all projects
+  // useEffect(() => {
+  //   const fetchProjects = async () => {
+  //     try {
+  //       const projects = await request.getProjects();
+  //       setProjectsList(projects);
+  //       //setFilteredProjects(projects); // Initialize filteredProjects with all projects
 
-        console.log("in use effect: ", projects);
-      } catch (error) {
-        console.error("Error fetching projects:", error);
-      }
-    };
+  //       console.log("in use effect: ", projects);
+  //     } catch (error) {
+  //       console.error("Error fetching projects:", error);
+  //     }
+  //   };
 
-    fetchProjects();
-  }, []);
+  //   fetchProjects();
+  // }, []);
 
 
 
@@ -72,8 +72,7 @@ function MenuComponent({isAauthenticated, logoutUserData}) {
   
     return (
       <div>
-        <SearchMenu isAauthenticated={isAauthenticated} logoutUserData={logoutUserData}   onSearch={(searchQuery) =>
-          handleSearch(searchQuery, setSearchResults, projectsList)}></SearchMenu>
+        <SearchMenu isAauthenticated={isAauthenticated} logoutUserData={logoutUserData}></SearchMenu>
         {/* <Menu width={260}>
           <a id="home" className="bm-item" href={isAauthenticated ? "/":"/login"}><FontAwesomeIcon icon={faHouse} size='lg' flip /> Home</a>
           <a id="about" className="bm-item" href="/about"><FontAwesomeIcon icon={faAddressCard} size='lg' /> About</a>
