@@ -71,7 +71,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 const pages = ['About', 'Projects', 'Blog'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-export default function SearchMenu({ isAauthenticated, logoutUserData, onSearch, showSearch }) {
+export default function SearchMenu({ setIsAuthenticated, isAauthenticated, logoutUserData, onSearch, showSearch }) {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const [searchProject, setSearchProject] =React.useState('');
@@ -80,6 +80,7 @@ export default function SearchMenu({ isAauthenticated, logoutUserData, onSearch,
         //setIsAuthenticated(false);
         // Remove the authentication state from localStorage
         localStorage.removeItem('isAuthenticated');
+        setIsAuthenticated(false)
         logoutUserData()
         logout()
         handleCloseUserMenu()

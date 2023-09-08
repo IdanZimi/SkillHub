@@ -25,6 +25,8 @@ import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import { showNotification } from "../utils/utils";
 import backgroundImage from '../static/images/backgroundCard.jpg';
+import { useLocation } from 'react-router-dom'
+import { request } from "../httpRequest";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -37,7 +39,7 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-const Project = ({ imageUrl, title, description, positionName, id }) => {
+const Project = ({ path, imageUrl, title, description, positionName, id, adminId }) => {
   const imageURL = imageUrl ? imageUrl : img
   const [cvFiles, setCVFiles] = useState(null);
   const [expanded, setExpanded] = useState(false);
@@ -46,9 +48,18 @@ const Project = ({ imageUrl, title, description, positionName, id }) => {
   const [positionChips, setPositionChips] = useState([])
   const [showAlert, setShowAlert] = useState(false);
   const [uid, setuid] = useState('')
+  const [isProjectAdmin, setIsProjectAdmin] = useState(false)
 
   useEffect(() => {
+    debugger;
     setuid(localStorage.getItem('uid'))
+    setIsProjectAdmin(adminId === localStorage.getItem('uid'))
+    // async function fetchData() {
+
+    //   const projectAdminUid = await request.getAdminUidByProjectId(id)
+    //   setIsProjectAdmin(projectAdminUid === uid)
+    // }
+    // fetchData()
   }, [])
 
   useEffect(() => {
@@ -97,9 +108,11 @@ const Project = ({ imageUrl, title, description, positionName, id }) => {
       setCVFiles(file);
     }
   };
-  const onClose = () =>{
+  const onClose = (isApplied) => {
     setIsApplyOpen(false)
-    showNotification("info", "Success!", `Congratulations! Apply has been sent to the project admin`)
+    if (isApplied) {
+      showNotification("info", "Success!", `Congratulations! Apply has been sent to the project admin`)
+    }
   }
 
   const handleApplyClick = (e) => {
@@ -150,7 +163,7 @@ const Project = ({ imageUrl, title, description, positionName, id }) => {
         <IconButton aria-label="add to favorites" onClick={handleIsLikeClick}>
           <FavoriteIcon color={isLike ? "error" : "inherit"} />
         </IconButton>
-        <DeleteOutlinedIcon onClick={handleDeleteProject} />
+        {path === '/profile' && isProjectAdmin ? (<DeleteOutlinedIcon onClick={handleDeleteProject} />) : ''}
         <ExpandMore
           expand={expanded}
           onClick={handleExpandClick}
@@ -186,7 +199,7 @@ const Project = ({ imageUrl, title, description, positionName, id }) => {
               <Apply
                 uid={uid}
                 userName={localStorage.getItem("name")}
-                selectedSkills={selectedChips.map((chip)=>{return chip.label})}
+                selectedSkills={selectedChips.map((chip) => { return chip.label })}
                 projectId={id}
                 isOpen={isApplyOpen}
                 title={title}

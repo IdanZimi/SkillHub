@@ -1,19 +1,19 @@
 <div align="center">
 
-![](static/images/skillHub-logo.jpg)
+![](static/images/SkillHub.png)
 
 </div>
 
 # SkillHub
 
 Welcome to our new generation social innovation hub!
-'SkillHub' is a web application that is aimed at helping people finding partners and teamates for their projects.
+'SKILLHUB' is a web application that is aimed at helping people finding partners and teamates for their projects.
 
 ## Built With
 
 * [React](https://react.dev/) - React is a popular JavaScript library for building web and native user interfaces.
 * [Node.js](https://nodejs.org/en) - Node.js is an open-source JavaScript runtime environment.
-* [postgreSQL](https://www.postgresql.org/) - PostgreSQL is an open-source object-relational database management system.
+* [Firebase](https://firebase.google.com//) - Firebase is an app development platform that helps you build and grow apps and games users love. Backed by Google and trusted by millions of businesses around the world.
 
 ## Team members
 

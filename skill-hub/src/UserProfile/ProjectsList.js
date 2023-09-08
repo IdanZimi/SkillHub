@@ -1,8 +1,10 @@
 import Project from "../Project/Project";
 import "./ProjectsList.css";
 import { MDBRow, MDBCardText } from "mdb-react-ui-kit";
+import { useLocation } from 'react-router-dom'
 
 function ProjectsList({ projectsList, projectsTitle }) {
+  const currentPath = useLocation().pathname;
   return (
     <div className="mt-1">
       <div className="d-flex justify-content-between align-items-center mt-5">
@@ -19,12 +21,14 @@ function ProjectsList({ projectsList, projectsTitle }) {
         <div className="projects-container">
           {projectsList.map((project, index) => (
             <Project
+              path = {currentPath}
               key={index}
               id={project.id}
               imageUrl={project.image}
               title={project.name}
               description={project.description}
               positionName={project.positionName}
+              adminId={project.adminId}
             />
           ))}
         </div>

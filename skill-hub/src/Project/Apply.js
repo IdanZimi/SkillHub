@@ -76,20 +76,20 @@ const Apply = ({ isOpen, onClose, title, uid, userName, selectedSkills, projectI
     setEmailAddressInput('');
     setPhoneNumberInput('');
     setResumeFile(null);
-    onClose();
+    onClose(false);
   }
 
   const handleApply = async () => {
     setfinishedApply(false)
-     uploadResumeToStorage();
+    uploadResumeToStorage();
   }
 
-  const submitApplyToDB = async (url) =>{
+  const submitApplyToDB = async (url) => {
     const apply = {
       uid: uid,
       userName: userName,
       pid: projectId,
-      selectedSkills: selectedSkills, 
+      selectedSkills: selectedSkills,
       email: emailAddressInput,
       phone: phoneNumberInput,
       resumeURL: url
@@ -100,7 +100,7 @@ const Apply = ({ isOpen, onClose, title, uid, userName, selectedSkills, projectI
      onClose()
   }
 
-  const uploadResumeToStorage = () =>{
+  const uploadResumeToStorage = () => {
     const storageRef = ref(storage, `${resumeFile.name}`);
     const uploadTask = uploadBytesResumable(storageRef, resumeFile);
     uploadTask.on(
@@ -173,16 +173,16 @@ const Apply = ({ isOpen, onClose, title, uid, userName, selectedSkills, projectI
         <DialogActions style={{ justifyContent: 'space-between' }}>
           <Button variant="outlined" spacing={1} style={{ fontWeight: 'bold' }} onClick={handleDiscard}>Discard</Button>
           {finishedApply ?
-           <Button variant="contained" onClick={handleApply} >Save</Button> : 
-           <ColorRing
-                visible={true}
-                height="60"
-                width="60"
-                ariaLabel="blocks-loading"
-                wrapperStyle={{}}
-                wrapperClass="blocks-wrapper"
-                colors={['lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue']}
-              />}
+            <Button variant="contained" onClick={handleApply} >Save</Button> :
+            <ColorRing
+              visible={true}
+              height="60"
+              width="60"
+              ariaLabel="blocks-loading"
+              wrapperStyle={{}}
+              wrapperClass="blocks-wrapper"
+              colors={['lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue']}
+            />}
         </DialogActions>
       </DialogContent>
     </Dialog>
