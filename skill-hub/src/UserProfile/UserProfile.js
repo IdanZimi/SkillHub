@@ -77,6 +77,7 @@ function UserProfile({ projectsList, updateProjectsList }) {
     try {
       await request.changeApplyStatus(apply.id, "Approved");
       await request.addToProjectsUsersTable(apply.pid, apply.uid);
+      await request.updateAvailablePositions(apply.selectedSkills, apply.pid);
       showNotification(
         "info",
         "Success!",
