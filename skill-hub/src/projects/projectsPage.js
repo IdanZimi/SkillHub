@@ -13,13 +13,13 @@ import { styled } from '@mui/material/styles';
 //import ProjectsList from "./ProjectsList";
 import SearchMenu from "../menu/search-menu/searchMenu";
 import { handleLogout } from "../menu/search-menu/searchMenu";
-import { useLocation } from "react-router-dom"; 
+import { useLocation } from "react-router-dom";
 //import SearchMenu from "../menu/search-menu/searchMenu";
 //import { handleLogout } from "../menu/search-menu/searchMenu";
 //import MenuComponent, { handleSearch } from "../menu/Menu";
 import MuiAlert from '@mui/material/Alert';
 import NoResult from "../NoResult/NoResult";
-import {setSearchResults} from "../menu/search-menu/searchMenu";
+import { setSearchResults } from "../menu/search-menu/searchMenu";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -64,10 +64,10 @@ function ProjectsPage({ projectsList, updateProjectsList }) {
     const fetchProjects = async () => {
       try {
         const projects = await request.getProjects();
+        setFilteredProjects(projects); // Initialize filteredProjects with all projects
         updateProjectsList(projects);
         //console.log("in use effect: ", projects);
         //setProjectsList(projects);
-        setFilteredProjects(projects); // Initialize filteredProjects with all projects
 
         console.log("in use effect: ", projects);
       } catch (error) {
@@ -97,12 +97,12 @@ function ProjectsPage({ projectsList, updateProjectsList }) {
     if (searchQuery.trim() === "") {
       // If the search query is empty or only contains whitespace, show all projects.
       setFilteredProjects(projectsList);
-    }else{
-    const filtered = projectsList.filter((project) =>
-      project.name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-    // Update the filtered projects state
-     setFilteredProjects(filtered);
+    } else {
+      const filtered = projectsList.filter((project) =>
+        project.name.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      // Update the filtered projects state
+      setFilteredProjects(filtered);
     }
   };
   return (
@@ -116,16 +116,15 @@ function ProjectsPage({ projectsList, updateProjectsList }) {
           isOpen={isRegisterOpen}
         />
       )}
-        <SearchMenu
-          isAauthenticated={user !== null}
-          onSearch={handleSearch}
-          showSearch={true} 
-        />
-      
+      <SearchMenu
+        isAauthenticated={user !== null}
+        onSearch={handleSearch}
+        showSearch={true}
+      />
+
       <div className="projects-container">
         {/* <ProjectsList projectsList={projectsList}/> */}
-<<<<<<< HEAD
-        {projectsList.map((project, index) => (
+        {filteredProjects.map((project, index) => (
           <Project
             key={index}
             id={project.id}
@@ -133,38 +132,11 @@ function ProjectsPage({ projectsList, updateProjectsList }) {
             title={project.name}
             description={project.description}
             positionName={project.positionName}
-            adminId={project.adminId}
           />
         ))}
-      {filteredProjects.length === 0 ? (
-        <NoResult />    ) : (
-          filteredProjects.map((project, index) => (
-            <Project
-              key={index}
-              id={project.id}
-              imageUrl={project.image}
-              title={project.name}
-              description={project.description}
-              positionName={project.positionName}
-            />
-          ))
-        )}
-        
-=======
-        {filteredProjects.map((project, index) => (
-    <Project
-      key={index}
-      id={project.id}
-      imageUrl={project.image}
-      title={project.name}
-      description={project.description}
-      positionName={project.positionName}
-    />
-  ))}
-  {filteredProjects.length === 0 ? (
-    <NoResult />
-  ) : null}
->>>>>>> 0d0b980 (shiran - changes)
+        {filteredProjects.length === 0 ? (
+          <NoResult />
+        ) : null}
       </div>
     </div>
   );
