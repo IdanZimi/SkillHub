@@ -40,7 +40,9 @@ function AppliesList({
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>Name</TableCell>
+                {appliesTitle === "My projects' applies" ? (
+                  <TableCell>Name</TableCell>
+                ) : null}
                 <TableCell>Project</TableCell>
                 {/* <TableCell>Project ID</TableCell> */}
                 <TableCell>Skills</TableCell>
@@ -57,7 +59,9 @@ function AppliesList({
             <TableBody>
               {appliesList.map((apply) => (
                 <TableRow key={apply.id}>
-                  <TableCell>{apply.userName}</TableCell>
+                  {appliesTitle === "My projects' applies" ? (
+                    <TableCell>{apply.userName}</TableCell>
+                  ) : null}
                   <TableCell>
                     {
                       projectsList.find((project) => project.id === apply.pid)

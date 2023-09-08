@@ -145,5 +145,24 @@ export const request = {
       const errorData = await response.json();
       console.error("Login error:", errorData);
     }
+  },
+  updateAvailablePositions: async (skillsToUpdate, pid) => {
+    const skills = {skillsToUpdate: skillsToUpdate, pid: pid};
+    const response = await fetch(apiUrl + 'project/positions', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(skills)
+    })
+    if (response.ok) {
+      const responseData = await response.json();
+      console.log("doc ref: ", responseData);
+      return responseData;
+    } else {
+      const errorData = await response.json();
+      console.error("Login error:", errorData);
+    }
+
   }
 }
