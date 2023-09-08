@@ -22,7 +22,7 @@ import { request } from "../httpRequest";
 // setSearchResults(filtered);
 // };
 
-function MenuComponent({isAauthenticated, logoutUserData}) {
+function MenuComponent({logoutUserData}) {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [searchResults, setSearchResults] = useState([]);
     const [projectsList, setProjectsList] = useState([]); // Add this state
@@ -30,10 +30,10 @@ function MenuComponent({isAauthenticated, logoutUserData}) {
   
     useEffect(() => {
       // Check if the authentication state exists in localStorage
-      const storedAuthState = localStorage.getItem('isAuthenticated');
-      if (storedAuthState) {
-        setIsAuthenticated(JSON.parse(storedAuthState));
-      }
+      //const storedAuthState = localStorage.getItem('isAuthenticated');
+      //if (storedAuthState) {
+        setIsAuthenticated(localStorage.getItem('isAuthenticated'));
+      //}
     }, []);
 
     
@@ -72,7 +72,7 @@ function MenuComponent({isAauthenticated, logoutUserData}) {
   
     return (
       <div>
-        <SearchMenu isAauthenticated={isAauthenticated} logoutUserData={logoutUserData}></SearchMenu>
+        <SearchMenu setIsAuthenticated={setIsAuthenticated} isAauthenticated={isAuthenticated} logoutUserData={logoutUserData}></SearchMenu>
         {/* <Menu width={260}>
           <a id="home" className="bm-item" href={isAauthenticated ? "/":"/login"}><FontAwesomeIcon icon={faHouse} size='lg' flip /> Home</a>
           <a id="about" className="bm-item" href="/about"><FontAwesomeIcon icon={faAddressCard} size='lg' /> About</a>

@@ -15,7 +15,8 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage } from '../firebase';
 import { request } from '../httpRequest';
 import { ColorRing } from 'react-loader-spinner'
-
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
 
 const VisuallyHiddenInput = styled('input')`
   clip: rect(0 0 0 0);
@@ -48,6 +49,9 @@ const Apply = ({ isOpen, onClose, title, uid, userName, selectedSkills, projectI
   const [phoneNumberInput, setPhoneNumberInput] = useState('');
   const [resumeFile, setResumeFile] = useState(null);
   const [finishedApply, setfinishedApply] = useState(true)
+  const [applyIsValid, setApplyIsValid] = useState(true)
+  const [showAlert, setShowAlert] = useState(false);
+
 
   const handleEmailAddressChange = (e) => {
     setEmailAddressInput(e.target.value)
@@ -76,31 +80,44 @@ const Apply = ({ isOpen, onClose, title, uid, userName, selectedSkills, projectI
     setEmailAddressInput('');
     setPhoneNumberInput('');
     setResumeFile(null);
-    onClose();
+    onClose(false);
   }
-
+  const checkApplyIsValid = () => {
+    if (isValidEmail(emailAddressInput) && isValidPhoneNumber(phoneNumberInput) && (resumeFile != null)) {
+      return true
+    }
+    return false
+  }
   const handleApply = async () => {
-    setfinishedApply(false)
-     uploadResumeToStorage();
+    if (checkApplyIsValid()) {
+      setShowAlert(false)
+      // setApplyIsValid(true)
+      setfinishedApply(false)
+      uploadResumeToStorage();
+    }
+    else {
+      setShowAlert(true)
+      // setApplyIsValid(false)
+    }
   }
 
-  const submitApplyToDB = async (url) =>{
+  const submitApplyToDB = async (url) => {
     const apply = {
       uid: uid,
       userName: userName,
       pid: projectId,
-      selectedSkills: selectedSkills, 
+      selectedSkills: selectedSkills,
       email: emailAddressInput,
       phone: phoneNumberInput,
       resumeURL: url
-     }
-     console.log("in submitApplyToDB, apply is: ", apply);
-     await request.sendApplyToDB(apply)
-     setfinishedApply(true)
-     onClose()
+    }
+    console.log("in submitApplyToDB, apply is: ", apply);
+    await request.sendApplyToDB(apply)
+    setfinishedApply(true)
+    onClose()
   }
 
-  const uploadResumeToStorage = () =>{
+  const uploadResumeToStorage = () => {
     const storageRef = ref(storage, `${resumeFile.name}`);
     const uploadTask = uploadBytesResumable(storageRef, resumeFile);
     uploadTask.on(
@@ -157,6 +174,12 @@ const Apply = ({ isOpen, onClose, title, uid, userName, selectedSkills, projectI
               : ''
           }
         />
+        {showAlert && ( // Conditionally render the alert based on showAlert state
+          <Alert severity="error" sx={{ marginTop: 1 }} onClose={() => setShowAlert(false)}>
+            <AlertTitle>Error</AlertTitle>
+            Please fill all fields correctly!
+          </Alert>
+        )}
         {/* <MuiTelInput value={value} onChange={handlePhoneNumberChange} /> */}
         <DialogActions style={{ justifyContent: 'center' }}>
           <Button onClick={() => document.getElementById('fileInput').click()} variant="contained">Upload Resume
@@ -173,16 +196,16 @@ const Apply = ({ isOpen, onClose, title, uid, userName, selectedSkills, projectI
         <DialogActions style={{ justifyContent: 'space-between' }}>
           <Button variant="outlined" spacing={1} style={{ fontWeight: 'bold' }} onClick={handleDiscard}>Discard</Button>
           {finishedApply ?
-           <Button variant="contained" onClick={handleApply} >Save</Button> : 
-           <ColorRing
-                visible={true}
-                height="60"
-                width="60"
-                ariaLabel="blocks-loading"
-                wrapperStyle={{}}
-                wrapperClass="blocks-wrapper"
-                colors={['lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue']}
-              />}
+            <Button variant="contained" onClick={handleApply} >Save</Button> :
+            <ColorRing
+              visible={true}
+              height="60"
+              width="60"
+              ariaLabel="blocks-loading"
+              wrapperStyle={{}}
+              wrapperClass="blocks-wrapper"
+              colors={['lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue']}
+            />}
         </DialogActions>
       </DialogContent>
     </Dialog>
