@@ -7,20 +7,51 @@ import { auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
 import "./ProjectsPage.css";
 import { showNotification } from "../utils/utils";
-import AddIcon from "@mui/icons-material/Add";
-import Fab from "@mui/material/Fab";
-import { styled } from "@mui/material/styles";
-import ProjectsList from "../UserProfile/ProjectsList";
+import AddIcon from '@mui/icons-material/Add';
+import Fab from '@mui/material/Fab';
+import { styled } from '@mui/material/styles';
+//import ProjectsList from "./ProjectsList";
+import SearchMenu from "../menu/search-menu/searchMenu";
+import { handleLogout } from "../menu/search-menu/searchMenu";
+import { useLocation } from "react-router-dom";
+//import SearchMenu from "../menu/search-menu/searchMenu";
+//import { handleLogout } from "../menu/search-menu/searchMenu";
+//import MenuComponent, { handleSearch } from "../menu/Menu";
+import MuiAlert from '@mui/material/Alert';
+import NoResult from "../NoResult/NoResult";
+import { setSearchResults } from "../menu/search-menu/searchMenu";
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const StyledFab = styled(Fab)({
   position: "fixed",
   top: "70px",
   right: "20px",
 });
+//shirab
+// const handleSearch = (searchQuery, setSearchResults, filteredProjects) => {
+
+//   // if (!projectsList) {
+//   //   // Handle the case where projectsList is undefined or null
+//   //   setSearchResults([]);
+//   //   return;
+//   // }
+//   const filtered = filteredProjects.filter((project) =>
+//     project.name.toLowerCase().includes(searchQuery.toLowerCase())
+//   );
+//   setSearchResults(filtered);
+// };
 
 function ProjectsPage({ projectsList, updateProjectsList }) {
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
   const [user, loading, error] = useAuthState(auth);
+  const [filteredProjects, setFilteredProjects] = useState([]);
+  // const location = useLocation(); // Get the current route location
+
+  // // Initialize isProjectsPage based on the route
+  // const isProjectsPage = location.pathname === "/projects";
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -33,8 +64,12 @@ function ProjectsPage({ projectsList, updateProjectsList }) {
     const fetchProjects = async () => {
       try {
         const projects = await request.getProjects();
+        setFilteredProjects(projects); // Initialize filteredProjects with all projects
         updateProjectsList(projects);
         //console.log("in use effect: ", projects);
+        //setProjectsList(projects);
+
+        console.log("in use effect: ", projects);
       } catch (error) {
         console.error("Error fetching projects:", error);
       }
@@ -58,11 +93,20 @@ function ProjectsPage({ projectsList, updateProjectsList }) {
     setIsRegisterOpen(false);
   };
 
+  const handleSearch = (searchQuery) => {
+    if (searchQuery.trim() === "") {
+      // If the search query is empty or only contains whitespace, show all projects.
+      setFilteredProjects(projectsList);
+    } else {
+      const filtered = projectsList.filter((project) =>
+        project.name.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      // Update the filtered projects state
+      setFilteredProjects(filtered);
+    }
+  };
   return (
     <div>
-      {/* <button className="create__btn" onClick={handleButtonClick}>
-        Create +
-      </button> */}
       <StyledFab color="primary" aria-label="add" onClick={handleButtonClick}>
         <AddIcon />
       </StyledFab>
@@ -72,9 +116,15 @@ function ProjectsPage({ projectsList, updateProjectsList }) {
           isOpen={isRegisterOpen}
         />
       )}
+      <SearchMenu
+        isAauthenticated={user !== null}
+        onSearch={handleSearch}
+        showSearch={true}
+      />
+
       <div className="projects-container">
         {/* <ProjectsList projectsList={projectsList}/> */}
-        {projectsList.map((project, index) => (
+        {filteredProjects.map((project, index) => (
           <Project
             key={index}
             id={project.id}
@@ -82,9 +132,11 @@ function ProjectsPage({ projectsList, updateProjectsList }) {
             title={project.name}
             description={project.description}
             positionName={project.positionName}
-            adminId={project.adminId}
           />
         ))}
+        {filteredProjects.length === 0 ? (
+          <NoResult />
+        ) : null}
       </div>
     </div>
   );

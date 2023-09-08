@@ -16,6 +16,11 @@
   justify-content: space-between;
   cursor: pointer;
   transition: transform 200ms ease-in;
+  /* background-image: url('https://firebasestorage.googleapis.com/v0/b/skillhub-f0207.appspot.com/o/background-skillhub.jpg?alt=media&token=0a769226-867d-4c1a-967a-3e43e6297bc6');
+  background-size: cover; 
+  background-repeat: no-repeat;
+  background-attachment: fixed; 
+   */
 }
 
 .project-name .MuiCardHeader-title {

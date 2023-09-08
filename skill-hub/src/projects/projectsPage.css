@@ -1,5 +1,5 @@
 .projects-container{
-  /* display: flex; */
+  /* display: flex;  */
   flex-direction: column;
   align-items: flex-start; /* Adjust alignment as needed */
   margin-top: 135px;

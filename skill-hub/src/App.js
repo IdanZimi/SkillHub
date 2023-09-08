@@ -21,6 +21,11 @@ function App() {
   const updateProjectsList = (projects) => {
     setProjectsList(projects);
   }
+  //const [name, setName] = useState("");
+  //const [uid, setuid] = useState("");
+  //const [user, loading, error] = useAuthState(auth);
+ 
+
 
   const setUserAuthenticated = () => {
     setIsAuthenticated(true);
@@ -32,6 +37,8 @@ function App() {
     localStorage.removeItem("name");
   };
 
+  
+;
   // useEffect(() => {
   //   const unsubscribe = authStateChanged(auth, (user) => {
   //     if (user) {

@@ -71,9 +71,10 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 const pages = ['About', 'Projects', 'Blog'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-export default function SearchMenu({ isAauthenticated, logoutUserData }) {
+export default function SearchMenu({ isAauthenticated, logoutUserData, onSearch, showSearch }) {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
+    const [searchProject, setSearchProject] =React.useState('');
 
     const handleLogout = () => {
         //setIsAuthenticated(false);
@@ -96,6 +97,13 @@ export default function SearchMenu({ isAauthenticated, logoutUserData }) {
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
+
+    const handleSearchInput = (event) => {
+        const searchText = event.target.value;
+        setSearchProject(searchText);
+        onSearch(searchText);
+      };
+
 
     return (
         <AppBar position="fixed" sx={{ maxHeight: '55px' }}>
@@ -131,15 +139,21 @@ export default function SearchMenu({ isAauthenticated, logoutUserData }) {
                             Projects
                         </Button>
                     </Box>
+                    {showSearch &&(
                     <Search>
-                        <SearchIconWrapper>
-                            <SearchIcon />
-                        </SearchIconWrapper>
-                        <StyledInputBase
-                            placeholder="Search…"
-                            inputProps={{ 'aria-label': 'search' }}
-                        />
-                    </Search>
+<>
+      <SearchIconWrapper>
+        <SearchIcon />
+      </SearchIconWrapper>
+      <StyledInputBase
+        placeholder="Search…"
+        inputProps={{ 'aria-label': 'search' }}
+         value={searchProject}
+        onChange={handleSearchInput}
+      />
+    </>
+</Search>
+                    )}
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip arrow title="Open settings">
                             <IconButton size='small' onClick={handleOpenUserMenu} sx={{ marginTop: 0 }}>

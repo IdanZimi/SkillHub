@@ -8,9 +8,25 @@ import {
 import SearchMenu from './search-menu/searchMenu';
 import React, { useState, useEffect } from 'react';
 import {logout} from '../firebase'
+import { request } from "../httpRequest";
+
+
+
+// export const  handleSearch = (searchQuery, setSearchResults, projectsList) => {
+//   // Perform the search based on searchQuery and set searchResults
+//   // This can be fetching data from your backend or filtering data
+//   // Example: setSearchResults(filteredResults);
+//   const filtered = projectsList.filter((project) =>
+//   project.name.toLowerCase().includes(searchQuery.toLowerCase())
+// );
+// setSearchResults(filtered);
+// };
 
 function MenuComponent({isAauthenticated, logoutUserData}) {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [searchResults, setSearchResults] = useState([]);
+    const [projectsList, setProjectsList] = useState([]); // Add this state
+
   
     useEffect(() => {
       // Check if the authentication state exists in localStorage
@@ -19,6 +35,26 @@ function MenuComponent({isAauthenticated, logoutUserData}) {
         setIsAuthenticated(JSON.parse(storedAuthState));
       }
     }, []);
+
+    
+  // useEffect(() => {
+  //   const fetchProjects = async () => {
+  //     try {
+  //       const projects = await request.getProjects();
+  //       setProjectsList(projects);
+  //       //setFilteredProjects(projects); // Initialize filteredProjects with all projects
+
+  //       console.log("in use effect: ", projects);
+  //     } catch (error) {
+  //       console.error("Error fetching projects:", error);
+  //     }
+  //   };
+
+  //   fetchProjects();
+  // }, []);
+
+
+
   
     const handleLogin = () => {
       //setIsAuthenticated(true);

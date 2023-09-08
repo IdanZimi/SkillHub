@@ -24,6 +24,7 @@ import Apply from "./Apply";
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import { showNotification } from "../utils/utils";
+import backgroundImage from '../static/images/backgroundCard.jpg';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -79,6 +80,9 @@ const Project = ({ imageUrl, title, description, positionName, id }) => {
     });
   };
 
+
+  const [isLike, setIsLike] = useState(false);
+  //console.log(positionName);
   const handleExpandClick = () => {
     setExpanded(!expanded);
     //console.log(positionName)
@@ -108,20 +112,24 @@ const Project = ({ imageUrl, title, description, positionName, id }) => {
     setIsApplyOpen(true);
   }
 
+  const handleIsLikeClick = () => {
+    setIsLike(!isLike); // Toggle favorite status
+  };
   return (
     <Card raised className="project-body"
-      sx={{
-        maxWidth: 350,
-        // maxHeight: 350,
-        // margin: "0 auto",
-        //overflow: 'hidden',
-        // maxHeight: expanded ? 'none' : '20rem',
-        padding: "0.1em",
-      }}>
+    sx={{
+      maxWidth: 350,
+//      backgroundImage: '..\static\images\backgroundCard.jpg',
+      // maxHeight: 350,
+      // margin: "0 auto",
+      //overflow: 'hidden',
+      // maxHeight: expanded ? 'none' : '20rem',
+      padding: "0.1em"
+    }}>  
+
       <CardHeader className="project-name"
         avatar={
           <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-
           </Avatar>
         }
         title={title}
@@ -134,13 +142,13 @@ const Project = ({ imageUrl, title, description, positionName, id }) => {
         sx={{ objectFit: "contain" }}
       />
       <CardContent className="project-description">
-        <Typography variant="body2">
+        <Typography variant="h6">
           {description} {/* Use the description prop */}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon color={"error"} />
+        <IconButton aria-label="add to favorites" onClick={handleIsLikeClick}>
+          <FavoriteIcon color={isLike ? "error" : "inherit"} />
         </IconButton>
         <DeleteOutlinedIcon onClick={handleDeleteProject} />
         <ExpandMore
