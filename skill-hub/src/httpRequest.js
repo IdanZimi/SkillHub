@@ -67,7 +67,8 @@ export const request = {
       console.error("Login error:", errorData);
     }
   },
-  sendApplyToDB: async (apply) =>{
+  sendApplyToDB: async (apply) => {
+    //debugger;
     const response = await fetch(apiUrl + 'apply', {
       method: 'POST',
       headers: {
@@ -98,7 +99,7 @@ export const request = {
     }
   },
   changeApplyStatus: async (applyId, applyStatus) => {
-    const apply = {id: applyId, status: applyStatus};
+    const apply = { id: applyId, status: applyStatus };
     const response = await fetch(apiUrl + 'apply/status', {
       method: 'PUT',
       headers: {
@@ -115,8 +116,8 @@ export const request = {
       console.error("Login error:", errorData);
     }
   },
-  addToProjectsUsersTable : async (pid, uid) => {
-    const data = {pid: pid, uid: uid};
+  addToProjectsUsersTable: async (pid, uid) => {
+    const data = { pid: pid, uid: uid };
     const response = await fetch(apiUrl + 'projects/users', {
       method: 'POST',
       headers: {
@@ -135,6 +136,18 @@ export const request = {
   },
   getProjectsOfUser: async (uid) => {
     const response = await fetch(apiUrl + 'projects/users' + `?uid=${uid}`, {
+      method:'GET'})
+      if (response.ok) {
+        const responseData = await response.json();
+        console.log(responseData);
+        return responseData;
+      } else {
+        const errorData = await response.json();
+        console.error("Login error:", errorData);
+      }
+    },
+  getAdminUidByProjectId: async (projectId) => {
+    const response = await fetch(`${apiUrl}projects/${projectId}`, {
       method: 'GET'
     })
     if (response.ok) {
@@ -146,4 +159,17 @@ export const request = {
       console.error("Login error:", errorData);
     }
   }
+  // getUserName: async (uid) => {
+  //   const response = await fetch(apiUrl + `user/name?uid=${uid}`, {
+  //     method: 'GET'
+  //   })
+  //   if (response.ok) {
+  //     const responseData = await response.json();
+  //     //console.log(responseData.userName);
+  //     return responseData.userName;
+  //   } else {
+  //     const errorData = await response.json();
+  //     console.error("Login error:", errorData);
+  //   }
+  // }
 }

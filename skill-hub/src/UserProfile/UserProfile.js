@@ -17,12 +17,14 @@ import { request } from "../httpRequest";
 import { showNotification } from "../utils/utils";
 import ProjectsList from "./ProjectsList";
 import AppliesList from "./AppliesList";
+import {useLocation} from 'react-router-dom'
 
 function UserProfile({ projectsList, updateProjectsList }) {
   const [about, setAbout] = useState(localStorage.getItem("about") || "");
   const [isEditMode, setIsEditMode] = useState(false);
   const [appliesList, setAppliesList] = useState([]);
   const [projectUserList, setProjectUserList] = useState([]);
+
 
   const filteredProjectsList = projectsList.filter(
     (project) => project.adminId === localStorage.getItem("uid")
