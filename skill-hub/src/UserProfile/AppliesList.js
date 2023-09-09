@@ -29,11 +29,11 @@ function AppliesList({
         <MDBCardText className="lead fw-normal mb-0">
           {appliesTitle}
         </MDBCardText>
-        <MDBCardText className="mb-0">
+        {/* <MDBCardText className="mb-0">
           <a href="#!" className="text-muted">
             Show all
           </a>
-        </MDBCardText>
+        </MDBCardText> */}
       </div>
       {appliesList.length !== 0 ? (
         <TableContainer>
@@ -71,7 +71,7 @@ function AppliesList({
                     </>
                   ) : null}
                   <TableCell>
-                    {apply.title}
+                    {apply.ptitle}
                   </TableCell>
                   {/* <TableCell>{apply.pid}</TableCell> */}
                   <TableCell>{apply.selectedSkills.join(", ")}</TableCell>
