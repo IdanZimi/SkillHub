@@ -44,10 +44,11 @@ const StyledFab = styled(Fab)({
 //   setSearchResults(filtered);
 // };
 
-function ProjectsPage({ projectsList, updateProjectsList }) {
+function ProjectsPage({ projectsList, setProjectsList }) {
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
   const [user, loading, error] = useAuthState(auth);
   const [filteredProjects, setFilteredProjects] = useState([]);
+  const [loadingProjects, setLoadingProjects] = useState(false)
   // const location = useLocation(); // Get the current route location
 
   // // Initialize isProjectsPage based on the route
@@ -61,22 +62,24 @@ function ProjectsPage({ projectsList, updateProjectsList }) {
   }, [user, loading]);
 
   useEffect(() => {
-    const fetchProjects = async () => {
-      try {
-        const projects = await request.getProjects();
-        setFilteredProjects(projects); // Initialize filteredProjects with all projects
-        updateProjectsList(projects);
-        //console.log("in use effect: ", projects);
-        //setProjectsList(projects);
+    try {
+      setLoadingProjects(true)
+      //const projects = await request.getProjects();
+      console.log("in use effect in projectpage, projects", projectsList)
+      //console.log("projects ", projectsList)
+      setFilteredProjects(projectsList); // Initialize filteredProjects with all projects
+      //setProjectsList(projects);
+      //console.log("in use effect: ", projects);
+      //setProjectsList(projects);
+      setLoadingProjects(false)
+      //console.log("in use effect: ", projects);
+    } catch (error) {
+      console.error("Error fetching projects:", error);
+    }
 
-        console.log("in use effect: ", projects);
-      } catch (error) {
-        console.error("Error fetching projects:", error);
-      }
-    };
 
-    fetchProjects();
-  }, []);
+    //fetchProjects();
+  }, [projectsList]);
 
   const handleButtonClick = () => {
     setIsRegisterOpen(true);
@@ -87,7 +90,7 @@ function ProjectsPage({ projectsList, updateProjectsList }) {
       const projectID = await request.addProjectToDB(project);
       project.id = projectID;
       const newProjectsList = [...projectsList, project];
-      updateProjectsList(newProjectsList);
+      setProjectsList(newProjectsList);
       showNotification("info", "Success!", `${project.title} created`);
     }
     setIsRegisterOpen(false);
@@ -123,7 +126,6 @@ function ProjectsPage({ projectsList, updateProjectsList }) {
       />
 
       <div className="projects-container">
-        {/* <ProjectsList projectsList={projectsList}/> */}
         {filteredProjects.map((project, index) => (
           <Project
             key={index}
@@ -132,11 +134,12 @@ function ProjectsPage({ projectsList, updateProjectsList }) {
             title={project.name}
             description={project.description}
             positionName={project.positionName}
+            adminId={project.adminId}
           />
         ))}
+
         {filteredProjects.length === 0 ? (
-          <NoResult />
-        ) : null}
+          <NoResult />) : null}
       </div>
     </div>
   );

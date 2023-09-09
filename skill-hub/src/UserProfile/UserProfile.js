@@ -19,7 +19,7 @@ import ProjectsList from "./ProjectsList";
 import AppliesList from "./AppliesList";
 import {useLocation} from 'react-router-dom'
 
-function UserProfile({ projectsList, updateProjectsList }) {
+function UserProfile({ projectsList, setProjectsList }) {
   const [about, setAbout] = useState(localStorage.getItem("about") || "");
   const [isEditMode, setIsEditMode] = useState(false);
   const [appliesList, setAppliesList] = useState([]);
@@ -45,7 +45,8 @@ function UserProfile({ projectsList, updateProjectsList }) {
 
   useEffect(() => {
     try {
-      fetchProjects();
+      console.log("in use effect userprofile, projects:", projectsList)
+      //fetchProjects();
       fetchApplies();
       fetchProjectsUsers();
     } catch (error) {
@@ -56,7 +57,7 @@ function UserProfile({ projectsList, updateProjectsList }) {
   const fetchProjects = async () => {
     try {
       const projects = await request.getProjects();
-      updateProjectsList(projects);
+      setProjectsList(projects);
       //console.log("projects are: ", projects);
     } catch (error) {
       console.error("Error fetching projects:", error);
@@ -65,6 +66,7 @@ function UserProfile({ projectsList, updateProjectsList }) {
 
   const fetchApplies = async () => {
     try {
+      console.log("fetching applies...")
       const applies = await request.getApplies();
       setAppliesList(applies);
       //console.log("applies are: ", applies);
@@ -105,6 +107,7 @@ function UserProfile({ projectsList, updateProjectsList }) {
 
   const fetchProjectsUsers = async () => {
     try {
+      console.log("fetching users projects...")
       const matchingProjects = await request.getProjectsOfUser(localStorage.getItem("uid"));
       console.log("matching projects are: ", matchingProjects);
       setProjectUserList(matchingProjects);

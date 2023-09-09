@@ -64,6 +64,7 @@ function AppliesList({
                   ) : null}
                   <TableCell>
                     {
+                      projectsList.length !== 0 &&
                       projectsList.find((project) => project.id === apply.pid)
                         .name
                     }
