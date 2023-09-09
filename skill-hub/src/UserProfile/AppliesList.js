@@ -71,9 +71,7 @@ function AppliesList({
                     </>
                   ) : null}
                   <TableCell>
-                    {projectsList.length !== 0 &&
-                      projectsList.find((project) => project.id === apply.pid)
-                        .title}
+                    {apply.title}
                   </TableCell>
                   {/* <TableCell>{apply.pid}</TableCell> */}
                   <TableCell>{apply.selectedSkills.join(", ")}</TableCell>

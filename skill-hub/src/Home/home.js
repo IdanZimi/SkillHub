@@ -27,6 +27,7 @@ function Home({ setUserAuthenticated, logoutUserData }) {
             setUserAuthenticated();
             localStorage.setItem("uid", data.uid);
             localStorage.setItem("name", data.name);
+            //localStorage.setItem("profilePictureURL", "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp");
         } catch (err) {
             console.error(err);
             alert("An error occured while fetching user data");

@@ -18,29 +18,31 @@ import { showNotification } from "../utils/utils";
 import ProjectsList from "./ProjectsList";
 import AppliesList from "./AppliesList";
 import { useLocation } from "react-router-dom";
-import Button from '@mui/material/Button';
-import DialogActions from '@mui/material/DialogActions';
-import { styled } from '@mui/material';
-
+import Button from "@mui/material/Button";
+import DialogActions from "@mui/material/DialogActions";
+import { styled } from "@mui/material";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { storage } from "../firebase";
+import img from "../static/images/projectImage.jpg";
 
 function UserProfile({ projectsList, setProjectsList }) {
   const [about, setAbout] = useState(localStorage.getItem("about") || "");
   const [isEditMode, setIsEditMode] = useState(false);
   const [appliesList, setAppliesList] = useState([]);
   const [projectUserList, setProjectUserList] = useState([]);
-  const [imageFile, setImageFile] = useState(null);
+  const [profileImageUrl, setProfileImageUrl] = useState("");
 
-  const VisuallyHiddenInput = styled('input')`
-  clip: rect(0 0 0 0);
-  clip-path: inset(50%);
-  height: 1px;
-  overflow: hidden;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  white-space: nowrap;
-  width: 1px;
-`;
+  const VisuallyHiddenInput = styled("input")`
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    white-space: nowrap;
+    width: 1px;
+  `;
 
   const filteredProjectsList = projectsList.filter(
     (project) => project.adminId === localStorage.getItem("uid")
@@ -63,6 +65,7 @@ function UserProfile({ projectsList, setProjectsList }) {
     try {
       console.log("in use effect userprofile, projects:", projectsList);
       //fetchProjects();
+      fetchUserProfilePicture();
       fetchApplies();
       fetchProjectsUsers();
     } catch (error) {
@@ -70,13 +73,24 @@ function UserProfile({ projectsList, setProjectsList }) {
     }
   }, []);
 
-  const fetchProjects = async () => {
+  // const fetchProjects = async () => {
+  //   try {
+  //     const projects = await request.getProjects();
+  //     setProjectsList(projects);
+  //     //console.log("projects are: ", projects);
+  //   } catch (error) {
+  //     console.error("Error fetching projects:", error);
+  //   }
+  // };
+
+  const fetchUserProfilePicture = async () => {
     try {
-      const projects = await request.getProjects();
-      setProjectsList(projects);
-      //console.log("projects are: ", projects);
+      const profilePictureUrl = await request.getUserProfilePicture(
+        localStorage.getItem("uid")
+      );
+      setProfileImageUrl(profilePictureUrl);
     } catch (error) {
-      console.error("Error fetching projects:", error);
+      console.error("Error fetching applies:", error);
     }
   };
 
@@ -90,13 +104,15 @@ function UserProfile({ projectsList, setProjectsList }) {
       console.error("Error fetching applies:", error);
     }
   };
-  const handleDeleteProject = async (id)=>{
-    const deletedProjectId = await request.deleteProjectById(id)
-    if (deletedProjectId){
-      const updatedProjectList = projectsList.filter((project) => project.id !== deletedProjectId.id);
-      setProjectsList(updatedProjectList)
+  const handleDeleteProject = async (id) => {
+    const deletedProjectId = await request.deleteProjectById(id);
+    if (deletedProjectId) {
+      const updatedProjectList = projectsList.filter(
+        (project) => project.id !== deletedProjectId.id
+      );
+      setProjectsList(updatedProjectList);
     }
-  }
+  };
 
   const approveApplyHandler = async (apply) => {
     try {
@@ -148,22 +164,23 @@ function UserProfile({ projectsList, setProjectsList }) {
 
   const handleImageChange = (e) => {
     const selectedImage = e.target.files[0];
-    if (selectedImage) {
-      console.log(selectedImage);
-      setImageFile(selectedImage);
-    }
-    // const storageRef = ref(storage, `${imageFile.name}`);
-    // const uploadTask = uploadBytesResumable(storageRef, imageFile);
-    // uploadTask.on(
-    //   "state_changed",
-    //   null,
-    //   (err) => console.log(err),
-    //   () => {
-    //     getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-    //       submit(url);
-    //     });
-    //   }
-    // );
+    const storageRef = ref(storage, `${selectedImage.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, selectedImage);
+    uploadTask.on(
+      "state_changed",
+      null,
+      (err) => console.log(err),
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+          changeProfilePicture(url);
+        });
+      }
+    );
+  };
+
+  const changeProfilePicture = (newImageURL) => {
+    setProfileImageUrl(newImageURL);
+    request.updateProfilePicture(localStorage.getItem("uid"), newImageURL);
   };
 
   return (
@@ -181,11 +198,11 @@ function UserProfile({ projectsList, setProjectsList }) {
                   style={{ width: "150px" }}
                 >
                   <MDBCardImage
-                    src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp"
+                    src={profileImageUrl ? profileImageUrl : img}
                     alt="Generic placeholder image"
                     className="mt-4 mb-2 img-thumbnail"
                     fluid
-                    style={{ width: "150px", zIndex: "1" }}
+                    style={{ width: "150px", height:"120px", zIndex: "1" }}
                   />
                   <DialogActions style={{ justifyContent: "center" }}>
                     <Button
@@ -223,7 +240,7 @@ function UserProfile({ projectsList, setProjectsList }) {
                 className="p-4 text-black"
                 style={{ backgroundColor: "white" }}
               ></div>
-              <MDBCardBody className="text-black p-4">
+              <MDBCardBody className="text-black p-4 mt-5">
                 <div className="mb-5">
                   <p className="lead fw-normal mb-1">About</p>
                   {isEditMode ? (
@@ -265,7 +282,7 @@ function UserProfile({ projectsList, setProjectsList }) {
                 <ProjectsList
                   projectsList={filteredProjectsList}
                   projectsTitle="Projects I've created"
-                  handleDeleteProject = {handleDeleteProject}
+                  handleDeleteProject={handleDeleteProject}
                 />
                 <AppliesList
                   appliesList={applicationsForMyProjects}
