@@ -25,7 +25,7 @@ function ProjectsList({ projectsList, projectsTitle }) {
               key={index}
               id={project.id}
               imageUrl={project.image}
-              title={project.name}
+              title={project.title}
               description={project.description}
               positionName={project.positionName}
               adminId={project.adminId}

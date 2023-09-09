@@ -102,7 +102,7 @@ function ProjectsPage({ projectsList, setProjectsList }) {
       setFilteredProjects(projectsList);
     } else {
       const filtered = projectsList.filter((project) =>
-        project.name.toLowerCase().includes(searchQuery.toLowerCase())
+        project.title.toLowerCase().includes(searchQuery.toLowerCase())
       );
       // Update the filtered projects state
       setFilteredProjects(filtered);
@@ -131,7 +131,7 @@ function ProjectsPage({ projectsList, setProjectsList }) {
             key={index}
             id={project.id}
             imageUrl={project.image}
-            title={project.name}
+            title={project.title}
             description={project.description}
             positionName={project.positionName}
             adminId={project.adminId}

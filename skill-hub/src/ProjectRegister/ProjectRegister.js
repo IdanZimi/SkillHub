@@ -20,6 +20,7 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage } from '../firebase';
 import { ColorRing } from 'react-loader-spinner'
 
+const _ = require("lodash");
 
 const VisuallyHiddenInput = styled('input')`
   clip: rect(0 0 0 0);
@@ -122,12 +123,16 @@ export default function ProjectRegister({ isOpen, onClose }) {
     );
   };
   const submit = async (imageURL) => {
+    const deepCopyPositions = _.cloneDeep(positionName);
+    const status = "pending";
     const newProject = {
       uid: localStorage.getItem("uid"),
       image: imageFile ? imageURL : '',
       title: projectName,
       description: description,
       positionName: positionName,
+      availablePositions: deepCopyPositions,
+      status: status
     };
     onClose(newProject);
   };
