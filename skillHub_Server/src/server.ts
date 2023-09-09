@@ -38,10 +38,6 @@ app.post("/register", async (req: Request, res: Response) => {
   const { fullName, email, password } = req.body;
   try {
     userService.registerUser(fullName, email, password, []);
-    // Here, you would typically perform your registration logic
-    // and save the user data to a database or perform other actions.
-    // For demonstration purposes, we'll just return a response.
-
     res.json({ message: "Registration successful", fullName, email });
   } catch (err) {
     console.error(err);
@@ -159,15 +155,17 @@ app.put("/project/positions", async (req: Request, res: Response) => {
 });
 
 app.get('/projects/:projectId',async (req: Request, res: Response) => {
-    // Get the project ID from the request parameters
     const projectId = req.params.projectId;
     const uid = await projectService.getAdminUidWithProjectId(projectId)
-    // Perform any necessary operations (e.g., query a database)
-    // In this example, we'll just send back a JSON response
     res.json({uid});
   });
 
-// app.get("/user/name", async (req: Request, res: Response) => {
+
+  app.delete('/projects/:projectId',async (req: Request, res: Response) => {
+    const projectId = req.params.projectId;
+    const uid = await projectService.deleteProjectById(projectId)
+    res.json({messege:'delete successfuly',uid});
+  });// app.get("/user/name", async (req: Request, res: Response) => {
 //     try {
 //         const { uid } = req.query;
 //         const userName = await userService.getUserName(uid.toString());

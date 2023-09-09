@@ -51,7 +51,6 @@ const Project = ({ path, imageUrl, title, description, positionName, id, adminId
   const [isProjectAdmin, setIsProjectAdmin] = useState(false)
 
   useEffect(() => {
-    debugger;
     setuid(localStorage.getItem('uid'))
     setIsProjectAdmin(adminId === localStorage.getItem('uid'))
     // async function fetchData() {

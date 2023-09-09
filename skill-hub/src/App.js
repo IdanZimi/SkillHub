@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -13,18 +13,35 @@ import ProjectsPage from "./projects/ProjectsPage";
 import AboutPage from './about/AboutPage';
 import { ReactNotifications, store } from 'react-notifications-component'
 import UserProfile from "./UserProfile/UserProfile";
+import { request } from "./httpRequest";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [projectsList, setProjectsList] = useState([]);
 
-  const updateProjectsList = (projects) => {
-    setProjectsList(projects);
-  }
+  // const updateProjectsList = (projects) => {
+  //   setProjectsList(projects);
+  // }
   //const [name, setName] = useState("");
   //const [uid, setuid] = useState("");
   //const [user, loading, error] = useAuthState(auth);
- 
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        //setLoadingProjects(true)
+        const projects = await request.getProjects();
+        //setFilteredProjects(projects); // Initialize filteredProjects with all projects
+        setProjectsList(projects);
+        //setProjectsList(projects);
+        //setLoadingProjects(false)
+        console.log("in use effect in App: ", projects);
+      } catch (error) {
+        console.error("Error fetching projects:", error);
+      }
+    };
+
+    fetchProjects();
+  }, []);
 
 
   const setUserAuthenticated = () => {
@@ -82,9 +99,9 @@ function App() {
               <Route path="/" element={<Home setUserAuthenticated={setUserAuthenticated} logoutUserData={logoutUserData} />} />
               <Route path="/login" element={<Alterlogin />} />
               <Route path="/register" element={<AlterRegister />} />
-              <Route path="/projects" element={<ProjectsPage projectsList={projectsList} updateProjectsList={updateProjectsList}/>} />
+              <Route path="/projects" element={<ProjectsPage projectsList={projectsList} setProjectsList={setProjectsList}/>} />
               <Route path="/about" element={<AboutPage />} />
-              <Route path="/profile" element={<UserProfile projectsList={projectsList} updateProjectsList={updateProjectsList}/>} />
+              <Route path="/profile" element={<UserProfile projectsList={projectsList} setProjectsList={setProjectsList}/>} />
             </Routes>
           </Router>
         </div>
