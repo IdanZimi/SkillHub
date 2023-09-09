@@ -17,14 +17,30 @@ import { request } from "../httpRequest";
 import { showNotification } from "../utils/utils";
 import ProjectsList from "./ProjectsList";
 import AppliesList from "./AppliesList";
-import {useLocation} from 'react-router-dom'
+import { useLocation } from "react-router-dom";
+import Button from '@mui/material/Button';
+import DialogActions from '@mui/material/DialogActions';
+import { styled } from '@mui/material';
+
 
 function UserProfile({ projectsList, setProjectsList }) {
   const [about, setAbout] = useState(localStorage.getItem("about") || "");
   const [isEditMode, setIsEditMode] = useState(false);
   const [appliesList, setAppliesList] = useState([]);
   const [projectUserList, setProjectUserList] = useState([]);
+  const [imageFile, setImageFile] = useState(null);
 
+  const VisuallyHiddenInput = styled('input')`
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  white-space: nowrap;
+  width: 1px;
+`;
 
   const filteredProjectsList = projectsList.filter(
     (project) => project.adminId === localStorage.getItem("uid")
@@ -45,7 +61,7 @@ function UserProfile({ projectsList, setProjectsList }) {
 
   useEffect(() => {
     try {
-      console.log("in use effect userprofile, projects:", projectsList)
+      console.log("in use effect userprofile, projects:", projectsList);
       //fetchProjects();
       fetchApplies();
       fetchProjectsUsers();
@@ -66,7 +82,7 @@ function UserProfile({ projectsList, setProjectsList }) {
 
   const fetchApplies = async () => {
     try {
-      console.log("fetching applies...")
+      console.log("fetching applies...");
       const applies = await request.getApplies();
       setAppliesList(applies);
       //console.log("applies are: ", applies);
@@ -107,8 +123,10 @@ function UserProfile({ projectsList, setProjectsList }) {
 
   const fetchProjectsUsers = async () => {
     try {
-      console.log("fetching users projects...")
-      const matchingProjects = await request.getProjectsOfUser(localStorage.getItem("uid"));
+      console.log("fetching users projects...");
+      const matchingProjects = await request.getProjectsOfUser(
+        localStorage.getItem("uid")
+      );
       console.log("matching projects are: ", matchingProjects);
       setProjectUserList(matchingProjects);
     } catch (error) {
@@ -119,6 +137,26 @@ function UserProfile({ projectsList, setProjectsList }) {
   const handleProfileEditSubmit = () => {
     localStorage.setItem("about", about);
     setIsEditMode(false);
+  };
+
+  const handleImageChange = (e) => {
+    const selectedImage = e.target.files[0];
+    if (selectedImage) {
+      console.log(selectedImage);
+      setImageFile(selectedImage);
+    }
+    // const storageRef = ref(storage, `${imageFile.name}`);
+    // const uploadTask = uploadBytesResumable(storageRef, imageFile);
+    // uploadTask.on(
+    //   "state_changed",
+    //   null,
+    //   (err) => console.log(err),
+    //   () => {
+    //     getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+    //       submit(url);
+    //     });
+    //   }
+    // );
   };
 
   return (
@@ -142,6 +180,22 @@ function UserProfile({ projectsList, setProjectsList }) {
                     fluid
                     style={{ width: "150px", zIndex: "1" }}
                   />
+                  <DialogActions style={{ justifyContent: "center" }}>
+                    <Button
+                      onClick={() =>
+                        document.getElementById("fileInput").click()
+                      }
+                      variant="contained"
+                    >
+                      Upload Image
+                      <VisuallyHiddenInput
+                        id="fileInput"
+                        type="file"
+                        onChange={handleImageChange}
+                      />
+                    </Button>
+                  </DialogActions>
+
                   <MDBBtn
                     outline
                     color="dark"

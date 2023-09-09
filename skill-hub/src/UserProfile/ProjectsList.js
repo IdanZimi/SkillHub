@@ -19,7 +19,7 @@ function ProjectsList({ projectsList, projectsTitle }) {
       </div>
       <MDBRow className="py-5">
         <div className="projects-container">
-          {projectsList.map((project, index) => (
+          {projectsList.length !== 0 && projectsList.map((project, index) => (
             <Project
               path = {currentPath}
               key={index}
