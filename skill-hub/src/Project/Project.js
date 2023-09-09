@@ -10,7 +10,7 @@ import Collapse from '@mui/material/Collapse';
 import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import { blue, red } from '@mui/material/colors';
+import { blue, red, green } from '@mui/material/colors';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import ShareIcon from '@mui/icons-material/Share';
@@ -24,9 +24,11 @@ import Apply from "./Apply";
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import { showNotification } from "../utils/utils";
+import AssignmentIcon from '@mui/icons-material/Assignment';
 import backgroundImage from '../static/images/backgroundCard.jpg';
 import { useLocation } from 'react-router-dom'
 import { request } from "../httpRequest";
+import { colorMapping } from "./colors";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -39,7 +41,7 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-const Project = ({ path, imageUrl, title, description, positionName, id, adminId, handleDeleteProject }) => {
+const Project = ({ path, imageUrl, title, description, positionName, id, adminId, handleDeleteProject, status }) => {
   const imageURL = imageUrl ? imageUrl : img
   const [cvFiles, setCVFiles] = useState(null);
   const [expanded, setExpanded] = useState(false);
@@ -62,7 +64,6 @@ const Project = ({ path, imageUrl, title, description, positionName, id, adminId
   }, [])
 
   useEffect(() => {
-    // Create an array of chip objects with the initial "outlined" variant
     const positionChips = positionName.map((name) => ({
       label: name,
       variant: 'outlined',
@@ -99,7 +100,7 @@ const Project = ({ path, imageUrl, title, description, positionName, id, adminId
   };
 
   const deleteProject = () => {
-     handleDeleteProject(id)
+    handleDeleteProject(id)
   }
   const handleCVFileChange = (e) => {
     const file = e.target.files[0];
@@ -129,21 +130,23 @@ const Project = ({ path, imageUrl, title, description, positionName, id, adminId
   };
   return (
     <Card raised className="project-body"
-    sx={{
-      maxWidth: 350,
-//      backgroundImage: '..\static\images\backgroundCard.jpg',
-      // maxHeight: 350,
-      // margin: "0 auto",
-      //overflow: 'hidden',
-      // maxHeight: expanded ? 'none' : '20rem',
-      padding: "0.1em"
-    }}>  
+      sx={{
+        maxWidth: 350,
+        //      backgroundImage: '..\static\images\backgroundCard.jpg',
+        // maxHeight: 350,
+        // margin: "0 auto",
+        //overflow: 'hidden',
+        // maxHeight: expanded ? 'none' : '20rem',
+        padding: "0.1em"
+      }}>
 
       <CardHeader className="project-name"
         avatar={
-          <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-          </Avatar>
-        }
+          <Avatar sx={{ bgcolor: blue[300] }} aria-label="recipe">
+            <AssignmentIcon variant="outlined" />
+          </Avatar>}
+          action={<Chip size="small" className="apply-btn" label={status} color={colorMapping[status]} variant="outlined" style={{marginTop:0}}  />}
+
         title={title}
       />
       <CardMedia
@@ -193,8 +196,8 @@ const Project = ({ path, imageUrl, title, description, positionName, id, adminId
             </Alert>
           )}
           <Typography paragraph style={{ display: 'flex', justifyContent: 'center', marginBottom: '1rem' }}>
-            {(!isProjectAdmin && positionName.length > 0 ) &&
-             <Chip className="apply-btn" label="Apply" color="primary" onClick={handleApplyClick} style={{ margin: '1rem 0' }} />}
+            {(!isProjectAdmin && positionName.length > 0) &&
+              <Chip className="apply-btn" label="Apply" color="primary" onClick={handleApplyClick} style={{ margin: '1rem 0' }} />}
             {isApplyOpen && (
               <Apply
                 uid={uid}

@@ -30,6 +30,7 @@ function ProjectsList({ handleDeleteProject, projectsList, projectsTitle }) {
               description={project.description}
               positionName={project.positionName}
               adminId={project.adminId}
+              status={project.status}
             />
           ))}
         </div>
