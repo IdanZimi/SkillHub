@@ -11,11 +11,11 @@ function ProjectsList({ handleDeleteProject, projectsList, projectsTitle }) {
         <MDBCardText className="lead fw-normal mb-0">
           {projectsTitle}
         </MDBCardText>
-        <MDBCardText className="mb-0">
+        {/* <MDBCardText className="mb-0">
           <a href="#!" className="text-muted">
             Show all
           </a>
-        </MDBCardText>
+        </MDBCardText> */}
       </div>
       <MDBRow className="py-5">
         <div className="projects-container">
@@ -28,7 +28,7 @@ function ProjectsList({ handleDeleteProject, projectsList, projectsTitle }) {
               imageUrl={project.image}
               title={project.title}
               description={project.description}
-              positionName={project.positionName}
+              positionName={project.availablePositions}
               adminId={project.adminId}
               status={project.status}
             />

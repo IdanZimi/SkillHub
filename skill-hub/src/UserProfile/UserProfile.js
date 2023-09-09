@@ -23,7 +23,7 @@ import DialogActions from "@mui/material/DialogActions";
 import { styled } from "@mui/material";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage } from "../firebase";
-import img from "../static/images/projectImage.jpg";
+import img from "../static/images/defaultProfilePicture.jpg";
 
 function UserProfile({ projectsList, setProjectsList }) {
   const [about, setAbout] = useState(localStorage.getItem("about") || "");
@@ -202,14 +202,16 @@ function UserProfile({ projectsList, setProjectsList }) {
                     alt="Generic placeholder image"
                     className="mt-4 mb-2 img-thumbnail"
                     fluid
-                    style={{ width: "150px", height:"120px", zIndex: "1" }}
+                    style={{ width: "150px", height:"200px", zIndex: "1" }}
                   />
-                  <DialogActions style={{ justifyContent: "center" }}>
-                    <Button
+                  {/* <DialogActions style={{ justifyContent: "center" }}> */}
+                    <MDBBtn
                       onClick={() =>
                         document.getElementById("fileInput").click()
                       }
-                      variant="contained"
+                      outline
+                      color="dark"
+                      style={{ height: "36px", overflow: "visible", marginBottom: "5px" }}
                     >
                       Upload Image
                       <VisuallyHiddenInput
@@ -217,9 +219,8 @@ function UserProfile({ projectsList, setProjectsList }) {
                         type="file"
                         onChange={handleImageChange}
                       />
-                    </Button>
-                  </DialogActions>
-
+                    </MDBBtn>
+                  {/* </DialogActions> */}
                   <MDBBtn
                     outline
                     color="dark"
