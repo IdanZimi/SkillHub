@@ -179,7 +179,7 @@ export default function SearchMenu({ setIsAuthenticated, isAauthenticated, logou
                         >
                             <MenuItem divider key={'Profile'}>
                                 {/* <Typography textAlign="center"><FontAwesomeIcon icon={faUser} size='md' /> Profile</Typography> */}
-                                <a id="profile" className="bm-item" href="/profile"><FontAwesomeIcon icon={faUser} size='md' /> Profile</a>
+                                <a id="profile" className="bm-item" href="/profile"><FontAwesomeIcon icon={faUser} size='sm' /> Profile</a>
 
                             </MenuItem>
                             {/* <MenuItem key={'Logout'} onClick={handleCloseUserMenu}>
@@ -187,7 +187,7 @@ export default function SearchMenu({ setIsAuthenticated, isAauthenticated, logou
                             </MenuItem> */}
                             {isAauthenticated ? (
                                 <MenuItem key={'logout'} onClick={handleLogout}>
-                                    <Typography textAlign="center"><FontAwesomeIcon icon={faRightFromBracket} size='md' /> Logout</Typography>
+                                    <Typography textAlign="center"><FontAwesomeIcon icon={faRightFromBracket} size='sm' /> Logout</Typography>
                                 </MenuItem>
                             ) : (
                                 <MenuItem key={'Login'}>

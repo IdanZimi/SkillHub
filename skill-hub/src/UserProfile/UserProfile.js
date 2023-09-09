@@ -74,6 +74,13 @@ function UserProfile({ projectsList, setProjectsList }) {
       console.error("Error fetching applies:", error);
     }
   };
+  const handleDeleteProject = async (id)=>{
+    const deletedProjectId = await request.deleteProjectById(id)
+    if (deletedProjectId){
+      const updatedProjectList = projectsList.filter((project) => project.id !== deletedProjectId.id);
+      setProjectsList(updatedProjectList)
+    }
+  }
 
   const approveApplyHandler = async (apply) => {
     try {
@@ -204,6 +211,7 @@ function UserProfile({ projectsList, setProjectsList }) {
                 <ProjectsList
                   projectsList={filteredProjectsList}
                   projectsTitle="Projects I've created"
+                  handleDeleteProject = {handleDeleteProject}
                 />
                 <AppliesList
                   appliesList={applicationsForMyProjects}
