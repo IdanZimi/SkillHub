@@ -40,7 +40,7 @@ const AboutPage = () => {
       )}
             <div className="home-page-text-container">
         <b className="skill-hub">
-          <span>Skill Hub</span>
+          <span>SKILL HUB</span>
           {/* <span className="span">{` `}</span> */}
         </b>
         <div className="skill-hub-is-container">
