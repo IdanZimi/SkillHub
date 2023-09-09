@@ -106,6 +106,7 @@ const Apply = ({ isOpen, onClose, title, uid, userName, selectedSkills, projectI
       uid: uid,
       userName: userName,
       pid: projectId,
+      title: title,
       selectedSkills: selectedSkills,
       email: emailAddressInput,
       phone: phoneNumberInput,
@@ -114,7 +115,7 @@ const Apply = ({ isOpen, onClose, title, uid, userName, selectedSkills, projectI
     console.log("in submitApplyToDB, apply is: ", apply);
     await request.sendApplyToDB(apply)
     setfinishedApply(true)
-    onClose()
+    onClose(true)
   }
 
   const uploadResumeToStorage = () => {

@@ -39,7 +39,7 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-const Project = ({ path, imageUrl, title, description, positionName, id, adminId }) => {
+const Project = ({ path, imageUrl, title, description, positionName, id, adminId, handleDeleteProject }) => {
   const imageURL = imageUrl ? imageUrl : img
   const [cvFiles, setCVFiles] = useState(null);
   const [expanded, setExpanded] = useState(false);
@@ -98,8 +98,8 @@ const Project = ({ path, imageUrl, title, description, positionName, id, adminId
     //console.log(positionName)
   };
 
-  const handleDeleteProject = () => {
-
+  const deleteProject = () => {
+     handleDeleteProject(id)
   }
   const handleCVFileChange = (e) => {
     const file = e.target.files[0];
@@ -162,7 +162,7 @@ const Project = ({ path, imageUrl, title, description, positionName, id, adminId
         <IconButton aria-label="add to favorites" onClick={handleIsLikeClick}>
           <FavoriteIcon color={isLike ? "error" : "inherit"} />
         </IconButton>
-        {path === '/profile' && isProjectAdmin ? (<DeleteOutlinedIcon onClick={handleDeleteProject} />) : ''}
+        {path === '/profile' && isProjectAdmin ? (<DeleteOutlinedIcon onClick={deleteProject} />) : ''}
         <ExpandMore
           expand={expanded}
           onClick={handleExpandClick}
