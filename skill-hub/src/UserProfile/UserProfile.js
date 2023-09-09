@@ -90,7 +90,7 @@ function UserProfile({ projectsList, setProjectsList }) {
       );
       setProfileImageUrl(profilePictureUrl);
     } catch (error) {
-      console.error("Error fetching applies:", error);
+      console.error("Error fetching profile picture:", error);
     }
   };
 
