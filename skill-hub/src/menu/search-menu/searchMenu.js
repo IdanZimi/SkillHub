@@ -158,7 +158,7 @@ export default function SearchMenu({ setIsAuthenticated, isAauthenticated, logou
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip arrow title="Open settings">
                             <IconButton size='small' onClick={handleOpenUserMenu} sx={{ marginTop: 0 }}>
-                                <Avatar alt="" src="/static/images/avatar/2.jpg" />
+                                <Avatar alt="" src="/static/images/avatar/3.jpg"/>
                             </IconButton>
                         </Tooltip>
                         <Menu
@@ -179,7 +179,7 @@ export default function SearchMenu({ setIsAuthenticated, isAauthenticated, logou
                         >
                             <MenuItem divider key={'Profile'}>
                                 {/* <Typography textAlign="center"><FontAwesomeIcon icon={faUser} size='md' /> Profile</Typography> */}
-                                <a id="profile" className="bm-item" href="/profile"><FontAwesomeIcon icon={faUser} size='sm' /> Profile</a>
+                                <a id="profile" className="bm-item" href="/profile"><FontAwesomeIcon icon={faUser} size='md' /> Profile</a>
 
                             </MenuItem>
                             {/* <MenuItem key={'Logout'} onClick={handleCloseUserMenu}>
@@ -187,7 +187,7 @@ export default function SearchMenu({ setIsAuthenticated, isAauthenticated, logou
                             </MenuItem> */}
                             {isAauthenticated ? (
                                 <MenuItem key={'logout'} onClick={handleLogout}>
-                                    <Typography textAlign="center"><FontAwesomeIcon icon={faRightFromBracket} size='sm' /> Logout</Typography>
+                                    <Typography textAlign="center"><FontAwesomeIcon icon={faRightFromBracket} size='md' /> Logout</Typography>
                                 </MenuItem>
                             ) : (
                                 <MenuItem key={'Login'}>

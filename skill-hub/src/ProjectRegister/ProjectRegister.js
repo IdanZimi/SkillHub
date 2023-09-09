@@ -42,6 +42,8 @@ export default function ProjectRegister({ isOpen, onClose }) {
   const [description, setDescription] = useState('');
   const [imageFile, setImageFile] = useState(null);
   const [showAlert, setShowAlert] = useState(false);
+  const [isPositionSelected, setIsPoistionSelected] = useState(false)
+  const [alertMessage, setAlertMesaage] = useState('')
   const [finishedSubmit, setfinishedSubmit] = useState(true)
   const [percent, setPercent] = useState(0);
 
@@ -93,9 +95,21 @@ export default function ProjectRegister({ isOpen, onClose }) {
   //     return; // Exit the function
   //   }
   // }
+  const submitIsValid = ()=>{
+    if (!projectName.trim() || !description.trim()) {
+      setAlertMesaage('Please fill project name and description')
+      return false 
+    }
+    else if (positionName.length === 0){
+      setAlertMesaage('Please fill at least 1 position')
+      return false
+    }
+    setShowAlert(false)
+    return true
+  }
 
   const handleSubmit = async () => {
-    if (!projectName.trim() || !description.trim()) {
+    if (!submitIsValid()) {
       setShowAlert(true);
       return; // Exit the function
     }
@@ -216,10 +230,10 @@ export default function ProjectRegister({ isOpen, onClose }) {
             rel="stylesheet"
             href="https://fonts.googleapis.com/icon?family=Material+Icons"
           />
-          {showAlert && ( // Conditionally render the alert based on showAlert state
+          {showAlert && ( 
             <Alert severity="error" sx={{ marginTop: 1 }} onClose={() => setShowAlert(false)}>
               <AlertTitle>Error</AlertTitle>
-              Please enter a project name and description.
+              {alertMessage}
             </Alert>
           )}
 

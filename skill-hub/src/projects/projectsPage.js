@@ -135,6 +135,7 @@ function ProjectsPage({ projectsList, setProjectsList }) {
             description={project.description}
             positionName={project.availablePositions}
             adminId={project.adminId}
+            status={project.status}
           />
         ))}
 
