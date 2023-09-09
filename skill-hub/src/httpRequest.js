@@ -68,7 +68,6 @@ export const request = {
     }
   },
   sendApplyToDB: async (apply) => {
-    //debugger;
     const response = await fetch(apiUrl + 'apply', {
       method: 'POST',
       headers: {
@@ -177,18 +176,22 @@ export const request = {
       console.error("Login error:", errorData);
     }
 
+  },
+  deleteProjectById: async (projectId)=>{
+    fetch(`/projects/${projectId}`, {
+      method: 'DELETE',
+    })
+      .then((response) => {
+        if (response.ok) {
+          console.log('Project deleted successfully');
+          return response.body.projectId
+        } else {
+          console.error('Failed to delete project');
+        }
+      })
+      .catch((error) => {
+        console.error('An error occurred in deleteProjectById:', error);
+      });
   }
-  // getUserName: async (uid) => {
-  //   const response = await fetch(apiUrl + `user/name?uid=${uid}`, {
-  //     method: 'GET'
-  //   })
-  //   if (response.ok) {
-  //     const responseData = await response.json();
-  //     //console.log(responseData.userName);
-  //     return responseData.userName;
-  //   } else {
-  //     const errorData = await response.json();
-  //     console.error("Login error:", errorData);
-  //   }
-  // }
+ 
 }

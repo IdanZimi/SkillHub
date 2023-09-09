@@ -8,7 +8,9 @@ import {
   DocumentReference,
   updateDoc,
   doc,
-  deleteDoc
+  deleteDoc,
+  where,
+  query
 } from "firebase/firestore";
 
 interface Project {
@@ -107,16 +109,30 @@ export class ProjectService {
       throw error;
     }
   }
-
+  //delete project by id is deleting also in 'projects-user' tablw intances where projectId exist
+  //it changes in 'applies' table all applies with given pid, field 'status' to 'unavailable' 
   async deleteProjectById(projectId) {
     try {
+      const q = query(collection(db, "apply"), where("pid", "==", projectId));
+      const docs = await getDocs(q);
+      if (docs.docs.length > 0) {
+        docs.forEach((doc)=>{
+          const docRef = doc.ref;
+          updateDoc(docRef, {status:'unavailable'})
+        })
+      }
+      const qUsers = query(collection(db, 'projects-users'), where("pid", '==', projectId))
+      const docsProjectUsers = await getDocs(qUsers)
+      if (docsProjectUsers.docs.length > 0) {
+        docsProjectUsers.forEach((doc)=>{
+          const docRef = doc.ref;
+          deleteDoc(docRef)
+        })
+      }
       const projectRef = await doc(db, 'projects', projectId);
-      const projectDoc = await getDoc(projectRef);
-
-      projectDoc
-
+      await deleteDoc(projectRef);
     } catch (error) {
-      console.error("Unable to fetch projects:", error);
+      console.error("Failed delete project", error);
       throw error;
     }
   }
