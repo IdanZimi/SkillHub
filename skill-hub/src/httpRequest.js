@@ -177,7 +177,7 @@ export const request = {
     }
   },
   deleteProjectById: async (projectId) => {
-    fetch(`/projects/${projectId}`, {
+    fetch(`${apiUrl}projects/${projectId}`, {
       method: "DELETE",
     })
       .then((response) => {

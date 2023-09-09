@@ -28,7 +28,7 @@ import AssignmentIcon from '@mui/icons-material/Assignment';
 import backgroundImage from '../static/images/backgroundCard.jpg';
 import { useLocation } from 'react-router-dom'
 import { request } from "../httpRequest";
-import { colorMapping } from "./colors";
+import { colorMappingProject } from "./colors";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -129,7 +129,7 @@ const Project = ({ path, imageUrl, title, description, positionName, id, adminId
     setIsLike(!isLike); // Toggle favorite status
   };
   return (
-    <Card raised className="project-body"
+    <Card raised className={`project-body ${expanded ? 'project-description-expanded':''}`}
       sx={{
         maxWidth: 350,
         //      backgroundImage: '..\static\images\backgroundCard.jpg',
@@ -145,7 +145,7 @@ const Project = ({ path, imageUrl, title, description, positionName, id, adminId
           <Avatar sx={{ bgcolor: blue[300] }} aria-label="recipe">
             <AssignmentIcon variant="outlined" />
           </Avatar>}
-          action={<Chip size="small" className="apply-btn" label={status} color={colorMapping[status]} variant="outlined" style={{marginTop:0}}  />}
+          action={<Chip size="small" className="apply-btn" label={status} color={colorMappingProject[status]} variant="outlined" style={{marginTop:0}}  />}
 
         title={title}
       />
@@ -156,8 +156,8 @@ const Project = ({ path, imageUrl, title, description, positionName, id, adminId
         alt="Project Image"
         sx={{ objectFit: "contain" }}
       />
-      <CardContent className="project-description">
-        <Typography variant="h6">
+      <CardContent className={`project-description ${expanded ? 'project-description-expanded':''}`}>
+        <Typography variant="body2" noWrap={!expanded} textOverflow={"hidden"}>
           {description} {/* Use the description prop */}
         </Typography>
       </CardContent>

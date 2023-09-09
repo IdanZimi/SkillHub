@@ -1,22 +1,22 @@
-/* html, body {
+ /* html, body {
   overflow: hidden;
   margin: 0;
   padding: 0;
   height: 100%;
-} */
+}  */
 
 .banner-background-icon {
-    position: absolute;
+    position: absolute; 
     top: 0;
-    left: 868px;
+    /* left: 868px; */
     right: 0;
-    width: 860px;
-    height: 997px;
+    width:max-content;
+    height:max-content;
   }
   .span {
     font-size: 60px;
-    margin-top: 40px;
-    margin-bottom: 70px;
+    /* margin-top: 40px; */
+    /* margin-bottom: 70px; */
   
   }
   .skill-hub {

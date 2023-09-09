@@ -14,6 +14,8 @@ import { Viewer } from "@react-pdf-viewer/core";
 import { Worker } from "@react-pdf-viewer/core";
 import "@react-pdf-viewer/core/lib/styles/index.css";
 import { defaultLayoutPlugin } from "@react-pdf-viewer/default-layout";
+import Chip from '@mui/material/Chip';
+import { colorMappingApplies } from "../Project/colors";
 
 function AppliesList({
   appliesList,
@@ -42,22 +44,22 @@ function AppliesList({
               <TableRow>
                 {appliesTitle === "My projects' applies" ? (
                   <>
-                    <TableCell>Name</TableCell>
-                    <TableCell>Email</TableCell>
-                    <TableCell>Phone Number</TableCell>
+                    <TableCell sx={{fontWeight:'bold'}}>Name</TableCell>
+                    <TableCell sx={{fontWeight:'bold'}}>Email</TableCell>
+                    <TableCell sx={{fontWeight:'bold'}}>Phone Number</TableCell>
                   </>
                 ) : null}
-                <TableCell>Project</TableCell>
+                <TableCell sx={{fontWeight:'bold'}}>Project</TableCell>
                 {/* <TableCell>Project ID</TableCell> */}
-                <TableCell>Skills</TableCell>
-                <TableCell>Resume</TableCell>
+                <TableCell sx={{fontWeight:'bold'}}>Skills</TableCell>
+                <TableCell sx={{fontWeight:'bold'}}>Resume</TableCell>
                 {appliesTitle === "My projects' applies" ? (
                   <>
                     <TableCell>Approve</TableCell>
                     <TableCell>Decline</TableCell>
                   </>
                 ) : null}
-                <TableCell>Status</TableCell>
+                <TableCell sx={{fontWeight:'bold'}}>Status</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -120,7 +122,8 @@ function AppliesList({
                   ) : null}
 
                   <TableCell>
-                    <MDBCardText className="mb-0">{apply.status}</MDBCardText>
+                    {/* <MDBCardText className="mb-0">{apply.status}</MDBCardText> */}
+                    <Chip size="small" className="apply-btn" label={apply.status} color={colorMappingApplies[apply.status]} variant="outlined"/>
                   </TableCell>
                 </TableRow>
               ))}

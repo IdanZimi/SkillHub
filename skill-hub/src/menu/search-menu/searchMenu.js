@@ -24,6 +24,7 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import Diversity2OutlinedIcon from '@mui/icons-material/Diversity2Outlined';
 import { redirect, useNavigate } from 'react-router-dom';
 
 const Search = styled('div')(({ theme }) => ({
@@ -74,7 +75,7 @@ const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 export default function SearchMenu({ setIsAuthenticated, isAauthenticated, logoutUserData, onSearch, showSearch }) {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
-    const [searchProject, setSearchProject] =React.useState('');
+    const [searchProject, setSearchProject] = React.useState('');
 
     const handleLogout = () => {
         //setIsAuthenticated(false);
@@ -103,14 +104,15 @@ export default function SearchMenu({ setIsAuthenticated, isAauthenticated, logou
         const searchText = event.target.value;
         setSearchProject(searchText);
         onSearch(searchText);
-      };
+    };
 
 
     return (
         <AppBar position="fixed" sx={{ maxHeight: '55px' }}>
             <Container maxWidth="false">
                 <Toolbar disableGutters>
-                    <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+                    <Diversity2OutlinedIcon sx={{ mr: 2 }}></Diversity2OutlinedIcon>
+                    {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
                     <Typography
                         variant="h6"
                         noWrap
@@ -140,25 +142,25 @@ export default function SearchMenu({ setIsAuthenticated, isAauthenticated, logou
                             Projects
                         </Button>
                     </Box>
-                    {showSearch &&(
-                    <Search>
-<>
-      <SearchIconWrapper>
-        <SearchIcon />
-      </SearchIconWrapper>
-      <StyledInputBase
-        placeholder="Search…"
-        inputProps={{ 'aria-label': 'search' }}
-         value={searchProject}
-        onChange={handleSearchInput}
-      />
-    </>
-</Search>
+                    {showSearch && (
+                        <Search>
+                            <>
+                                <SearchIconWrapper>
+                                    <SearchIcon />
+                                </SearchIconWrapper>
+                                <StyledInputBase
+                                    placeholder="Search…"
+                                    inputProps={{ 'aria-label': 'search' }}
+                                    value={searchProject}
+                                    onChange={handleSearchInput}
+                                />
+                            </>
+                        </Search>
                     )}
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip arrow title="Open settings">
                             <IconButton size='small' onClick={handleOpenUserMenu} sx={{ marginTop: 0 }}>
-                                <Avatar alt="" src="/static/images/avatar/3.jpg"/>
+                                <Avatar alt="" src="/static/images/avatar/3.jpg" />
                             </IconButton>
                         </Tooltip>
                         <Menu

@@ -7,7 +7,7 @@
 
 .project-body {
   /* Set a fixed height for your project cards */
-  height: auto; /* Adjust the height as needed */
+  height: 400px; /* Adjust the height as needed */
   overflow: hidden;
   box-shadow: 0 2px 20px #e1e5ee;
   border-radius: 0.2rem;
@@ -32,6 +32,18 @@
 .project-description {
   padding: 0 1rem;
   font-weight: bold;
+
+  overflow: hidden;
+  transition: max-height 0.3s ease-in-out;
+  max-height:100px;
+  text-overflow: ellipsis;
+}
+
+.project-description-expanded{
+  height: auto;
+  overflow: visible;
+  max-height:none
+
 }
 
 .project-image {

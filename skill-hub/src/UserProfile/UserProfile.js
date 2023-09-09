@@ -111,6 +111,7 @@ function UserProfile({ projectsList, setProjectsList }) {
         (project) => project.id !== deletedProjectId.id
       );
       setProjectsList(updatedProjectList);
+      showNotification('info','Success!','Project deleted')
     }
   };
 
