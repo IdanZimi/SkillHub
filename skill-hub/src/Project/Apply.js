@@ -106,7 +106,7 @@ const Apply = ({ isOpen, onClose, title, uid, userName, selectedSkills, projectI
       uid: uid,
       userName: userName,
       pid: projectId,
-      title: title,
+      ptitle: title,
       selectedSkills: selectedSkills,
       email: emailAddressInput,
       phone: phoneNumberInput,

@@ -11,6 +11,7 @@ import {
 interface Apply {
   resumeURL: string;
   pid: string;
+  ptitle:string;
   uid: string;
   selectedSkills: string[];
   email: string;
@@ -25,6 +26,7 @@ export class ApplyService {
       uid: apply.uid,
       userName: apply.userName,
       pid: apply.pid,
+      ptitle: apply.ptitle,
       email: apply.email,
       phone: apply.phone,
       selectedSkills: apply.selectedSkills,
