@@ -193,7 +193,8 @@ const Project = ({ path, imageUrl, title, description, positionName, id, adminId
             </Alert>
           )}
           <Typography paragraph style={{ display: 'flex', justifyContent: 'center', marginBottom: '1rem' }}>
-            <Chip className="apply-btn" label="Apply" color="primary" onClick={handleApplyClick} style={{ margin: '1rem 0' }} />
+            {(!isProjectAdmin && positionName.length > 0 ) &&
+             <Chip className="apply-btn" label="Apply" color="primary" onClick={handleApplyClick} style={{ margin: '1rem 0' }} />}
             {isApplyOpen && (
               <Apply
                 uid={uid}
