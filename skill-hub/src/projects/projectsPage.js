@@ -133,7 +133,7 @@ function ProjectsPage({ projectsList, setProjectsList }) {
             imageUrl={project.image}
             title={project.title}
             description={project.description}
-            positionName={project.positionName}
+            positionName={project.availablePositions}
             adminId={project.adminId}
           />
         ))}
