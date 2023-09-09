@@ -15,7 +15,6 @@ import { ApplyService } from "./service/ApplyService";
 import { ProjectUserService } from "./service/ProjectUserService";
 
 const app: Application = express();
-const _ = require("lodash");
 
 app.use(bodyParser.json());
 app.use(cors());
@@ -58,14 +57,7 @@ app.post("/login", async (req: Request, res: Response) => {
 });
 
 app.post("/project", async (req: Request, res: Response) => {
-  const data = req.body;
-  const deepCopyPositions = _.cloneDeep(data.positionName);
-  const project = {
-    ...data,
-    availablePositions: deepCopyPositions,
-    status: "pending",
-  };
-
+  const project = req.body;
   try {
     const docref = await projectService.addProject(project);
     res.json({ message: "Add project successful", docref });

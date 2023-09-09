@@ -41,7 +41,11 @@ function AppliesList({
             <TableHead>
               <TableRow>
                 {appliesTitle === "My projects' applies" ? (
-                  <TableCell>Name</TableCell>
+                  <>
+                    <TableCell>Name</TableCell>
+                    <TableCell>Email</TableCell>
+                    <TableCell>Phone Number</TableCell>
+                  </>
                 ) : null}
                 <TableCell>Project</TableCell>
                 {/* <TableCell>Project ID</TableCell> */}
@@ -57,17 +61,19 @@ function AppliesList({
               </TableRow>
             </TableHead>
             <TableBody>
-              {appliesList.map((apply) => (
+              {appliesList.length !== 0 && appliesList.map((apply) => (
                 <TableRow key={apply.id}>
                   {appliesTitle === "My projects' applies" ? (
-                    <TableCell>{apply.userName}</TableCell>
+                    <>
+                      <TableCell>{apply.userName}</TableCell>
+                      <TableCell>{apply.email}</TableCell>
+                      <TableCell>{apply.phone}</TableCell>
+                    </>
                   ) : null}
                   <TableCell>
-                    {
-                      projectsList.length !== 0 &&
+                    {projectsList.length !== 0 &&
                       projectsList.find((project) => project.id === apply.pid)
-                        .name
-                    }
+                        .name}
                   </TableCell>
                   {/* <TableCell>{apply.pid}</TableCell> */}
                   <TableCell>{apply.selectedSkills.join(", ")}</TableCell>

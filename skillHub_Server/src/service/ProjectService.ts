@@ -25,13 +25,13 @@ export class ProjectService {
   async addProject(project: Project): Promise<DocumentReference> {
     debugger;
     return await addDoc(collection(db, "projects"), {
-      name: project.title,
+      title: project.title,
       image: project.image,
       description: project.description,
       positionName: project.positionName,
       adminId: project.uid,
       availablePositions: project.availablePositions,
-      status: project.status,
+      status: project.status
     });
   }
 
