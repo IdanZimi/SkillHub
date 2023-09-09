@@ -138,7 +138,7 @@ export default function ProjectRegister({ isOpen, onClose }) {
   };
   const submit = async (imageURL) => {
     const deepCopyPositions = _.cloneDeep(positionName);
-    const status = "pending";
+    const status = "recruiting";
     const newProject = {
       uid: localStorage.getItem("uid"),
       image: imageFile ? imageURL : '',

@@ -185,7 +185,7 @@ function UserProfile({ projectsList, setProjectsList }) {
 
   return (
     <div className="gradient-custom" style={{}}>
-      <MDBContainer className="py-5 h-100">
+      <MDBContainer className='m-0 p-0' style={{ height: '100vh' }} fluid>
         <MDBRow className="justify-content-center align-items-center h-100">
           <MDBCol lg="12" xl="12">
             <MDBCard>
