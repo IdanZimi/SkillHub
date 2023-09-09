@@ -152,7 +152,6 @@ app.get('/projects/:projectId', async (req: Request, res: Response) => {
     res.json({ uid });
 });
 
-
 app.delete('/projects/:projectId', async (req: Request, res: Response) => {
     const projectId = req.params.projectId;
     try {
@@ -164,7 +163,33 @@ app.delete('/projects/:projectId', async (req: Request, res: Response) => {
         console.error("Unable to delete project:", error);
         res.status(500).json({ error: "Unable to delete projects" });
     }
-});// app.get("/user/name", async (req: Request, res: Response) => {
+});
+
+app.put("/user/image", async (req: Request, res: Response) => {
+    const { uid, imageURL } = req.body;
+    try {
+        const docref = await userService.updateUserImage(uid, imageURL);
+        res.json({ message: "Updated image successfuly", docref });
+    } catch (err) {
+        var errorMessage = err.message;
+        console.error("Update image error:", errorMessage);
+        res.status(500).json({ message: "failed", err: errorMessage });
+    }
+});
+
+app.get("/user/image", async (req: Request, res: Response) => {
+    const { uid } = req.query;
+    try {
+        const imageURL = await userService.getUserImage(uid);
+        res.json({ message: "Image sent successfuly", imageURL });
+    } catch (err) {
+        var errorMessage = err.message;
+        console.error("Error:", errorMessage);
+        res.status(500).json({ message: "failed", err: errorMessage });
+    }
+});
+
+// app.get("/user/name", async (req: Request, res: Response) => {
 //     try {
 //         const { uid } = req.query;
 //         const userName = await userService.getUserName(uid.toString());

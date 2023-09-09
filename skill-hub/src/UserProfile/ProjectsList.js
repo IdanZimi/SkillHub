@@ -19,7 +19,7 @@ function ProjectsList({ handleDeleteProject, projectsList, projectsTitle }) {
       </div>
       <MDBRow className="py-5">
         <div className="projects-container">
-          {projectsList.map((project, index) => (
+          {projectsList.length !== 0 && projectsList.map((project, index) => (
             <Project
               handleDeleteProject= {handleDeleteProject}
               path = {currentPath}

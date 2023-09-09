@@ -38,8 +38,8 @@ function AlterRegister() {
         try{
          await request.register({
             fullName: `${firstname} ${lastname}`,
-            email:email,
-            password:password})
+            email: email,
+            password: password})
             navigate('/')
          }catch(err){
             alert(err.message)

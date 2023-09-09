@@ -1,31 +1,30 @@
-const port = '8000'
+const port = "8000";
 const apiUrl = `http://localhost:${port}/`;
 
 export const request = {
   register: async (userData) => {
-    fetch(apiUrl + 'register', {
-      method: 'POST',
+    fetch(apiUrl + "register", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(userData)
+      body: JSON.stringify(userData),
     })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Registration successful:', data);
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Registration successful:", data);
       })
-      .catch(error => {
-        throw Error(error)
+      .catch((error) => {
+        throw Error(error);
       });
   },
   login: async (loginData) => {
-
-    const response = await fetch(apiUrl + 'login', {
-      method: 'POST',
+    const response = await fetch(apiUrl + "login", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(loginData)
+      body: JSON.stringify(loginData),
     });
 
     if (response.ok) {
@@ -38,16 +37,16 @@ export const request = {
   },
   addProjectToDB: async (project) => {
     //console.log("the project" + project)
-    const response = await fetch(apiUrl + 'project', {
-      method: 'POST',
+    const response = await fetch(apiUrl + "project", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(project)
-    })
+      body: JSON.stringify(project),
+    });
     if (response.ok) {
       const responseData = await response.json();
-      return responseData.docref._key.path.segments[1]
+      return responseData.docref._key.path.segments[1];
       //console.log("Add Project successfuly:", responseData);
     } else {
       const errorData = await response.json();
@@ -55,9 +54,9 @@ export const request = {
     }
   },
   getProjects: async () => {
-    const response = await fetch(apiUrl + 'projects', {
-      method: 'GET'
-    })
+    const response = await fetch(apiUrl + "projects", {
+      method: "GET",
+    });
     if (response.ok) {
       const responseData = await response.json();
       console.log(responseData);
@@ -68,13 +67,13 @@ export const request = {
     }
   },
   sendApplyToDB: async (apply) => {
-    const response = await fetch(apiUrl + 'apply', {
-      method: 'POST',
+    const response = await fetch(apiUrl + "apply", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(apply)
-    })
+      body: JSON.stringify(apply),
+    });
     if (response.ok) {
       const responseData = await response.json();
       console.log(responseData);
@@ -85,9 +84,9 @@ export const request = {
     }
   },
   getApplies: async () => {
-    const response = await fetch(apiUrl + 'applies', {
-      method: 'GET'
-    })
+    const response = await fetch(apiUrl + "applies", {
+      method: "GET",
+    });
     if (response.ok) {
       const responseData = await response.json();
       console.log(responseData);
@@ -99,13 +98,13 @@ export const request = {
   },
   changeApplyStatus: async (applyId, applyStatus) => {
     const apply = { id: applyId, status: applyStatus };
-    const response = await fetch(apiUrl + 'apply/status', {
-      method: 'PUT',
+    const response = await fetch(apiUrl + "apply/status", {
+      method: "PUT",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(apply)
-    })
+      body: JSON.stringify(apply),
+    });
     if (response.ok) {
       const responseData = await response.json();
       console.log("doc ref: ", responseData);
@@ -117,13 +116,13 @@ export const request = {
   },
   addToProjectsUsersTable: async (pid, uid) => {
     const data = { pid: pid, uid: uid };
-    const response = await fetch(apiUrl + 'projects/users', {
-      method: 'POST',
+    const response = await fetch(apiUrl + "projects/users", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(data)
-    })
+      body: JSON.stringify(data),
+    });
     if (response.ok) {
       const responseData = await response.json();
       console.log(responseData);
@@ -134,21 +133,22 @@ export const request = {
     }
   },
   getProjectsOfUser: async (uid) => {
-    const response = await fetch(apiUrl + 'projects/users' + `?uid=${uid}`, {
-      method:'GET'})
-      if (response.ok) {
-        const responseData = await response.json();
-        console.log(responseData);
-        return responseData;
-      } else {
-        const errorData = await response.json();
-        console.error("Login error:", errorData);
-      }
-    },
+    const response = await fetch(apiUrl + "projects/users" + `?uid=${uid}`, {
+      method: "GET",
+    });
+    if (response.ok) {
+      const responseData = await response.json();
+      console.log(responseData);
+      return responseData;
+    } else {
+      const errorData = await response.json();
+      console.error("Login error:", errorData);
+    }
+  },
   getAdminUidByProjectId: async (projectId) => {
     const response = await fetch(`${apiUrl}projects/${projectId}`, {
-      method: 'GET'
-    })
+      method: "GET",
+    });
     if (response.ok) {
       const responseData = await response.json();
       console.log(responseData);
@@ -159,14 +159,14 @@ export const request = {
     }
   },
   updateAvailablePositions: async (skillsToUpdate, pid) => {
-    const skills = {skillsToUpdate: skillsToUpdate, pid: pid};
-    const response = await fetch(apiUrl + 'project/positions', {
-      method: 'PUT',
+    const skills = { skillsToUpdate: skillsToUpdate, pid: pid };
+    const response = await fetch(apiUrl + "project/positions", {
+      method: "PUT",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(skills)
-    })
+      body: JSON.stringify(skills),
+    });
     if (response.ok) {
       const responseData = await response.json();
       console.log("doc ref: ", responseData);
@@ -175,23 +175,52 @@ export const request = {
       const errorData = await response.json();
       console.error("Login error:", errorData);
     }
-
   },
-  deleteProjectById: async (projectId)=>{
+  deleteProjectById: async (projectId) => {
     fetch(`/projects/${projectId}`, {
-      method: 'DELETE',
+      method: "DELETE",
     })
       .then((response) => {
         if (response.ok) {
-          console.log('Project deleted successfully');
-          return response.body.projectId
+          console.log("Project deleted successfully");
+          return response.body.projectId;
         } else {
-          console.error('Failed to delete project');
+          console.error("Failed to delete project");
         }
       })
       .catch((error) => {
-        console.error('An error occurred in deleteProjectById:', error);
+        console.error("An error occurred in deleteProjectById:", error);
       });
-  }
- 
-}
+  },
+  updateProfilePicture: async (uid, imageURL) => {
+    const data = { uid: uid, imageURL: imageURL };
+    const response = await fetch(apiUrl + "user/image", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    if (response.ok) {
+      const responseData = await response.json();
+      console.log("doc ref: ", responseData);
+      return responseData;
+    } else {
+      const errorData = await response.json();
+      console.error("Login error:", errorData);
+    }
+  },
+  getUserProfilePicture: async (uid) => {
+    const response = await fetch(apiUrl + "user/image" + `?uid=${uid}`, {
+      method: "GET",
+    });
+    if (response.ok) {
+      const responseData = await response.json();
+      console.log("imageURL: ", responseData);
+      return responseData.imageURL;
+    } else {
+      const errorData = await response.json();
+      console.error("Error:", errorData);
+    }
+  },
+};
