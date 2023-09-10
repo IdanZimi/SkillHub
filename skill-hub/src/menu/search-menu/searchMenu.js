@@ -81,7 +81,7 @@ export default function SearchMenu({ setIsAuthenticated, isAauthenticated, logou
         //setIsAuthenticated(false);
         // Remove the authentication state from localStorage
         localStorage.removeItem('isAuthenticated');
-        setIsAuthenticated(false)
+        //setIsAuthenticated(false)
         logoutUserData()
         logout()
         handleCloseUserMenu()

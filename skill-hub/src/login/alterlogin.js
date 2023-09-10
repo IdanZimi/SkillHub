@@ -22,7 +22,7 @@ function Alterlogin() {
             // maybe trigger a loading screen
             return;
         }
-        if (user) navigate("/");
+        if (user) navigate("/about");
     }, [user, loading, navigate]);
 
     const handleLogin =async (loginMethod) =>{

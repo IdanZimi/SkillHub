@@ -21,9 +21,9 @@ import { styled } from "@mui/material";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage } from "../firebase";
 import img from "../static/images/defaultProfilePicture.jpg";
-import backgroundCardImage from '../static/images/backgroundCard.jpg';
+import backgroundCardImage from '../static/images/darkBackground.jpg';
 
-function UserProfile({ projectsList, setProjectsList }) {
+function UserProfile({ projectsList, setProjectsList, logoutUserData }) {
   const [about, setAbout] = useState(localStorage.getItem("about") || "");
   const [isEditMode, setIsEditMode] = useState(false);
   const [appliesList, setAppliesList] = useState([]);
@@ -187,7 +187,7 @@ function UserProfile({ projectsList, setProjectsList }) {
       <MDBContainer className="py-5" style={{ minHeight: "100vh" }} fluid>
         <MDBRow className="justify-content-center align-items-center h-100">
           <MDBCol lg="12" xl="12">
-            <MDBCard>
+            <MDBCard style={{backgroundColor:'AliceBlue'}}>
               <div
                 className="rounded-top text-white d-flex flex-row"
                 style={{
@@ -241,9 +241,9 @@ function UserProfile({ projectsList, setProjectsList }) {
                   <MDBTypography tag="h5">
                     <MDBCardText
                       className="font-italic mb-1"
-                      style={{ color: "black" }}
+                      style={{ color: "white", fontWeight:"bold" }}
                     >
-                      {localStorage.getItem("name")}
+                      {localStorage.getItem("name").toUpperCase()}
                     </MDBCardText>
                   </MDBTypography>
                 </div>
