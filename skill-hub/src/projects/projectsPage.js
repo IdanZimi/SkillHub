@@ -44,7 +44,7 @@ const StyledFab = styled(Fab)({
 //   setSearchResults(filtered);
 // };
 
-function ProjectsPage({ projectsList, setProjectsList }) {
+function ProjectsPage({ projectsList, setProjectsList, logout, logoutUserData }) {
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
   const [user, loading, error] = useAuthState(auth);
   const [filteredProjects, setFilteredProjects] = useState([]);
@@ -123,6 +123,7 @@ function ProjectsPage({ projectsList, setProjectsList }) {
         isAauthenticated={user !== null}
         onSearch={handleSearch}
         showSearch={true}
+        logoutUserData={logoutUserData}
       />
 
       <div className="projects-container">
