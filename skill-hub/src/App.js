@@ -99,9 +99,9 @@ function App() {
               <Route path="/" element={<Home setUserAuthenticated={setUserAuthenticated} logoutUserData={logoutUserData} />} />
               <Route path="/login" element={<Alterlogin />} />
               <Route path="/register" element={<AlterRegister />} />
-              <Route path="/projects" element={<ProjectsPage projectsList={projectsList} setProjectsList={setProjectsList}/>} />
-              <Route path="/about" element={<AboutPage />} />
-              <Route path="/profile" element={<UserProfile projectsList={projectsList} setProjectsList={setProjectsList}/>} />
+              <Route path="/projects" element={<ProjectsPage projectsList={projectsList} setProjectsList={setProjectsList} logoutUserData={logoutUserData}/>} />
+              <Route path="/about" element={<AboutPage setUserAuthenticated={setUserAuthenticated} logoutUserData={logoutUserData} />} />
+              <Route path="/profile" element={<UserProfile projectsList={projectsList} setProjectsList={setProjectsList} logoutUserData={logoutUserData}/>} />
             </Routes>
           </Router>
         </div>

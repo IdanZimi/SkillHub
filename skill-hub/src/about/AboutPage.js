@@ -3,12 +3,13 @@ import React, { useState, useEffect } from "react";
 import SearchMenu from "../menu/search-menu/searchMenu";
 import { handleSearch } from "../menu/Menu";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom"; 
+import { query, collection, getDocs, where } from "firebase/firestore";
+import { auth, db, logout } from "../firebase";
 
 
-const AboutPage = () => {
+const AboutPage = ({setUserAuthenticated, logoutUserData}) => {
   // const [filteredContent, setFilteredContent] = useState([]);
   // const [user, loading, error] = useAuthState(auth);
   const [user, loading, error] = useAuthState(auth);
@@ -16,6 +17,25 @@ const AboutPage = () => {
   const location = useLocation(); // Get the current route location
   const isAboutPage = location.pathname === "/about"; 
 
+  useEffect(() => {
+    if (loading) return;
+    if (!user) return navigate("/login");
+    fetchUserData();
+  }, [user, loading]);
+
+  const fetchUserData = async () => {
+    try {
+        const q = query(collection(db, "users"), where("uid", "==", user?.uid));
+        const doc = await getDocs(q);
+        const data = doc.docs[0].data();
+        setUserAuthenticated();
+        localStorage.setItem("uid", data.uid);
+        localStorage.setItem("name", data.name);
+    } catch (err) {
+        console.error(err);
+        alert("An error occured while fetching user data");
+    }
+};
   // const navigate = useNavigate();
 
   // useEffect(() => {
@@ -36,6 +56,7 @@ const AboutPage = () => {
           isAauthenticated={user !== null}
           //onSearch={handleSearchTextChange}
           showSearch={false} 
+          logoutUserData={logoutUserData}
         />
       )}
             <div className="home-page-text-container">
