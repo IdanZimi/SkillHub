@@ -17,13 +17,11 @@ import { request } from "../httpRequest";
 import { showNotification } from "../utils/utils";
 import ProjectsList from "./ProjectsList";
 import AppliesList from "./AppliesList";
-import { useLocation } from "react-router-dom";
-import Button from "@mui/material/Button";
-import DialogActions from "@mui/material/DialogActions";
 import { styled } from "@mui/material";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage } from "../firebase";
 import img from "../static/images/defaultProfilePicture.jpg";
+import backgroundCardImage from '../static/images/backgroundCard.jpg';
 
 function UserProfile({ projectsList, setProjectsList }) {
   const [about, setAbout] = useState(localStorage.getItem("about") || "");
@@ -111,7 +109,7 @@ function UserProfile({ projectsList, setProjectsList }) {
         (project) => project.id !== deletedProjectId.id
       );
       setProjectsList(updatedProjectList);
-      showNotification('info','Success!','Project deleted')
+      showNotification("info", "Success!", "Project deleted");
     }
   };
 
@@ -186,13 +184,19 @@ function UserProfile({ projectsList, setProjectsList }) {
 
   return (
     <div className="gradient-custom" style={{}}>
-      <MDBContainer className='m-0 p-0' style={{ height: '100vh' }} fluid>
+      <MDBContainer className="py-5" style={{ minHeight: "100vh" }} fluid>
         <MDBRow className="justify-content-center align-items-center h-100">
           <MDBCol lg="12" xl="12">
             <MDBCard>
               <div
                 className="rounded-top text-white d-flex flex-row"
-                style={{ backgroundColor: "#000", height: "200px" }}
+                style={{
+                  backgroundImage: `url(${backgroundCardImage})`,
+                  backgroundSize: 'cover', // Adjust as needed
+                  backgroundRepeat: 'no-repeat', // Adjust as needed
+                  height: '200px'
+                }}
+              
               >
                 <div
                   className="ms-4 mt-5 d-flex flex-column"
@@ -203,24 +207,26 @@ function UserProfile({ projectsList, setProjectsList }) {
                     alt="Generic placeholder image"
                     className="mt-4 mb-2 img-thumbnail"
                     fluid
-                    style={{ width: "150px", height:"200px", zIndex: "1" }}
+                    // style={{ width: "200px", height: "300px", zIndex: "1" }}
                   />
                   {/* <DialogActions style={{ justifyContent: "center" }}> */}
-                    <MDBBtn
-                      onClick={() =>
-                        document.getElementById("fileInput").click()
-                      }
-                      outline
-                      color="dark"
-                      style={{ height: "36px", overflow: "visible", marginBottom: "5px" }}
-                    >
-                      Upload Image
-                      <VisuallyHiddenInput
-                        id="fileInput"
-                        type="file"
-                        onChange={handleImageChange}
-                      />
-                    </MDBBtn>
+                  <MDBBtn
+                    onClick={() => document.getElementById("fileInput").click()}
+                    outline
+                    color="dark"
+                    style={{
+                      height: "36px",
+                      overflow: "visible",
+                      marginBottom: "5px",
+                    }}
+                  >
+                    Upload Image
+                    <VisuallyHiddenInput
+                      id="fileInput"
+                      type="file"
+                      onChange={handleImageChange}
+                    />
+                  </MDBBtn>
                   {/* </DialogActions> */}
                   <MDBBtn
                     outline
@@ -228,23 +234,27 @@ function UserProfile({ projectsList, setProjectsList }) {
                     style={{ height: "36px", overflow: "visible" }}
                     onClick={() => setIsEditMode(true)}
                   >
-                    Edit profile
+                    Edit Bio
                   </MDBBtn>
                 </div>
                 <div className="ms-3" style={{ marginTop: "130px" }}>
                   <MDBTypography tag="h5">
-                    {localStorage.getItem("name")}
+                    <MDBCardText
+                      className="font-italic mb-1"
+                      style={{ color: "black" }}
+                    >
+                      {localStorage.getItem("name")}
+                    </MDBCardText>
                   </MDBTypography>
-                  <MDBCardText>{/* Tel Aviv */}</MDBCardText>
                 </div>
               </div>
-              <div
+              {/* <div
                 className="p-4 text-black"
                 style={{ backgroundColor: "white" }}
-              ></div>
+              ></div> */}
               <MDBCardBody className="text-black p-4 mt-5">
-                <div className="mb-5">
-                  <p className="lead fw-normal mb-1">About</p>
+              <div className="mb-5">
+                  <p className="lead fw-normal mt-5 mb-1">About</p>
                   {isEditMode ? (
                     <div>
                       {" "}
