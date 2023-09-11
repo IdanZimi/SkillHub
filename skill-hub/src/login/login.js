@@ -3,8 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { auth, logInWithEmailAndPassword, signInWithGoogle } from "../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import {MDBContainer, MDBCol, MDBRow, MDBBtn, MDBIcon, MDBInput, MDBCheckbox } from 'mdb-react-ui-kit';
-
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import "./Login.css";
 
 function Login() {
@@ -15,7 +13,6 @@ function Login() {
 
     useEffect(() => {
         if (loading) {
-            // maybe trigger a loading screen
             return;
         }
         if (user) navigate("/");
@@ -45,7 +42,6 @@ function Login() {
                     Login
                 </button>
                 <button className="login__btn login__google" onClick={signInWithGoogle}>
-                    {/* <FontAwesomeIcon icon={faGoogleLogo} style={{ color: "#f01919", }} /> */}
                     Login with Google
                 </button>
                 <div className="reset-text">

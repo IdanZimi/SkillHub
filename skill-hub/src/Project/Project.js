@@ -13,21 +13,15 @@ import Typography from '@mui/material/Typography';
 import { blue, red, green } from '@mui/material/colors';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
-import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
 import img from '../static/images/projectImage.jpg'
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
-import { Dialog, DialogTitle } from "@mui/material";
 import Apply from "./Apply";
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import { showNotification } from "../utils/utils";
 import AssignmentIcon from '@mui/icons-material/Assignment';
-import backgroundImage from '../static/images/backgroundCard.jpg';
-import { useLocation } from 'react-router-dom'
-import { request } from "../httpRequest";
 import { colorMappingProject } from "./colors";
 
 const ExpandMore = styled((props) => {
@@ -55,12 +49,6 @@ const Project = ({ path, imageUrl, title, description, positionName, id, adminId
   useEffect(() => {
     setuid(localStorage.getItem('uid'))
     setIsProjectAdmin(adminId === localStorage.getItem('uid'))
-    // async function fetchData() {
-
-    //   const projectAdminUid = await request.getAdminUidByProjectId(id)
-    //   setIsProjectAdmin(projectAdminUid === uid)
-    // }
-    // fetchData()
   }, [])
 
   useEffect(() => {
@@ -85,7 +73,6 @@ const Project = ({ path, imageUrl, title, description, positionName, id, adminId
         positionChips.find((chip) => chip.label === label).variant = 'filled'
         setShowAlert(false)
         const newSelectedChips = [...prevSelectedChips, { label, variant: 'filled' }];
-        console.log(newSelectedChips)
         return newSelectedChips
       }
     });
@@ -93,10 +80,8 @@ const Project = ({ path, imageUrl, title, description, positionName, id, adminId
 
 
   const [isLike, setIsLike] = useState(false);
-  //console.log(positionName);
   const handleExpandClick = () => {
     setExpanded(!expanded);
-    //console.log(positionName)
   };
 
   const deleteProject = () => {
@@ -116,27 +101,20 @@ const Project = ({ path, imageUrl, title, description, positionName, id, adminId
   }
 
   const handleApplyClick = (e) => {
-    console.log(selectedChips.length)
     if (selectedChips.length === 0) {
-      console.log("length is " + selectedChips.length)
       setShowAlert(true);
-      return; // Exit the function
+      return; 
     }
     setIsApplyOpen(true);
   }
 
   const handleIsLikeClick = () => {
-    setIsLike(!isLike); // Toggle favorite status
+    setIsLike(!isLike);
   };
   return (
     <Card raised className={`project-body ${expanded ? 'project-description-expanded':''}`}
       sx={{
         maxWidth: 350,
-        //      backgroundImage: '..\static\images\backgroundCard.jpg',
-        // maxHeight: 350,
-        // margin: "0 auto",
-        //overflow: 'hidden',
-        // maxHeight: expanded ? 'none' : '20rem',
         padding: "0.1em"
       }}>
 
@@ -158,7 +136,7 @@ const Project = ({ path, imageUrl, title, description, positionName, id, adminId
       />
       <CardContent className={`project-description ${expanded ? 'project-description-expanded':''}`}>
         <Typography variant="body2" noWrap={!expanded} textOverflow={"hidden"}>
-          {description} {/* Use the description prop */}
+          {description} 
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
@@ -189,7 +167,7 @@ const Project = ({ path, imageUrl, title, description, positionName, id, adminId
               <p>No positions available.</p>
             )}
           </Typography>
-          {showAlert && ( // Conditionally render the alert based on showAlert state
+          {showAlert && ( 
             <Alert severity="error" sx={{ marginTop: 1 }} onClose={() => setShowAlert(false)}>
               <AlertTitle>Error</AlertTitle>
               Please pick at least 1 skill

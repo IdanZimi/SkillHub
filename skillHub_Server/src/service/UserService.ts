@@ -50,7 +50,7 @@ export class UserService {
         // Update the user document with the new imageURL
         await updateDoc(userDocRef, { imageURL: imageURL });
 
-        return userDocRef; // Return a reference to the updated document
+        return userDocRef; 
       } else {
         throw new Error("User not found");
       }
@@ -81,14 +81,4 @@ export class UserService {
       throw error;
     }
   }
-
-  // async checkConnection() {
-  //     try {
-  //         await sequelize.authenticate();
-  //         console.log("Connection has been established successfully.");
-  //     }
-  //     catch (error) {
-  //         throw error;
-  //     }
-  // }
 }

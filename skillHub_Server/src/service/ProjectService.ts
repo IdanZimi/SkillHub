@@ -1,4 +1,3 @@
-import { StringNullableChain } from "lodash";
 import { db } from "../firebase";
 import {
   getDocs,
@@ -54,22 +53,17 @@ export class ProjectService {
 
   async updateAvailableSkills(skillsToRemove: string[], pid: string) {
     try {
-      // Get a reference to the document in the "projects" collection with the specified ID
       const projectDocRef = doc(db, "projects", pid);
 
-      // Fetch the current document data
       const projectDocSnapshot = await getDoc(projectDocRef);
 
       if (projectDocSnapshot.exists()) {
-        // Get the current positionName array
         const currentPositionName = projectDocSnapshot.data().availablePositions;
 
-        // Remove skillsToRemove from the currentPositionName array
         const updatedPositionName = currentPositionName.filter(
           (position) => !skillsToRemove.includes(position)
         );
 
-        // Update the document with the modified positionName array
         await updateDoc(projectDocRef, {
           availablePositions: updatedPositionName,
         });
@@ -80,7 +74,7 @@ export class ProjectService {
           });
         }
 
-        return projectDocRef; // Return a reference to the updated document
+        return projectDocRef; 
       } else {
         throw new Error("Document not found");
       }
@@ -96,12 +90,9 @@ export class ProjectService {
       const projectDoc = await getDoc(projectRef);
 
       if (projectDoc.exists) {
-        // Get the admin UID from the project document
         const adminUid = projectDoc.data().adminId;
-        console.log("adminUid: " + adminUid)
         return adminUid;
       } else {
-        // Handle the case where the project document doesn't exist
         return null;
       }
     } catch (error) {

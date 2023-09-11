@@ -10,11 +10,9 @@ import { auth, db, logout } from "../firebase";
 
 
 const AboutPage = ({setUserAuthenticated, logoutUserData}) => {
-  // const [filteredContent, setFilteredContent] = useState([]);
-  // const [user, loading, error] = useAuthState(auth);
   const [user, loading, error] = useAuthState(auth);
   const navigate = useNavigate();
-  const location = useLocation(); // Get the current route location
+  const location = useLocation(); 
   const isAboutPage = location.pathname === "/about"; 
 
   useEffect(() => {
@@ -36,18 +34,7 @@ const AboutPage = ({setUserAuthenticated, logoutUserData}) => {
         alert("An error occured while fetching user data");
     }
 };
-  // const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   if (loading) return;
-  //   if (!user) return navigate("/login");
-  //   //fetchUserData();
-  // }, [user, loading]);
-
-  // const handleSearchTextChange = (searchText) => {
-  //   // Use the handleSearch function to filter content based on the search query
-  //   handleSearch(searchText, setFilteredContent, filteredContent); // Replace contentData with your actual data
-  // };
+ 
   return (
     
     <div className="restaurant-landing-page">

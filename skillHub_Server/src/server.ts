@@ -4,12 +4,6 @@ import cors from "cors";
 import config from "../config/config.json";
 import { sequelize } from "./database";
 import { UserService } from "./service/UserService";
-import {
-    auth,
-    registerWithEmailAndPassword,
-    signInWithGoogle,
-    signInWithFacebook,
-} from "./firebase";
 import { ProjectService } from "./service/ProjectService";
 import { ApplyService } from "./service/ApplyService";
 import { ProjectUserService } from "./service/ProjectUserService";
@@ -29,7 +23,7 @@ app.get("/", async (req: Request, res: Response) => {
         res.status(200).json("WELCOME TO SKILLHUB");
     } catch (error) {
         console.error("Unable to connect to the database:", error);
-        //res.status(500).json({ error: "Unable to connect to the database" });
+        res.status(500).json({ error: "Unable to connect to the database" });
     }
 });
 
@@ -188,18 +182,6 @@ app.get("/user/image", async (req: Request, res: Response) => {
         res.status(500).json({ message: "failed", err: errorMessage });
     }
 });
-
-// app.get("/user/name", async (req: Request, res: Response) => {
-//     try {
-//         const { uid } = req.query;
-//         const userName = await userService.getUserName(uid.toString());
-//         //console.log("in server.ts: ", projects);
-//         res.status(200).json(userName);
-//     } catch (error) {
-//         console.error("Unable to fetch projects:", error);
-//         res.status(500).json({ error: "Unable to fetch projects" });
-//     }
-// });
 
 app.listen(config.development.serverPort, () => {
     console.log(`Server is running on port ${config.development.serverPort}`);

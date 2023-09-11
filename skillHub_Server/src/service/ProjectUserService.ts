@@ -21,7 +21,6 @@ export class ProjectUserService {
 
   async getProjectsUsers(uid) {
     try {
-      // Fetch project users
       const projectUsersQuerySnapshot = await getDocs(
         collection(db, "projects-users")
       );
@@ -30,14 +29,12 @@ export class ProjectUserService {
         usersProjectsList.push({ id: doc.id, ...doc.data() });
       });
 
-      // Fetch projects
       const projectsQuerySnapshot = await getDocs(collection(db, "projects"));
       const projectsList = [];
       projectsQuerySnapshot.forEach((doc) => {
         projectsList.push({ id: doc.id, ...doc.data() });
       });
 
-      // Get the matching projects required
       const myProjectsId = usersProjectsList
         .filter(
           (projectUser) => projectUser.uid === uid

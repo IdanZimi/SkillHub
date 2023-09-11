@@ -8,9 +8,6 @@ import img from '../static/images/projectImage.jpg'
 
 function Home({ setUserAuthenticated, logoutUserData }) {
   const [user, loading, error] = useAuthState(auth);
-  //const [projectsList, setProjectsList] = useState([]);
-  //const [name, setName] = useState("");
-  //const [uid, setuid] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -42,7 +39,6 @@ function Home({ setUserAuthenticated, logoutUserData }) {
                 {/* <div>{user?.email}</div> */}
                 <button className="dashboard__btn" onClick={() => {
                     logout()
-                    //setName("")
                     logoutUserData()
                 }}>
                     Logout

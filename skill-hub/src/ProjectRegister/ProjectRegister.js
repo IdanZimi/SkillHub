@@ -1,15 +1,11 @@
-
 import React, { useState } from 'react';
-// import * as React from 'react';
 import IconButton from '@mui/material/IconButton';
 import Icon from '@mui/material/Icon';
-import CloseRounded from '@mui/icons-material/CloseRounded';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
@@ -72,29 +68,13 @@ export default function ProjectRegister({ isOpen, onClose }) {
     setImageFile(null);
   }
 
-  //   const handleClose = () => {
-  //     setOpen(false);
-  //  };
   const handleAddCircleClick = () => {
     if (positionInput.trim() !== '') {
       setPositionName([...positionName, positionInput]);
       setPositionInput('');
     }
-    console.log(positionName)
   };
 
-  // React.useEffect(() => {
-  //   console.log(positionName);
-  // }, [positionName]);
-
-  // const handleSubmit = () => {
-
-  //   // Check if projectName and projectDescription are empty
-  //   if (!projectName.trim() || !description.trim()) {
-  //     setShowAlert(true);
-  //     return; // Exit the function
-  //   }
-  // }
   const submitIsValid = ()=>{
     if (!projectName.trim() || !description.trim()) {
       setAlertMesaage('Please fill project name and description')
@@ -111,7 +91,7 @@ export default function ProjectRegister({ isOpen, onClose }) {
   const handleSubmit = async () => {
     if (!submitIsValid()) {
       setShowAlert(true);
-      return; // Exit the function
+      return; 
     }
     setfinishedSubmit(false)
     if (!imageFile) {
