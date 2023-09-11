@@ -6,8 +6,7 @@
 }
 
 .project-body {
-  /* Set a fixed height for your project cards */
-  height: 400px; /* Adjust the height as needed */
+  height: 400px; 
   overflow: hidden;
   box-shadow: 0 2px 20px #e1e5ee;
   border-radius: 0.2rem;
@@ -16,11 +15,6 @@
   justify-content: space-between;
   cursor: pointer;
   transition: transform 200ms ease-in;
-  /* background-image: url('https://firebasestorage.googleapis.com/v0/b/skillhub-f0207.appspot.com/o/background-skillhub.jpg?alt=media&token=0a769226-867d-4c1a-967a-3e43e6297bc6');
-  background-size: cover; 
-  background-repeat: no-repeat;
-  background-attachment: fixed; 
-   */
 }
 
 .project-name .MuiCardHeader-title {
@@ -74,7 +68,6 @@
   color: white;
 }
 
-/* Style the wrapper */
 .apply-btn {
   display: flex;
   align-items: center;

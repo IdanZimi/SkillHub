@@ -1,15 +1,11 @@
-/* ProjectRegister.css */
-
 .project-popup {
-    /* display: none; */
     position: fixed;
     top:200px ;
     bottom: 5px;
     left: 800px;
     width: 340px;
     height: 100%;
-    /* background-color: rgba(189, 190, 193, 0.5); */
-    z-index: 1000; /* Ensure the popup is above other content */
+    z-index: 1000; 
     align-items: center;
     justify-content: center;
   }
@@ -35,7 +31,6 @@
     margin-bottom: 10px;
     border: none;
     color: white;
-    /* color: white; */
     background-color: #434344;
     border-radius: 4px;
     
@@ -51,7 +46,6 @@
     margin-bottom: 10px;
     border: none;
     color: white;
-    /* color: white; */
     background-color: #434344;
     border-radius: 4px;
   }
@@ -69,9 +63,7 @@
     color: white;
     background-color: #434344;
     border-radius: 4px;
-    /* cursor: pointer; */
      transition: background-color 0.3s ease; 
-    /* position: fixed; */
   }
 
   .create-button{
@@ -86,9 +78,7 @@
     color: rgb(42, 40, 40);
     background-color:rgb(251, 251, 253);
     border-radius: 4px;
-    /* cursor: pointer; */
      transition: background-color 0.3s ease; 
-    /* position: fixed; */
   }
 
   .cancel-button{
@@ -103,21 +93,6 @@
     color: rgb(42, 40, 40);
     background-color:rgb(251, 251, 253);
     border-radius: 4px;
-    /* cursor: pointer; */
      transition: background-color 0.3s ease; 
-    /* position: fixed; */
   }
   
-  /* padding: 12px 20px;
-  font-size: 18px;
-  margin-bottom: 10px;
-  border: none;
-  color: white;
-  background-color: #4c4c4c;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  position: fixed;
-  top: 70px;
-  right: 50px; 
-  z-index: 1000; */

@@ -7,7 +7,6 @@ import {
     MDBCard,
     MDBCardBody,
     MDBInput,
-    MDBCheckbox,
     MDBIcon
 }
     from 'mdb-react-ui-kit';
@@ -45,8 +44,6 @@ function AlterRegister() {
             alert(err.message)
             console.error(err.message)
          }
-
-        //registerWithEmailAndPassword(`${firstname} ${lastname}`, email, password);
     };
 
     useEffect(() => {

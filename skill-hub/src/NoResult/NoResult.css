@@ -2,10 +2,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100vh; /* Ensure the container takes up the entire viewport height */
+    height: 100vh; 
   }
   
   .header {
-    text-align: center; /* Center the text horizontally */
-    /* You can adjust the styles of the header as needed */
+    text-align: center;
   }

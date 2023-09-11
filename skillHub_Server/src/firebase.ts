@@ -18,7 +18,6 @@ import {
     where,
     addDoc,
 } from "firebase/firestore";
-//import { redirect } from "react-router-dom";
 
 const firebaseConfig = {
     apiKey: "AIzaSyDAdPJ1TuJSIKlEzLUUgwGS23e_Cow_Rus",
@@ -72,11 +71,8 @@ const logInWithEmailAndPassword = async (email, password) => {
         const user = userCredential.user;
         console.log("User signed in:", user);
     } catch (error) {
-        throw error; // Rethrow the error to be caught by the caller
+        throw error; 
     }
-    //localStorage.setItem('isAuthenticated', true);
-
-    //redirect("/")
 };
 
 const registerWithEmailAndPassword = async (name, email, password, skills = []) => {

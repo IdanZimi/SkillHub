@@ -2,30 +2,26 @@ import * as React from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
-import { stack as BurgerMenu } from 'react-burger-menu'
 import '../Menu.css'
 import { logout } from '../../firebase';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-    faHouse, faAddressCard, faPeopleGroup, faRightToBracket,
+    faRightToBracket,
     faRightFromBracket, faUser
 } from '@fortawesome/free-solid-svg-icons';
-import Nav from '../../nav/nav';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
 import Diversity2OutlinedIcon from '@mui/icons-material/Diversity2Outlined';
-import { redirect, useNavigate } from 'react-router-dom';
+import { redirect } from 'react-router-dom';
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -56,7 +52,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     color: 'inherit',
     '& .MuiInputBase-input': {
         padding: theme.spacing(1, 1, 1, 0),
-        // vertical padding + font size from searchIcon
         paddingLeft: `calc(1em + ${theme.spacing(4)})`,
         transition: theme.transitions.create('width'),
         width: '100%',
@@ -78,10 +73,7 @@ export default function SearchMenu({ setIsAuthenticated, isAauthenticated, logou
     const [searchProject, setSearchProject] = React.useState('');
 
     const handleLogout = () => {
-        //setIsAuthenticated(false);
-        // Remove the authentication state from localStorage
         localStorage.removeItem('isAuthenticated');
-        //setIsAuthenticated(false)
         logoutUserData()
         logout()
         handleCloseUserMenu()
@@ -89,7 +81,6 @@ export default function SearchMenu({ setIsAuthenticated, isAauthenticated, logou
 
     const navigatePofile = () => {
         handleCloseUserMenu()
-        console.log("hereeeeeeeee")
         redirect('/profile')
     }
     const handleOpenUserMenu = (event) => {
@@ -106,13 +97,11 @@ export default function SearchMenu({ setIsAuthenticated, isAauthenticated, logou
         onSearch(searchText);
     };
 
-
     return (
         <AppBar position="fixed" sx={{ maxHeight: '55px' }}>
             <Container maxWidth="false">
                 <Toolbar disableGutters>
                     <Diversity2OutlinedIcon sx={{ mr: 2 }}></Diversity2OutlinedIcon>
-                    {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
                     <Typography
                         variant="h6"
                         noWrap
@@ -180,20 +169,15 @@ export default function SearchMenu({ setIsAuthenticated, isAauthenticated, logou
                             onClose={handleCloseUserMenu}
                         >
                             <MenuItem divider key={'Profile'}>
-                                {/* <Typography textAlign="center"><FontAwesomeIcon icon={faUser} size='md' /> Profile</Typography> */}
                                 <a id="profile" className="bm-item" href="/profile"><FontAwesomeIcon icon={faUser} size='md' /> Profile</a>
 
                             </MenuItem>
-                            {/* <MenuItem key={'Logout'} onClick={handleCloseUserMenu}>
-                                <Typography textAlign="center">Logout</Typography>
-                            </MenuItem> */}
                             {isAauthenticated ? (
                                 <MenuItem key={'logout'} onClick={handleLogout}>
                                     <Typography textAlign="center"><FontAwesomeIcon icon={faRightFromBracket} size='md' /> Logout</Typography>
                                 </MenuItem>
                             ) : (
                                 <MenuItem key={'Login'}>
-                                    {/* <Typography textAlign="center"> Login</Typography> */}
                                     <a id="login" className="bm-item" href="/login"><FontAwesomeIcon icon={faRightToBracket} size='md' /> Login</a>
                                 </MenuItem>
                             )}

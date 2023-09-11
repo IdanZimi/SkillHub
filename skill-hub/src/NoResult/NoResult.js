@@ -1,5 +1,4 @@
-import React from 'react'
-//import './NoResult.css'; 
+import React from 'react' 
 import SearchOffIcon from '@mui/icons-material/SearchOff';
 
 const NoResult = () => {

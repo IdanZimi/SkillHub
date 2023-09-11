@@ -61,8 +61,6 @@ function UserProfile({ projectsList, setProjectsList, logoutUserData }) {
 
   useEffect(() => {
     try {
-      console.log("in use effect userprofile, projects:", projectsList);
-      //fetchProjects();
       fetchUserProfilePicture();
       fetchApplies();
       fetchProjectsUsers();
@@ -70,16 +68,6 @@ function UserProfile({ projectsList, setProjectsList, logoutUserData }) {
       console.error("Error fetching data:", error);
     }
   }, []);
-
-  // const fetchProjects = async () => {
-  //   try {
-  //     const projects = await request.getProjects();
-  //     setProjectsList(projects);
-  //     //console.log("projects are: ", projects);
-  //   } catch (error) {
-  //     console.error("Error fetching projects:", error);
-  //   }
-  // };
 
   const fetchUserProfilePicture = async () => {
     try {
@@ -94,10 +82,8 @@ function UserProfile({ projectsList, setProjectsList, logoutUserData }) {
 
   const fetchApplies = async () => {
     try {
-      console.log("fetching applies...");
       const applies = await request.getApplies();
       setAppliesList(applies);
-      //console.log("applies are: ", applies);
     } catch (error) {
       console.error("Error fetching applies:", error);
     }
@@ -145,11 +131,9 @@ function UserProfile({ projectsList, setProjectsList, logoutUserData }) {
 
   const fetchProjectsUsers = async () => {
     try {
-      console.log("fetching users projects...");
       const matchingProjects = await request.getProjectsOfUser(
         localStorage.getItem("uid")
       );
-      console.log("matching projects are: ", matchingProjects);
       setProjectUserList(matchingProjects);
     } catch (error) {
       console.error("Error fetching projects-users:", error);
@@ -192,8 +176,8 @@ function UserProfile({ projectsList, setProjectsList, logoutUserData }) {
                 className="rounded-top text-white d-flex flex-row"
                 style={{
                   backgroundImage: `url(${backgroundCardImage})`,
-                  backgroundSize: 'cover', // Adjust as needed
-                  backgroundRepeat: 'no-repeat', // Adjust as needed
+                  backgroundSize: 'cover', 
+                  backgroundRepeat: 'no-repeat',
                   height: '200px'
                 }}
               
@@ -209,7 +193,6 @@ function UserProfile({ projectsList, setProjectsList, logoutUserData }) {
                     fluid
                     // style={{ width: "200px", height: "300px", zIndex: "1" }}
                   />
-                  {/* <DialogActions style={{ justifyContent: "center" }}> */}
                   <MDBBtn
                     onClick={() => document.getElementById("fileInput").click()}
                     outline
@@ -227,7 +210,6 @@ function UserProfile({ projectsList, setProjectsList, logoutUserData }) {
                       onChange={handleImageChange}
                     />
                   </MDBBtn>
-                  {/* </DialogActions> */}
                   <MDBBtn
                     outline
                     color="dark"
@@ -248,10 +230,6 @@ function UserProfile({ projectsList, setProjectsList, logoutUserData }) {
                   </MDBTypography>
                 </div>
               </div>
-              {/* <div
-                className="p-4 text-black"
-                style={{ backgroundColor: "white" }}
-              ></div> */}
               <MDBCardBody className="text-black p-4 mt-5">
               <div className="mb-5">
                   <p className="lead fw-normal mt-5 mb-1">About</p>
@@ -266,10 +244,7 @@ function UserProfile({ projectsList, setProjectsList, logoutUserData }) {
                         onChange={(e) => setAbout(e.target.value)}
                         onKeyDown={(e) => {
                           if (e.key === "Enter") {
-                            // Prevent capturing "Enter" key if you want to create new lines
                             e.preventDefault();
-
-                            // Insert a newline character into the textarea value
                             setAbout(about + "\n");
                           }
                         }}

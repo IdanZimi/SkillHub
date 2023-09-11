@@ -19,22 +19,11 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [projectsList, setProjectsList] = useState([]);
 
-  // const updateProjectsList = (projects) => {
-  //   setProjectsList(projects);
-  // }
-  //const [name, setName] = useState("");
-  //const [uid, setuid] = useState("");
-  //const [user, loading, error] = useAuthState(auth);
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        //setLoadingProjects(true)
         const projects = await request.getProjects();
-        //setFilteredProjects(projects); // Initialize filteredProjects with all projects
         setProjectsList(projects);
-        //setProjectsList(projects);
-        //setLoadingProjects(false)
-        console.log("in use effect in App: ", projects);
       } catch (error) {
         console.error("Error fetching projects:", error);
       }
@@ -54,64 +43,26 @@ function App() {
     localStorage.removeItem("name");
   };
 
-  
-;
-  // useEffect(() => {
-  //   const unsubscribe = authStateChanged(auth, (user) => {
-  //     if (user) {
-  //       console.log("inside use effect of app")
-  //       setIsAuthenticated(true)
-  //       fetchUserData(user.uid)
-  //       console.log("user:", user)
-  //       // Perform any necessary actions for an authenticated user
-  //     } else {
-  //       // User is not authenticated
-  //       setIsAuthenticated(false)
-  //       setuid('')
-  //     }
-  //   });
-  //   return () => {
-  //     unsubscribe();
-  //   };
-  // }, []);
 
-  //   const fetchUserData = async (uid) => {
-  //     try {
-  //         const q = query(collection(db, "users"), where("uid", "==", uid));
-  //         const doc = await getDocs(q);
-  //         const data = doc.docs[0].data();
-  //         setUserData(data.name, data.uid)
-  //     } catch (err) {
-  //         console.error(err);
-  //         alert("An error occured while fetching user data");
-  //     }
-  // };
-
+  ;
   return (
-      <div className='app'>
-        <div id="content">
-          <div>
-            <ReactNotifications/>
-            <MenuComponent isAauthenticated={isAuthenticated} logoutUserData={logoutUserData}> </MenuComponent>
-          </div>
-          <Router>
-            <Routes>
-              <Route path="/" element={<Home setUserAuthenticated={setUserAuthenticated} logoutUserData={logoutUserData} />} />
-              <Route path="/login" element={<Alterlogin />} />
-              <Route path="/register" element={<AlterRegister />} />
-              <Route path="/projects" element={<ProjectsPage projectsList={projectsList} setProjectsList={setProjectsList} logoutUserData={logoutUserData}/>} />
-              <Route path="/about" element={<AboutPage setUserAuthenticated={setUserAuthenticated} logoutUserData={logoutUserData} />} />
-              <Route path="/profile" element={<UserProfile projectsList={projectsList} setProjectsList={setProjectsList} logoutUserData={logoutUserData}/>} />
-            </Routes>
-          </Router>
+    <div className='app'>
+      <div id="content">
+        <div>
+          <ReactNotifications />
+          <MenuComponent isAauthenticated={isAuthenticated} logoutUserData={logoutUserData}> </MenuComponent>
         </div>
-        {/* <footer className="footer">
-          <div className="d-flex flex-column flex-md-row text-center text-md-start justify-content-between py-2 px-4 px-xl-5 bg-primary">
-            <div className="text-white mb-3 mb-md-0">
-              Copyright © 2023. All rights reserved.
-            </div>
-          </div>
-        </footer> */}
+        <Router>
+          <Routes>
+            <Route path="/" element={<Home setUserAuthenticated={setUserAuthenticated} logoutUserData={logoutUserData} />} />
+            <Route path="/login" element={<Alterlogin />} />
+            <Route path="/register" element={<AlterRegister />} />
+            <Route path="/projects" element={<ProjectsPage projectsList={projectsList} setProjectsList={setProjectsList} logoutUserData={logoutUserData} />} />
+            <Route path="/about" element={<AboutPage setUserAuthenticated={setUserAuthenticated} logoutUserData={logoutUserData} />} />
+            <Route path="/profile" element={<UserProfile projectsList={projectsList} setProjectsList={setProjectsList} logoutUserData={logoutUserData} />} />
+          </Routes>
+        </Router>
+      </div>
     </div>
   );
 }

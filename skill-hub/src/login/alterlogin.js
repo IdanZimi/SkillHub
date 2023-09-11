@@ -19,7 +19,6 @@ function Alterlogin() {
 
     useEffect(() => {
         if (loading) {
-            // maybe trigger a loading screen
             return;
         }
         if (user) navigate("/about");

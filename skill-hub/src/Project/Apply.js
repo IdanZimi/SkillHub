@@ -3,14 +3,11 @@ import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
-import SvgIcon from '@mui/material/SvgIcon';
 import { styled } from '@mui/material';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
-import { MuiTelInput } from 'mui-tel-input'
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage } from '../firebase';
 import { request } from '../httpRequest';
@@ -65,13 +62,11 @@ const Apply = ({ isOpen, onClose, title, uid, userName, selectedSkills, projectI
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
     if (selectedFile) {
-      console.log("Selected File:", selectedFile);
       setResumeFile(selectedFile);
     }
   };
 
   const handleDelete = () => {
-    // Reset the resumeFile state to null to remove the selected file
     setResumeFile(null);
   };
 
@@ -91,13 +86,11 @@ const Apply = ({ isOpen, onClose, title, uid, userName, selectedSkills, projectI
   const handleApply = async () => {
     if (checkApplyIsValid()) {
       setShowAlert(false)
-      // setApplyIsValid(true)
       setfinishedApply(false)
       uploadResumeToStorage();
     }
     else {
       setShowAlert(true)
-      // setApplyIsValid(false)
     }
   }
 
@@ -112,7 +105,6 @@ const Apply = ({ isOpen, onClose, title, uid, userName, selectedSkills, projectI
       phone: phoneNumberInput,
       resumeURL: url
     }
-    console.log("in submitApplyToDB, apply is: ", apply);
     await request.sendApplyToDB(apply)
     setfinishedApply(true)
     onClose(true)
@@ -175,13 +167,12 @@ const Apply = ({ isOpen, onClose, title, uid, userName, selectedSkills, projectI
               : ''
           }
         />
-        {showAlert && ( // Conditionally render the alert based on showAlert state
+        {showAlert && (
           <Alert severity="error" sx={{ marginTop: 1 }} onClose={() => setShowAlert(false)}>
             <AlertTitle>Error</AlertTitle>
             Please fill all fields correctly!
           </Alert>
         )}
-        {/* <MuiTelInput value={value} onChange={handlePhoneNumberChange} /> */}
         <DialogActions style={{ justifyContent: 'center' }}>
           <Button onClick={() => document.getElementById('fileInput').click()} variant="contained">Upload Resume
             <VisuallyHiddenInput id="fileInput" type="file" accept=".pdf, .doc, .docx" onChange={handleFileChange} />

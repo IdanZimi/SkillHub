@@ -36,7 +36,6 @@ export const request = {
     }
   },
   addProjectToDB: async (project) => {
-    //console.log("the project" + project)
     const response = await fetch(apiUrl + "project", {
       method: "POST",
       headers: {
@@ -47,7 +46,6 @@ export const request = {
     if (response.ok) {
       const responseData = await response.json();
       return responseData.docref._key.path.segments[1];
-      //console.log("Add Project successfuly:", responseData);
     } else {
       const errorData = await response.json();
       console.error("Login error:", errorData);
@@ -59,7 +57,6 @@ export const request = {
     });
     if (response.ok) {
       const responseData = await response.json();
-      console.log(responseData);
       return responseData;
     } else {
       const errorData = await response.json();
@@ -76,7 +73,6 @@ export const request = {
     });
     if (response.ok) {
       const responseData = await response.json();
-      console.log(responseData);
       return responseData;
     } else {
       const errorData = await response.json();
@@ -89,7 +85,6 @@ export const request = {
     });
     if (response.ok) {
       const responseData = await response.json();
-      console.log(responseData);
       return responseData;
     } else {
       const errorData = await response.json();
@@ -107,7 +102,6 @@ export const request = {
     });
     if (response.ok) {
       const responseData = await response.json();
-      console.log("doc ref: ", responseData);
       return responseData;
     } else {
       const errorData = await response.json();
@@ -125,7 +119,6 @@ export const request = {
     });
     if (response.ok) {
       const responseData = await response.json();
-      console.log(responseData);
       return responseData;
     } else {
       const errorData = await response.json();
@@ -138,7 +131,6 @@ export const request = {
     });
     if (response.ok) {
       const responseData = await response.json();
-      console.log(responseData);
       return responseData;
     } else {
       const errorData = await response.json();
@@ -151,7 +143,6 @@ export const request = {
     });
     if (response.ok) {
       const responseData = await response.json();
-      console.log(responseData);
       return responseData;
     } else {
       const errorData = await response.json();
@@ -169,7 +160,6 @@ export const request = {
     });
     if (response.ok) {
       const responseData = await response.json();
-      console.log("doc ref: ", responseData);
       return responseData;
     } else {
       const errorData = await response.json();
@@ -203,7 +193,6 @@ export const request = {
     });
     if (response.ok) {
       const responseData = await response.json();
-      console.log("doc ref: ", responseData);
       return responseData;
     } else {
       const errorData = await response.json();
