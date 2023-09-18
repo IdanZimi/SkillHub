@@ -18,9 +18,43 @@ Welcome to our new generation social innovation hub!
 ## Team members
 
 * [Idan Zimilis](https://github.com/IdanZimi)
+  - ID : 316133222
 * [Ido Yekutiel](https://github.com/Idoyek)
+  - ID : 207071713
 * [Shiran Swissa](https://github.com/Swisash)
+  - ID : 206549164
 
+## Contact Information
+
+For any inquiries or questions, please feel free to contact us at:
+
+* Phone: 054-345-6925
+
+## Installation
+
+Follow these steps to install and run the project:
+
+1. **Clone the Repository:**  
+  - git clone https://github.com/IdanZimi/SkillHub  
+  - cd SkillHub  
+
+2. **Server Setup:**  
+
+Navigate to the server directory:  
+
+  - cd skillHub_Server  
+  - npm install  
+  - npm start  
+  - The server should now be running on `http://localhost:5432`  
+
+3. **Client Setup:**  
+
+Navigate to the client directory:  
+
+  - cd skill-hub  
+  - npm install  
+  - npm start  
+  - The client application should now be running on `http://localhost:3000`  
 
 ## License
 
