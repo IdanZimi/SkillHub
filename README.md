@@ -30,6 +30,11 @@ For any inquiries or questions, please feel free to contact us at:
 
 * Phone: 054-345-6925
 
+## See It in Action: A Quick Video Demo
+
+https://drive.google.com/file/d/1O_Sgug3pbDemWowD5iezh4CanvKrHanE/view?usp=drivesdk  
+![](static/images/SkillHub-Homepage.png)
+
 ## Installation
 
 Follow these steps to install and run the project:
@@ -45,7 +50,7 @@ Navigate to the server directory:
   - cd skillHub_Server  
   - npm install  
   - npm start  
-  - The server should now be running on `http://localhost:5432`  
+  - The server should now be running on `http://localhost:8000`  
 
 3. **Client Setup:**  
 
