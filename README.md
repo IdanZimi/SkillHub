@@ -32,8 +32,8 @@ For any inquiries or questions, please feel free to contact us at:
 
 ## See It in Action: A Quick Video Demo
 
-https://drive.google.com/file/d/1O_Sgug3pbDemWowD5iezh4CanvKrHanE/view?usp=drivesdk
-![GitHub Logo](static/images/SkillHub Homepage.png)
+https://drive.google.com/file/d/1O_Sgug3pbDemWowD5iezh4CanvKrHanE/view?usp=drivesdk  
+![](static/images/SkillHub-Homepage.png)
 
 ## Installation
 
